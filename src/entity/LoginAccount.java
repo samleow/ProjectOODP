@@ -26,7 +26,8 @@ public class LoginAccount {
 
 		// Open a new connection to the file
 
-		File listOfNames = new File("User.txt");
+		//File listOfNames = new File("User.txt");
+		File listOfNames = new File("StudentAccount.txt");
 
 		try {
 
@@ -51,7 +52,7 @@ public class LoginAccount {
 				
 
 				// .equal() in java check only values while == check memory location
-				if(userName.equals(indivUserData[0]) && passwordHashed.equals(indivUserData[1]))
+				if(userName.equals(indivUserData[0]) && passwordHashed.equals(indivUserData[4])) // indivUserData[4] rmb to change to different posistion
 				{
 					correctInfo = true;
 					// break while loop once username and password found

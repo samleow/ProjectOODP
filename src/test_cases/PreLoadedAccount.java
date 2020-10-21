@@ -27,7 +27,7 @@ public class PreLoadedAccount {
 	
 	public PreLoadedAccount()
 	{
-		UserAccount[] listUser = getUser();
+		StudentAccount[] listUser = getUser();
 
 		PrintWriter createTxt = createFile("User.txt");
 
@@ -44,13 +44,13 @@ public class PreLoadedAccount {
 
 	// class that defines all the fields for User Account
 
-	private static class UserAccount {
+	private static class StudentAccount {
 
 		public String userName, password;
 
 		// constructor that's called when a customer is made
 
-		public UserAccount(String userName, String password) {
+		public StudentAccount(String userName, String password) {
 
 			this.userName = userName;
 			this.password = password;
@@ -61,13 +61,13 @@ public class PreLoadedAccount {
 
 	// Creates an array of preload user account
 
-	private static UserAccount[] getUser() {
+	private static StudentAccount[] getUser() {
 
-		UserAccount[] userAcc = new UserAccount[3];
+		StudentAccount[] userAcc = new StudentAccount[3];
 
-		userAcc[0] = new UserAccount("jo", HashingPassword.encryptThisString("123"));
-		userAcc[1] = new UserAccount("lee", HashingPassword.encryptThisString("zxc"));
-		userAcc[2] = new UserAccount("admin", HashingPassword.encryptThisString("admin"));
+		userAcc[0] = new StudentAccount("jo", HashingPassword.encryptThisString("123"));
+		userAcc[1] = new StudentAccount("lee", HashingPassword.encryptThisString("zxc"));
+		userAcc[2] = new StudentAccount("admin", HashingPassword.encryptThisString("admin"));
 
 		return userAcc;
 
@@ -109,7 +109,7 @@ public class PreLoadedAccount {
 
 	// Create a string with the customer info and write it to the file
 
-	private static void createUser(UserAccount user, PrintWriter userOutput) {
+	private static void createUser(StudentAccount user, PrintWriter userOutput) {
 
 		// Create the String that contains the user info
 		// "|" mean for separating the username and password in the text file
