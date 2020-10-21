@@ -52,7 +52,7 @@ public class LoginAccount {
 				
 
 				// .equal() in java check only values while == check memory location
-				if(userName.equals(indivUserData[0]) && passwordHashed.equals(indivUserData[4])) // indivUserData[4] rmb to change to different posistion
+				if(userName.equals(indivUserData[0]) && passwordHashed.equals(indivUserData[5])) // indivUserData[4] rmb to change to different posistion
 				{
 					correctInfo = true;
 					// break while loop once username and password found

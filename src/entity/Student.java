@@ -17,11 +17,11 @@ public class Student {
 	private String password;
 	
 	// need to add gender and other etc here
-	public Student(String matricNo, String name, String nationality, int maxAU,  String password) {
-		
+	public Student(String matricNo, String name, Gender gender, String nationality, int maxAU,  String password) {
 		this.matricNo = matricNo;
 		this.nationality = nationality;
 		this.maxAU = maxAU;
+		this.gender = gender;
 		//this.courses = courses;
 		this.name = name;
 		this.password = password;

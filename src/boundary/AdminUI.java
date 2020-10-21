@@ -6,11 +6,12 @@ import control.Admin;
 import control.HashingPassword;
 import entity.Course;
 import entity.Period;
+import entity.AllEnums.Gender;
 
 
 public class AdminUI {
 
-	
+	static Gender gender = Gender.DEFAULT;
 	public static void adminLogin()
 	{
 		int choice;
@@ -47,11 +48,18 @@ public class AdminUI {
 					break;
 				case 2: /* (2) Add a student (matric, name, number, gender, nationality, Max AU, Password  etc) */
 					
-					System.out.print("Enter new student martic number: ");
+					System.out.print("Enter new student matric number: ");
 					matricNo = sc.next();
 					
 					System.out.print("Enter new student name: ");
 					name = sc.next();
+					
+					System.out.print("Enter new student gender M/F: ");
+					if(sc.next().equals("M")) {
+						gender = Gender.MALE;
+					} else {
+						gender = Gender.FEMALE;
+					}
 					
 					System.out.print("Enter new student nationality: ");
 					nationality = sc.next();
@@ -71,7 +79,7 @@ public class AdminUI {
 					}
 					hashPassword = HashingPassword.encryptThisString(password);
 					
-					Admin.createStudAcc(matricNo, name, nationality, maxAU, hashPassword );
+					Admin.createStudAcc(matricNo, name, gender, nationality, maxAU, hashPassword );
 					
 
 					break;

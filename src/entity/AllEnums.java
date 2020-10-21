@@ -1,13 +1,13 @@
 package entity;
 
 public class AllEnums {
-	enum AccountType{
+	public enum AccountType{
 		DEFAULT,
 		STUDENT,
 		ADMIN
 	}
 	
-	enum Day {
+	public enum Day {
 		DEFAULT,
 		MONDAY,
 		TUESDAY,
@@ -18,20 +18,20 @@ public class AllEnums {
 		SUNDAY
 	}
 	
-	enum Gender {
+	public enum Gender {
 		DEFAULT,
 		MALE,
 		FEMALE
 	}
 	
-	enum LessonType {
+	public enum LessonType {
 		DEFAULT,
 		LECTURE,
 		TUTORIAL,
 		LAB
 	}
 	
-	enum WeekType {
+	public enum WeekType {
 		DEFAULT,
 		ODD,
 		EVEN,

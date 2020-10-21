@@ -7,7 +7,7 @@ public class StudentUI {
 		int choice;
 		boolean run = true;
 
-		System.out.println("Welcome (Stuent Name)");
+		System.out.println("Welcome (Student Name)");
 
 		Scanner sc = new Scanner(System.in);
 		do {
