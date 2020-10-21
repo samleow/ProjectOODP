@@ -31,11 +31,17 @@ public class UserLogin {
 				switch (choice) {
 				case 1: /* (1) Student Login*/
 					
-					System.out.print("Enter the your StudentID: ");
+					System.out.print("Enter your StudentID: ");
 					userName = sc.next(); 
 					
-					System.out.print("Enter the your Password: ");
-					password = sc.next();
+					System.out.print("Enter your Password: ");
+					password = sc.next(); // If want test password masking, comment this line
+					
+					// The bottom two lines is for masking password.
+					// Can't work now cause IDE can't support System.console()
+//					char[] passMask = System.console().readPassword(); 
+//					password = new String(passMask);
+					
 					password = HashingPassword.encryptThisString(password);
 					//System.out.println(password);
 					
