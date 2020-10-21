@@ -13,10 +13,10 @@ public class Coordinate {
 	}
 	
 	public double getLatitude() {
-		return this.longtitude;
+		return this.latitude;
 	}
 	
 	public void setLatitude(double longtitude) {
-		this.longtitude = longtitude;
+		this.latitude = longtitude;
 	}
 }
