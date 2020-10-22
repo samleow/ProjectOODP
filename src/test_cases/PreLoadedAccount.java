@@ -111,7 +111,7 @@ public class PreLoadedAccount {
 	private static StudentAccount[] getUser() {
 		StudentAccount[] userAcc = new StudentAccount[3];
 		userAcc[0] = new StudentAccount("jo", HashingPassword.encryptThisString("123"));
-		userAcc[1] = new StudentAccount("test123", HashingPassword.encryptThisString("zxc"));
+		userAcc[1] = new StudentAccount("lee", HashingPassword.encryptThisString("zxc"));
 		userAcc[2] = new StudentAccount("admin", HashingPassword.encryptThisString("admin"));
 		return userAcc;
 	}
