@@ -3,23 +3,31 @@ package entity;
 import entity.AllEnums.Day;
 
 public class Period {
-	private Time startTime;
-	private Time endTime;
+	private String startTime;
+	private String endTime;
 	private Day day;
 	
-	public Time getStartTime() {
+	//To preload the data to create the text file, can be removed later on
+	public Period(String startTime, String endTime, Day day) {
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.day = day;
+	}
+	
+	
+	public String getStartTime() {
 		return this.startTime;
 	}
 	
-	public void setStartTime(Time startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 	
-	public Time getEndTime() {
+	public String getEndTime() {
 		return this.endTime;
 	}
 	
-	public void setEndTime(Time endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 	

@@ -6,6 +6,15 @@ public class Location {
 	private String address;
 	private Coordinate coord;
 	
+	
+	//To preload the data to create the text file, can be removed later on
+	public Location(String name, String nameExtended, String address, Coordinate coord) {
+		this.name = name;
+		this.nameExtended = nameExtended;
+		this.address = address;
+		this.coord = coord;
+	}
+	
 	public String getName() {
 		return this.name;
 	}

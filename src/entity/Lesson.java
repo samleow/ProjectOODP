@@ -11,6 +11,17 @@ public class Lesson {
 	private boolean isOnline;
 	private Location location;
 	
+	//To preload the data to create the text file, can be removed later on
+	public Lesson(String courseID, LessonType type, WeekType weekly, Period lessonPeriod, boolean isOnline, Location location) {
+		this.courseID = courseID;
+		this.type = type;
+		this.weekly = weekly;
+		this.lessonPeriod = lessonPeriod;
+		this.isOnline = isOnline;
+		this.location = location;
+	}
+	
+	
 	public String getCourseID() {
 		return this.courseID;
 	}

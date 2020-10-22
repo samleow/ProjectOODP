@@ -1,0 +1,4 @@
+HWLab2|Hardware Lab 2|N4-01B-05|1.3467|1.3467
+TR+33|Tutorial Room + 33|NS4-05-93|1.3483|1.3483
+SPL|Software Project Lab|NS4-05-93|1.3437|1.3437
+LHN-TR+17|Learning Hub North Tutorial Room + 17|NS4-05-94|1.346|1.346

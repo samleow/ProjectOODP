@@ -1,7 +1,6 @@
 package boundary;
 import java.util.List;
 import java.util.Scanner;
-
 import control.Admin;
 import control.HashingPassword;
 import entity.Course;
