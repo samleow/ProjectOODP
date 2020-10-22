@@ -3,16 +3,13 @@ package entity;
 import java.util.List;
 
 public class CourseSlots {
-	private CoursePlan coursePlan;
 	private int totalSlots;
+	private CoursePlan coursePlan;
 	private List<String> waitingList;
 	private List<String> slotList;
 	
-	public CoursePlan getCoursePlan() {
-		return this.coursePlan;
-	}
-	
-	public void setCoursePlan(CoursePlan coursePlan) {
+	public CourseSlots(int totalSlots, CoursePlan coursePlan) {
+		this.totalSlots = totalSlots;
 		this.coursePlan = coursePlan;
 	}
 	
@@ -22,6 +19,14 @@ public class CourseSlots {
 	
 	public void setTotalSlots(int totalSlots) {
 		this.totalSlots = totalSlots;
+	}
+	
+	public CoursePlan getCoursePlan() {
+		return this.coursePlan;
+	}
+	
+	public void setCoursePlan(CoursePlan coursePlan) {
+		this.coursePlan = coursePlan;
 	}
 	
 	public List<String> getWaitingList() {
