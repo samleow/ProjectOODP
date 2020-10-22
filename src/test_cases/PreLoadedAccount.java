@@ -86,6 +86,20 @@ public class PreLoadedAccount {
 			createCoursePlan(CoursePlanData[i], createCoursePlan);
 		}
 		createCoursePlan.close();
+		
+		Course[] Course = getCourse();
+		PrintWriter createCourse = createFile("Course.txt");
+		for (int i = 0; i < Course.length; i++) {
+			createCourse(Course[i], createCourse);
+		}
+		createCourse.close();
+		
+		CourseSlots[] CourseSlots = getCourseSlots();
+		PrintWriter createCourseSlots = createFile("CourseSlots.txt");
+		for (int i = 0; i < CourseSlots.length; i++) {
+			createCourseSlots(CourseSlots[i], createCourseSlots);
+		}
+		createCourseSlots.close();
 
 		
 		
@@ -179,19 +193,32 @@ public class PreLoadedAccount {
 		CoursePlanList[0] = new CoursePlan("CZ2001", "SSP2", 10192);
 		CoursePlanList[1] = new CoursePlan("CZ2002", "SS12", 10209);
 		
-		List<Lesson> temp = new ArrayList<Lesson>();
 		for(int i = 0; i<CoursePlanList.length; i++) {
+			List<Lesson> temp = new ArrayList<Lesson>();
 			for(int j = 0; j<LessonData.length; j++) {
 				if(CoursePlanList[i].getCourseID() == LessonData[j].getCourseID()) {
 					temp.add(LessonData[j]);
 				}
 			}
 			CoursePlanList[i].setLessons(temp);
-			System.out.println(CoursePlanList[i].getLessons());
-			temp.clear();
 		}
-		System.out.println(CoursePlanList[0].getLessons());
 		return CoursePlanList;
+	}
+	
+	private static Course[] getCourse() {
+		Course[] CourseList = new Course[2];
+		CoursePlan[] CoursePlanData = getCoursePlan();
+		CourseList[0] = new Course("Algorithm", "CZ2001", 3, CoursePlanData[0]);
+		CourseList[1] = new Course("Object Oriented Design and Programming", "CZ2002", 3, CoursePlanData[1]);
+		return CourseList;
+	}
+	
+	private static CourseSlots[] getCourseSlots() {
+		CourseSlots[] CourseSlotsList = new CourseSlots[2];
+		CoursePlan[] CoursePlanData = getCoursePlan();
+		CourseSlotsList[0] = new CourseSlots(30, CoursePlanData[0]);
+		CourseSlotsList[1] = new CourseSlots(25, CoursePlanData[1]);
+		return CourseSlotsList;
 	}
 	
 
@@ -275,8 +302,77 @@ public class PreLoadedAccount {
 	
 	
 	private static void createCoursePlan(CoursePlan courseplan, PrintWriter userOutput) {
-		String data = courseplan.getCourseID() + "|" + courseplan.getGroupID() + "|" + courseplan.getIndex()
-		+ "|" + courseplan.getLessons();
+		String lessondata;
+		String data = courseplan.getCourseID() + "|" + courseplan.getGroupID() + "|" + courseplan.getIndex();
+		List<String> temp = new ArrayList<String>();
+		for(int i = 0; i<courseplan.getLessons().size(); i++) {
+			if(courseplan.getLessons().get(i).getLocation() != null) {
+				lessondata = courseplan.getLessons().get(i).getCourseID() + "|" + courseplan.getLessons().get(i).getType() + "|" + 
+					courseplan.getLessons().get(i).getWeekly() + "|" + courseplan.getLessons().get(i).getLessonPeriod().getStartTime() + "|" +
+					courseplan.getLessons().get(i).getLessonPeriod().getEndTime() + "|" + courseplan.getLessons().get(i).getLessonPeriod().getDay()
+					+ "|" + courseplan.getLessons().get(i).getIsOnline() + "|" + courseplan.getLessons().get(i).getLocation().getName() + "|" +
+					courseplan.getLessons().get(i).getLocation().getNameExtended() + "|" + courseplan.getLessons().get(i).getLocation().getAddress();
+			}
+			else {
+				lessondata = courseplan.getLessons().get(i).getCourseID() + "|" + courseplan.getLessons().get(i).getType() + "|" + 
+						courseplan.getLessons().get(i).getWeekly() + "|" + courseplan.getLessons().get(i).getLessonPeriod().getStartTime() + "|" +
+						courseplan.getLessons().get(i).getLessonPeriod().getEndTime() + "|" + courseplan.getLessons().get(i).getLessonPeriod().getDay()
+						+ "|" + courseplan.getLessons().get(i).getIsOnline() + "|" + null + "|" + null + "|" + null;
+			}
+			temp.add(lessondata);
+		}
+		
+		data = data + "|" + temp;
+		userOutput.println(data);
+	}
+	
+	
+	private static void createCourse(Course course, PrintWriter userOutput) {
+		String lessondata;
+		List<String> temp = new ArrayList<String>();
+		String data = course.getName() + "|" + course.getCourseID() + "|" + course.getCourseAU();
+		
+		for(int i = 0; i<course.getCoursePlan().getLessons().size(); i++) {
+			if(course.getCoursePlan().getLessons().get(i).getLocation() != null) {
+				lessondata = course.getCoursePlan().getLessons().get(i).getCourseID() + "|" + course.getCoursePlan().getLessons().get(i).getType() + "|" + 
+						course.getCoursePlan().getLessons().get(i).getWeekly() + "|" + course.getCoursePlan().getLessons().get(i).getLessonPeriod().getStartTime() + "|" +
+						course.getCoursePlan().getLessons().get(i).getLessonPeriod().getEndTime() + "|" + course.getCoursePlan().getLessons().get(i).getLessonPeriod().getDay()
+					+ "|" + course.getCoursePlan().getLessons().get(i).getIsOnline() + "|" + course.getCoursePlan().getLessons().get(i).getLocation().getName() + "|" +
+					course.getCoursePlan().getLessons().get(i).getLocation().getNameExtended() + "|" + course.getCoursePlan().getLessons().get(i).getLocation().getAddress();
+			}
+			else {
+				lessondata = course.getCoursePlan().getLessons().get(i).getCourseID() + "|" + course.getCoursePlan().getLessons().get(i).getType() + "|" + 
+						course.getCoursePlan().getLessons().get(i).getWeekly() + "|" + course.getCoursePlan().getLessons().get(i).getLessonPeriod().getStartTime() + "|" +
+						course.getCoursePlan().getLessons().get(i).getLessonPeriod().getEndTime() + "|" + course.getCoursePlan().getLessons().get(i).getLessonPeriod().getDay()
+						+ "|" + course.getCoursePlan().getLessons().get(i).getIsOnline() + "|" + null + "|" + null + "|" + null;
+			}
+			temp.add(lessondata);
+		}
+		data = data + "|" + temp;
+		userOutput.println(data);
+	}
+	
+	private static void createCourseSlots(CourseSlots courseSlots, PrintWriter userOutput) {
+		String lessondata; 
+		List<String> temp = new ArrayList<String>();
+		String data =  String.valueOf(courseSlots.getTotalSlots());
+		for(int i = 0; i<courseSlots.getCoursePlan().getLessons().size(); i++) {
+			if(courseSlots.getCoursePlan().getLessons().get(i).getLocation() != null) {
+				lessondata = courseSlots.getCoursePlan().getLessons().get(i).getCourseID() + "|" + courseSlots.getCoursePlan().getLessons().get(i).getType() + "|" + 
+						courseSlots.getCoursePlan().getLessons().get(i).getWeekly() + "|" + courseSlots.getCoursePlan().getLessons().get(i).getLessonPeriod().getStartTime() + "|" +
+						courseSlots.getCoursePlan().getLessons().get(i).getLessonPeriod().getEndTime() + "|" + courseSlots.getCoursePlan().getLessons().get(i).getLessonPeriod().getDay()
+					+ "|" + courseSlots.getCoursePlan().getLessons().get(i).getIsOnline() + "|" + courseSlots.getCoursePlan().getLessons().get(i).getLocation().getName() + "|" +
+					courseSlots.getCoursePlan().getLessons().get(i).getLocation().getNameExtended() + "|" + courseSlots.getCoursePlan().getLessons().get(i).getLocation().getAddress();
+			}
+			else {
+				lessondata = courseSlots.getCoursePlan().getLessons().get(i).getCourseID() + "|" + courseSlots.getCoursePlan().getLessons().get(i).getType() + "|" + 
+						courseSlots.getCoursePlan().getLessons().get(i).getWeekly() + "|" + courseSlots.getCoursePlan().getLessons().get(i).getLessonPeriod().getStartTime() + "|" +
+						courseSlots.getCoursePlan().getLessons().get(i).getLessonPeriod().getEndTime() + "|" + courseSlots.getCoursePlan().getLessons().get(i).getLessonPeriod().getDay()
+						+ "|" + courseSlots.getCoursePlan().getLessons().get(i).getIsOnline() + "|" + null + "|" + null + "|" + null;
+			}
+			temp.add(lessondata);
+		}
+		data = data + "|" + temp;
 		userOutput.println(data);
 	}
 
