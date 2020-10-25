@@ -1,49 +1,66 @@
 package entity;
 
-import java.util.List;
+import java.util.*;
 
-public class CoursePlan {
+// Details of a particular course index
+// Stores the "timetable" of lessons
+public class CoursePlan
+{
+	// Course ID - Eg. "CZ2001"
 	private String courseID;
+	// Group ID - Eg. "SSP2"
 	private String groupID;
-	private int index; // should it be int instead?
+	// Index - Eg. 10192
+	private int index;
+	// List of lessons - Stores the different lessons of this index
 	private List<Lesson> lessons;
-	
-	public CoursePlan(String courseID, String groupID, int index) {
+
+	public CoursePlan(String courseID, String groupID, int index)
+	{
 		this.courseID = courseID;
 		this.groupID = groupID;
 		this.index = index;
+		this.lessons = new ArrayList<Lesson>();
 	}
-	
-	public String getCourseID() {
+
+	public String getCourseID()
+	{
 		return this.courseID;
 	}
-	
-	public void setCourseID(String courseID) {
+
+	public void setCourseID(String courseID)
+	{
 		this.courseID = courseID;
 	}
-	
-	public String getGroupID() {
+
+	public String getGroupID()
+	{
 		return this.groupID;
 	}
-	
-	public void setGroupID(String groupID) {
+
+	public void setGroupID(String groupID)
+	{
 		this.groupID = groupID;
 	}
-	
-	public int getIndex() {
+
+	public int getIndex()
+	{
 		return this.index;
 	}
-	
-	public void setIndex(int index) {
+
+	public void setIndex(int index)
+	{
 		this.index = index;
 	}
-	
-	public List<Lesson> getLessons() {
+
+	public List<Lesson> getLessons()
+	{
 		return this.lessons;
 	}
-	
-	public void setLessons(List<Lesson> lessons) {
+
+	public void setLessons(List<Lesson> lessons)
+	{
 		this.lessons = lessons;
 	}
-	
+
 }

@@ -3,16 +3,26 @@ package entity;
 import entity.AllEnums.LessonType;
 import entity.AllEnums.WeekType;
 
-public class Lesson {
+// Details of a particular lesson block
+public class Lesson
+{
+	// Course ID - Eg. "CZ2001"
 	private String courseID;
+	// Type - Eg. LessonType.LAB
 	private LessonType type;
+	// Weekly - Eg. WeekType.EVEN
 	private WeekType weekly;
+	// Lesson Period - Details of the lesson time and duration
 	private Period lessonPeriod;
+	// Is Online - Is the lesson an online lesson or a physical lesson
 	private boolean isOnline;
+	// Location - Details of the lesson location
 	private Location location;
-	
-	//To preload the data to create the text file, can be removed later on
-	public Lesson(String courseID, LessonType type, WeekType weekly, Period lessonPeriod, boolean isOnline, Location location) {
+
+	// To preload the data to create the text file, can be removed later on
+	public Lesson(String courseID, LessonType type, WeekType weekly, Period lessonPeriod, boolean isOnline,
+			Location location)
+	{
 		this.courseID = courseID;
 		this.type = type;
 		this.weekly = weekly;
@@ -20,54 +30,65 @@ public class Lesson {
 		this.isOnline = isOnline;
 		this.location = location;
 	}
-	
-	
-	public String getCourseID() {
+
+	public String getCourseID()
+	{
 		return this.courseID;
 	}
-	
-	public void setCourseID(String courseID) {
+
+	public void setCourseID(String courseID)
+	{
 		this.courseID = courseID;
 	}
-	
-	public LessonType getType() {
+
+	public LessonType getType()
+	{
 		return this.type;
 	}
-	
-	public void setType(LessonType type) {
+
+	public void setType(LessonType type)
+	{
 		this.type = type;
 	}
-	
-	public WeekType getWeekly() {
+
+	public WeekType getWeekly()
+	{
 		return this.weekly;
 	}
-	
-	public void setWeekly(WeekType weekly) {
+
+	public void setWeekly(WeekType weekly)
+	{
 		this.weekly = weekly;
 	}
-	
-	public Period getLessonPeriod() {
+
+	public Period getLessonPeriod()
+	{
 		return this.lessonPeriod;
 	}
-	
-	public void setLessonPeriod(Period lessonPeriod) {
+
+	public void setLessonPeriod(Period lessonPeriod)
+	{
 		this.lessonPeriod = lessonPeriod;
 	}
-	
-	public boolean getIsOnline() {
+
+	public boolean getIsOnline()
+	{
 		return this.isOnline;
 	}
-	
-	public void setIsOnline(boolean isOnline) {
+
+	public void setIsOnline(boolean isOnline)
+	{
 		this.isOnline = isOnline;
 	}
-	
-	public Location getLocation() {
+
+	public Location getLocation()
+	{
 		return this.location;
 	}
-	
-	public void setLocation(Location location) {
+
+	public void setLocation(Location location)
+	{
 		this.location = location;
 	}
-	
+
 }

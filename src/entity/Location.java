@@ -1,49 +1,63 @@
 package entity;
 
-public class Location {
+// Location details
+public class Location
+{
+	// Name - Eg. "HWLAB2"
 	private String name;
+	// Name Extended - Eg. "Hardware Lab 2"
 	private String nameExtended;
+	// Address - Eg. "N4-01B-05"
 	private String address;
+	// Coord - Coordinate details, may be used for navigation
 	private Coordinate coord;
-	
-	
-	//To preload the data to create the text file, can be removed later on
-	public Location(String name, String nameExtended, String address, Coordinate coord) {
+
+	// To preload the data to create the text file, can be removed later on
+	public Location(String name, String nameExtended, String address, Coordinate coord)
+	{
 		this.name = name;
 		this.nameExtended = nameExtended;
 		this.address = address;
 		this.coord = coord;
 	}
-	
-	public String getName() {
+
+	public String getName()
+	{
 		return this.name;
 	}
-	
-	public void setName(String name) {
+
+	public void setName(String name)
+	{
 		this.name = name;
 	}
-	
-	public String getNameExtended() {
+
+	public String getNameExtended()
+	{
 		return this.nameExtended;
 	}
-	
-	public void setNameExtended(String nameExtended) {
+
+	public void setNameExtended(String nameExtended)
+	{
 		this.nameExtended = nameExtended;
 	}
-	
-	public String getAddress() {
+
+	public String getAddress()
+	{
 		return this.address;
 	}
-	
-	public void setAddress(String address) {
+
+	public void setAddress(String address)
+	{
 		this.address = address;
 	}
-	
-	public Coordinate getCoord() {
+
+	public Coordinate getCoord()
+	{
 		return this.coord;
 	}
-	
-	public void setCoord(Coordinate coord) {
+
+	public void setCoord(Coordinate coord)
+	{
 		this.coord = coord;
 	}
 }

@@ -5,15 +5,19 @@ import java.util.ArrayList;
 
 import entity.Student;
 import test_cases.CreateStudentAccount;
+import entity.AllEnums.AccountType;
 import entity.AllEnums.Gender;
 
-public class Admin {
+public class AdminControl {
 	
 	public void setStudentAccessPeriod(int matricNo) {
 		
 	}
 	
-	public static void createStudAcc(String matricNo, String name, Gender gender, String nationality, int maxAU,  String password) // please help to add gender etc
+	public static void createStudAcc(String name, String userName,
+			String password, AccountType type,
+			String matricNo, Gender gender,
+			String nationality, int maxAU) // please help to add gender etc
 	{
     	CreateStudentAccount studDB = new CreateStudentAccount();
     	String filename = "StudentAccount.txt" ;
@@ -34,7 +38,10 @@ public class Admin {
 			
 			
 			//create student obj to add into the studList
-			Student addStud = new Student(matricNo, name, gender, nationality, maxAU, password);
+			Student addStud = new Student(name, userName,
+					password, type,
+					matricNo, gender,
+					nationality, maxAU);
 			
 			studList.add(addStud);
 			

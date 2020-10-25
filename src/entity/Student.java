@@ -1,93 +1,105 @@
 package entity;
 
-import java.util.List;
+import java.util.*;
 
+import entity.AllEnums.AccountType;
 import entity.AllEnums.Gender;
 
-public class Student {
+// Student account that inherits LoginAccount
+public class Student extends LoginAccount
+{
+	// Matric No - Eg. "U1234567A"
 	String matricNo;
+	// Gender - Eg. Gender.MALE
 	Gender gender;
+	// Nationality - Eg. "Singaporean"
 	String nationality;
+	// Max AU - Eg. 23
+	// The max AU he can apply for in a semester
 	int maxAU;
+	// List of Courses - Courses the Student applied for this semester
+	// May need to change to all semesters
 	List<Course> courses;
+	// Access Period - The period Student can access the course application
 	Period accessPeriod;
+	// Access Date - The access date of the course application
+	Date accessDate;
 	
-	//added
-	private String name;
-	private String password;
-	
-	// need to add gender and other etc here
-	public Student(String matricNo, String name, Gender gender, String nationality, int maxAU,  String password) {
+	// ADDITIONAL INFO NEEDED !!!
+	// Need pursuing degree, current studying year, etc.
+	// for Admin to check what access period and date to give
+
+	// overloaded constructor?
+	public Student(String name, String userName,
+			String password, AccountType type,
+			String matricNo, Gender gender,
+			String nationality, int maxAU)
+	{
+		super(name, userName, password, type);
 		this.matricNo = matricNo;
 		this.nationality = nationality;
 		this.maxAU = maxAU;
 		this.gender = gender;
-		//this.courses = courses;
-		this.name = name;
-		this.password = password;
+		courses = new ArrayList<Course>();
 	}
 
-	public String getMatricNo() {
+	public String getMatricNo()
+	{
 		return this.matricNo;
 	}
-	
-	public void setMatricNo(String matricNo) {
+
+	public void setMatricNo(String matricNo)
+	{
 		this.matricNo = matricNo;
 	}
-	
-	public Gender getGender() {
+
+	public Gender getGender()
+	{
 		return this.gender;
 	}
-	
-	public void setGender(Gender gender) {
+
+	public void setGender(Gender gender)
+	{
 		this.gender = gender;
 	}
-	
-	public String getNationality() {
+
+	public String getNationality()
+	{
 		return this.nationality;
 	}
-	
-	public void setNationality(String nationality) {
+
+	public void setNationality(String nationality)
+	{
 		this.nationality = nationality;
 	}
-	
-	public int getMaxAU() {
+
+	public int getMaxAU()
+	{
 		return this.maxAU;
 	}
-	
-	public void setMaxAU(int maxAU) {
+
+	public void setMaxAU(int maxAU)
+	{
 		this.maxAU = maxAU;
 	}
-	
-	public List<Course> getCourses() {
+
+	public List<Course> getCourses()
+	{
 		return this.courses;
 	}
-	
-	public void setCourses(List<Course> courses) {
+
+	public void setCourses(List<Course> courses)
+	{
 		this.courses = courses;
 	}
-	
-	public Period getAccessPeriod() {
+
+	public Period getAccessPeriod()
+	{
 		return this.accessPeriod;
 	}
-	
-	public void setAccessPeriod(Period accessPeriod) {
+
+	public void setAccessPeriod(Period accessPeriod)
+	{
 		this.accessPeriod = accessPeriod;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 }

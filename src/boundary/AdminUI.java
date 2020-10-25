@@ -1,10 +1,11 @@
 package boundary;
 import java.util.List;
 import java.util.Scanner;
-import control.Admin;
+import control.AdminControl;
 import control.HashingPassword;
 import entity.Course;
 import entity.Period;
+import entity.AllEnums.AccountType;
 import entity.AllEnums.Gender;
 
 
@@ -78,8 +79,9 @@ public class AdminUI {
 					}
 					hashPassword = HashingPassword.encryptThisString(password);
 					
-					Admin.createStudAcc(matricNo, name, gender, nationality, maxAU, hashPassword );
-					
+					AdminControl.createStudAcc(name, matricNo,
+							hashPassword, AccountType.STUDENT,
+							matricNo, gender, nationality, maxAU );
 
 					break;
 				case 3: /* (3) Add/Update a course (course code, school, its index numbers and vacancy).*/

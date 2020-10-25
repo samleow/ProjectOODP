@@ -14,6 +14,7 @@ import entity.AllEnums.LessonType;
 import entity.AllEnums.WeekType;
 import control.HashingPassword;
 import entity.AllEnums;
+import entity.Time;
 
 public class PreLoadedAccount {
 
@@ -155,16 +156,16 @@ public class PreLoadedAccount {
 	private static Period[] getPeriod() {
 		Period[] PeriodList = new Period[8];
 		//For Algo Timetable
-		PeriodList[0] = new Period("10:30", "12:30", AllEnums.Day.MONDAY);
-		PeriodList[1] = new Period("12:30", "13:30", AllEnums.Day.MONDAY);
-		PeriodList[2] = new Period("12:30", "13:30", AllEnums.Day.WEDNESDAY);
-		PeriodList[3] = new Period("10:30", "11:30", AllEnums.Day.FRIDAY);
+		PeriodList[0] = new Period(new Time(10,30,0), new Time(12,30,0), AllEnums.Day.MONDAY);
+		PeriodList[1] = new Period(new Time(12,30,0), new Time(13,30,0), AllEnums.Day.MONDAY);
+		PeriodList[2] = new Period(new Time(12,30,0), new Time(13,30,0), AllEnums.Day.WEDNESDAY);
+		PeriodList[3] = new Period(new Time(10,30,0), new Time(11,30,0), AllEnums.Day.FRIDAY);
 		
 		//For OOP Timetable
-		PeriodList[4] = new Period("09:30", "10:30", AllEnums.Day.TUESDAY);
-		PeriodList[5] = new Period("10:30", "12:30", AllEnums.Day.WEDNESDAY);
-		PeriodList[6] = new Period("15:30", "16:30", AllEnums.Day.WEDNESDAY);
-		PeriodList[7] = new Period("11:30", "12:30", AllEnums.Day.FRIDAY);
+		PeriodList[4] = new Period(new Time( 9,30,0), new Time(10,30,0), AllEnums.Day.TUESDAY);
+		PeriodList[5] = new Period(new Time(10,30,0), new Time(12,30,0), AllEnums.Day.WEDNESDAY);
+		PeriodList[6] = new Period(new Time(15,30,0), new Time(16,30,0), AllEnums.Day.WEDNESDAY);
+		PeriodList[7] = new Period(new Time(11,30,0), new Time(12,30,0), AllEnums.Day.FRIDAY);
 		return PeriodList;
 	}
 	

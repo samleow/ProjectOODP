@@ -6,6 +6,7 @@ import java.util.*;
 import entity.Course;
 import entity.Period;
 import entity.Student;
+import entity.AllEnums.AccountType;
 import entity.AllEnums.Gender;
 
 
@@ -93,7 +94,10 @@ public class CreateStudentAccount {
 					String  password = star.nextToken().trim();
 					
 					// create Student object from file data
-					Student student = new Student(matricNo, name, gender, nationality, maxAU, password);
+					Student student = new Student(name, matricNo,
+							password, AccountType.STUDENT,
+							matricNo, gender,
+							nationality, maxAU);
 					
 					// add to Professors list
 					studentList.add(student) ;
