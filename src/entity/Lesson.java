@@ -1,10 +1,12 @@
 package entity;
 
+import java.io.*;
+
 import entity.AllEnums.LessonType;
 import entity.AllEnums.WeekType;
 
 // Details of a particular lesson block
-public class Lesson
+public class Lesson implements IOData<Lesson>
 {
 	// Course ID - Eg. "CZ2001"
 	private String courseID;
@@ -20,8 +22,8 @@ public class Lesson
 	private Location location;
 
 	// To preload the data to create the text file, can be removed later on
-	public Lesson(String courseID, LessonType type, WeekType weekly, Period lessonPeriod, boolean isOnline,
-			Location location)
+	public Lesson(String courseID, LessonType type, WeekType weekly,
+			Period lessonPeriod, boolean isOnline, Location location)
 	{
 		this.courseID = courseID;
 		this.type = type;
@@ -89,6 +91,40 @@ public class Lesson
 	public void setLocation(Location location)
 	{
 		this.location = location;
+	}
+
+	@Override
+	public String toStringData()
+	{
+		return courseID + "|" + type + "|" + weekly + "|"
+				+ lessonPeriod + "|" + isOnline + "|" + location;
+	}
+	
+	@Override
+	public boolean writeDataToFile(String fileName, boolean overwrite)
+	{
+		try {
+			FileWriter fw = new FileWriter(fileName,overwrite);
+			fw.write(toStringData());;
+			fw.close();
+			return true;
+		}
+		catch(IOException e)
+		{
+			System.out.println("File for overwriting Lesson data not found!");
+			return false;
+		}
+	}
+
+	@Override
+	public Lesson readDataFile(String fileLine)
+	{
+		String[] data = fileLine.split("|");
+		
+		for(int i=0; i<data.length; i++)
+			System.out.println(data[i]);
+		
+		return this;
 	}
 
 }

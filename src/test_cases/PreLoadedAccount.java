@@ -10,6 +10,7 @@ import entity.Coordinate;
 import entity.Lesson;
 import entity.Location;
 import entity.Period;
+import entity.AllEnums.Day;
 import entity.AllEnums.LessonType;
 import entity.AllEnums.WeekType;
 import control.HashingPassword;
@@ -35,6 +36,16 @@ public class PreLoadedAccount {
 		 * 
 		 * getFileInfo();
 		 */
+
+//		String courseID, LessonType type, WeekType weekly,
+//		Period lessonPeriod, boolean isOnline, Location location
+		Lesson l1 = new Lesson("CZ2005",LessonType.LAB,WeekType.EVEN,
+				new Period(new Time(10,30,0), new Time(12,30,0), Day.MONDAY),
+				false, new Location("HWLAB2", "Hardware Lab 2", "N4-01B-05",
+						new Coordinate(12.241,415.342)));
+		
+		System.out.println(l1.toStringData());
+		l1.writeDataToFile("Lesson.txt",false);
 	}
 
 	public PreLoadedAccount() {

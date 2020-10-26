@@ -60,4 +60,10 @@ public class Location
 	{
 		this.coord = coord;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return name + "," + nameExtended + "," + address + "," + coord;
+	}
 }

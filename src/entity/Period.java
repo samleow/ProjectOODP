@@ -59,4 +59,10 @@ public class Period
 	{
 		this.day = day;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return startTime + "-" + endTime + "," + day;
+	}
 }
