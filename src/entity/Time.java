@@ -5,20 +5,18 @@ public class Time
 {
 	private int hour;
 	private int minute;
-	private int second;
 	
-	public Time(int hour, int minute, int second)
+	public Time(int hour, int minute)
 	{
 		this.hour = hour;
 		this.minute = minute;
-		this.second = second;
 	}
 	
 	// returns the time in an array
 	// in the order HR:MIN:SEC
 	public int[] getTime()
 	{
-		return new int[] { this.hour, this.minute, this.second };
+		return new int[] { this.hour, this.minute};
 	}
 	
 	// sets the time using an array
@@ -27,7 +25,6 @@ public class Time
 	{
 		time[0] = this.hour;
 		time[1] = this.minute;
-		time[2] = this.second;
 	}
 	
 	// Compare the given Time to this Time
@@ -44,24 +41,15 @@ public class Time
 		{
 			if (this.minute < time.getTime()[1])
 				return -1;
-			else if (this.minute > time.getTime()[1])
-				return 1;
 			else
-			{
-				if (this.second < time.getTime()[2])
-					return -1;
-				else if (this.second > time.getTime()[2])
-					return 1;
-				else
-					return 0;
-			}
+				return 1;
 		}
 	}
 	
 	@Override
 	public String toString()
 	{
-		return hour + ":" + minute + ":" + second;
+		return hour + ":" + minute;
 	}
 
 }

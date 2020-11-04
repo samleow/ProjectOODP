@@ -1,9 +1,9 @@
 package entity;
 
 import java.io.*;
+import java.util.StringTokenizer;
 
-import entity.AllEnums.LessonType;
-import entity.AllEnums.WeekType;
+import entity.AllEnums.*;
 
 // Details of a particular lesson block
 public class Lesson implements IOData<Lesson>
@@ -20,7 +20,17 @@ public class Lesson implements IOData<Lesson>
 	private boolean isOnline;
 	// Location - Details of the lesson location
 	private Location location;
-
+	
+	public Lesson()
+	{
+		this.courseID = "";
+		this.type = LessonType.DEFAULT;
+		this.weekly = WeekType.DEFAULT;
+		this.lessonPeriod = null;
+		this.isOnline = false;
+		this.location = null;
+	}
+	
 	// To preload the data to create the text file, can be removed later on
 	public Lesson(String courseID, LessonType type, WeekType weekly,
 			Period lessonPeriod, boolean isOnline, Location location)
@@ -92,9 +102,9 @@ public class Lesson implements IOData<Lesson>
 	{
 		this.location = location;
 	}
-
+	
 	@Override
-	public String toStringData()
+	public String toString()
 	{
 		return courseID + "|" + type + "|" + weekly + "|"
 				+ lessonPeriod + "|" + isOnline + "|" + location;
@@ -104,8 +114,8 @@ public class Lesson implements IOData<Lesson>
 	public boolean writeDataToFile(String fileName, boolean overwrite)
 	{
 		try {
-			FileWriter fw = new FileWriter(fileName,overwrite);
-			fw.write(toStringData());;
+			FileWriter fw = new FileWriter(fileName,!overwrite);
+			fw.write(toString()+"\n");
 			fw.close();
 			return true;
 		}
@@ -119,12 +129,72 @@ public class Lesson implements IOData<Lesson>
 	@Override
 	public Lesson readDataFile(String fileLine)
 	{
-		String[] data = fileLine.split("|");
+		String st = fileLine;
+		// get individual 'fields' of the string separated by SEPARATOR
+		StringTokenizer star = new StringTokenizer(st , "|");	// pass in the string to the string tokenizer using delimiter ","
+
+		this.courseID = star.nextToken().trim();
+		this.type = LessonType.valueOf(star.nextToken().trim());
+		this.weekly = WeekType.valueOf(star.nextToken().trim());
 		
-		for(int i=0; i<data.length; i++)
-			System.out.println(data[i]);
+		String pdatas = star.nextToken().trim();
+		
+		String[] pdata = pdatas.split(",");
+		String[] stdata = pdata[0].split(":");
+		String[] etdata = pdata[1].split(":");
+		Time[] tdata = {null,null};
+		tdata[0] = new Time(Integer.parseInt(stdata[0]),Integer.parseInt(stdata[1]));
+		tdata[1] = new Time(Integer.parseInt(etdata[0]),Integer.parseInt(etdata[1]));
+		
+		Day day = Day.DEFAULT;
+		day = Day.valueOf(pdata[2]);
+		this.lessonPeriod = new Period(tdata[0], tdata[1], day);
+		this.isOnline = false;
+		if(star.nextToken().trim().equals("true"))
+			this.isOnline = true;
+		String[] ldata = star.nextToken().trim().split("~");
+		this.location = new Location(ldata[0],ldata[1],ldata[2]);
 		
 		return this;
+	}
+	
+	@Override
+	public boolean updateLineInFile(String fileName, String[] keys)
+	{
+		// copy ori into temp
+		// modify temp
+		// save into ori
+		
+		// for now lessons don't need update
+		
+		return false;
+	}
+	
+	// don't need for now
+	public static void replaceLines(String fileName, String newLine) {
+	    try {
+	        // input the (modified) file content to the StringBuffer "input"
+	        BufferedReader file = new BufferedReader(new FileReader(fileName));
+	        StringBuffer inputBuffer = new StringBuffer();
+	        String line;
+	        
+	        // if line == the line to check
+	        // if keys == keys from line
+	        while ((line = file.readLine()) != null) {
+	            line = newLine; // replace the line here
+	            inputBuffer.append(line);
+	            inputBuffer.append('\n');
+	        }
+	        file.close();
+
+	        // write the new string with the replaced line OVER the same file
+	        FileOutputStream fileOut = new FileOutputStream(fileName);
+	        fileOut.write(inputBuffer.toString().getBytes());
+	        fileOut.close();
+
+	    } catch (Exception e) {
+	        System.out.println("Problem reading file.");
+	    }
 	}
 
 }

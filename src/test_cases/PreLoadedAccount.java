@@ -2,17 +2,19 @@ package test_cases;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 import java.io.*;
 import entity.Course;
 import entity.CoursePlan;
 import entity.CourseSlots;
-import entity.Coordinate;
+import entity.IOData;
 import entity.Lesson;
 import entity.Location;
 import entity.Period;
 import entity.AllEnums.Day;
 import entity.AllEnums.LessonType;
 import entity.AllEnums.WeekType;
+import control.Container;
 import control.HashingPassword;
 import entity.AllEnums;
 import entity.Time;
@@ -37,18 +39,30 @@ public class PreLoadedAccount {
 		 * getFileInfo();
 		 */
 
+		// Adding a lesson
 //		String courseID, LessonType type, WeekType weekly,
 //		Period lessonPeriod, boolean isOnline, Location location
-		Lesson l1 = new Lesson("CZ2005",LessonType.LAB,WeekType.EVEN,
-				new Period(new Time(10,30,0), new Time(12,30,0), Day.MONDAY),
-				false, new Location("HWLAB2", "Hardware Lab 2", "N4-01B-05",
-						new Coordinate(12.241,415.342)));
+//		Lesson l1 = new Lesson("CZ2005",LessonType.LAB,WeekType.EVEN,
+//				new Period(new Time(10,30,0), new Time(12,30,0), Day.MONDAY),
+//				false, new Location("HWLAB3", "Hardware Lab 3", "N4-02B-05"));
+//		
+//		System.out.println(l1.toStringData());
+//		l1.writeDataToFile("Lesson.txt",false);
 		
-		System.out.println(l1.toStringData());
-		l1.writeDataToFile("Lesson.txt",false);
+		// Reading from file and storing as class object
+		try
+		{
+			Container.readLessonFile("Lesson.txt", Container.lessonList);
+		}catch(IOException e) {};
+		for (int i=0;i<Container.lessonList.size();i++)
+		{
+			System.out.println(Container.lessonList.get(i).getWeekly());
+			System.out.println(Container.lessonList.get(i).toString());
+			
+		}
 	}
-
-	public PreLoadedAccount() {
+	
+	/*public PreLoadedAccount() {
 		// Testing
 		
 		
@@ -443,6 +457,6 @@ public class PreLoadedAccount {
 
 		}
 
-	}
+	}*/
 
 }

@@ -9,6 +9,8 @@ public class Course
 {
 	// Course name - Eg. "Algorithms"
 	private String name;
+	// School - Eg. "SCSE"
+	String school;
 	// Course ID - Eg. "CZ2001"
 	private String courseID;
 	// Course AU - Eg. 3
@@ -19,9 +21,10 @@ public class Course
 	// Eg. AY 2020 Sem 1
 
 	// To preload the data to create the text file, can be removed later on
-	public Course(String name, String courseID, int courseAU, CoursePlan coursePlan)
+	public Course(String name, String school, String courseID, int courseAU, CoursePlan coursePlan)
 	{
 		this.name = name;
+		this.school = school;
 		this.courseID = courseID;
 		this.courseAU = courseAU;
 		this.coursePlan = coursePlan;
@@ -35,6 +38,16 @@ public class Course
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+
+	public String getSchool()
+	{
+		return this.school;
+	}
+
+	public void setSchool(String school)
+	{
+		this.school = school;
 	}
 
 	public String getCourseID()

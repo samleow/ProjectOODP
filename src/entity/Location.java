@@ -9,16 +9,13 @@ public class Location
 	private String nameExtended;
 	// Address - Eg. "N4-01B-05"
 	private String address;
-	// Coord - Coordinate details, may be used for navigation
-	private Coordinate coord;
 
 	// To preload the data to create the text file, can be removed later on
-	public Location(String name, String nameExtended, String address, Coordinate coord)
+	public Location(String name, String nameExtended, String address)
 	{
 		this.name = name;
 		this.nameExtended = nameExtended;
 		this.address = address;
-		this.coord = coord;
 	}
 
 	public String getName()
@@ -50,20 +47,10 @@ public class Location
 	{
 		this.address = address;
 	}
-
-	public Coordinate getCoord()
-	{
-		return this.coord;
-	}
-
-	public void setCoord(Coordinate coord)
-	{
-		this.coord = coord;
-	}
 	
 	@Override
 	public String toString()
 	{
-		return name + "," + nameExtended + "," + address + "," + coord;
+		return name + "~" + nameExtended + "~" + address;
 	}
 }

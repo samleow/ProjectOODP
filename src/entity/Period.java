@@ -63,6 +63,6 @@ public class Period
 	@Override
 	public String toString()
 	{
-		return startTime + "-" + endTime + "," + day;
+		return startTime + "," + endTime + "," + day;
 	}
 }
