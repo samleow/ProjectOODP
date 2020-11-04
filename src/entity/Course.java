@@ -10,7 +10,7 @@ public class Course
 	// Course name - Eg. "Algorithms"
 	private String name;
 	// School - Eg. "SCSE"
-	String school;
+	private String school;
 	// Course ID - Eg. "CZ2001"
 	private String courseID;
 	// Course AU - Eg. 3

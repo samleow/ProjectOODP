@@ -8,6 +8,7 @@ import entity.AllEnums.*;
 // Details of a particular lesson block
 public class Lesson implements IOData<Lesson>
 {
+	private int lessonID;
 	// Course ID - Eg. "CZ2001"
 	private String courseID;
 	// Type - Eg. LessonType.LAB
@@ -23,6 +24,7 @@ public class Lesson implements IOData<Lesson>
 	
 	public Lesson()
 	{
+		this.lessonID = 0;
 		this.courseID = "";
 		this.type = LessonType.DEFAULT;
 		this.weekly = WeekType.DEFAULT;
@@ -32,15 +34,20 @@ public class Lesson implements IOData<Lesson>
 	}
 	
 	// To preload the data to create the text file, can be removed later on
-	public Lesson(String courseID, LessonType type, WeekType weekly,
+	public Lesson(int lessonID, String courseID, LessonType type, WeekType weekly,
 			Period lessonPeriod, boolean isOnline, Location location)
 	{
+		this.lessonID = lessonID;
 		this.courseID = courseID;
 		this.type = type;
 		this.weekly = weekly;
 		this.lessonPeriod = lessonPeriod;
 		this.isOnline = isOnline;
 		this.location = location;
+	}
+	
+	public int getLessonID() {
+		return this.lessonID;
 	}
 
 	public String getCourseID()
@@ -106,7 +113,7 @@ public class Lesson implements IOData<Lesson>
 	@Override
 	public String toString()
 	{
-		return courseID + "|" + type + "|" + weekly + "|"
+		return lessonID + "|" + courseID + "|" + type + "|" + weekly + "|"
 				+ lessonPeriod + "|" + isOnline + "|" + location;
 	}
 	
@@ -133,6 +140,7 @@ public class Lesson implements IOData<Lesson>
 		// get individual 'fields' of the string separated by SEPARATOR
 		StringTokenizer star = new StringTokenizer(st , "|");	// pass in the string to the string tokenizer using delimiter ","
 
+		this.lessonID = Integer.parseInt(star.nextToken().trim());
 		this.courseID = star.nextToken().trim();
 		this.type = LessonType.valueOf(star.nextToken().trim());
 		this.weekly = WeekType.valueOf(star.nextToken().trim());
@@ -142,11 +150,12 @@ public class Lesson implements IOData<Lesson>
 		String[] pdata = pdatas.split(",");
 		String[] stdata = pdata[0].split(":");
 		String[] etdata = pdata[1].split(":");
+		
 		Time[] tdata = {null,null};
 		tdata[0] = new Time(Integer.parseInt(stdata[0]),Integer.parseInt(stdata[1]));
 		tdata[1] = new Time(Integer.parseInt(etdata[0]),Integer.parseInt(etdata[1]));
-		
 		Day day = Day.DEFAULT;
+		
 		day = Day.valueOf(pdata[2]);
 		this.lessonPeriod = new Period(tdata[0], tdata[1], day);
 		this.isOnline = false;

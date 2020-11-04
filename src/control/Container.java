@@ -14,6 +14,7 @@ public class Container
 	{}
 	
 	public static ArrayList<Lesson> lessonList = new ArrayList<Lesson>();
+	public static ArrayList<CoursePlan> coursePlanList = new ArrayList<CoursePlan>();
 	public static ArrayList<Student> studentList = new ArrayList<Student>();
 	
 	
@@ -21,13 +22,32 @@ public class Container
 	{
 		// read String from text file
 		ArrayList stringArray = (ArrayList)read(fileName);
-		ArrayList alr = new ArrayList() ;// to store Professors data
+		ArrayList alr = new ArrayList() ;// to store data
 
         for (int i = 0 ; i < stringArray.size() ; i++)
         {
         	if(!stringArray.get(i).toString().isBlank())
         	{
         		Lesson l = new Lesson();
+        		l.readDataFile((String)stringArray.get(i));
+        		list.add(l);
+        	}
+        }
+        
+        return true;
+    }
+	
+	public static boolean readCoursePlanFile(String fileName, ArrayList<CoursePlan> list) throws IOException
+	{
+		// read String from text file
+		ArrayList stringArray = (ArrayList)read(fileName);
+		ArrayList alr = new ArrayList() ;// to store data
+
+        for (int i = 0 ; i < stringArray.size() ; i++)
+        {
+        	if(!stringArray.get(i).toString().isBlank())
+        	{
+        		CoursePlan l = new CoursePlan();
         		l.readDataFile((String)stringArray.get(i));
         		list.add(l);
         	}
