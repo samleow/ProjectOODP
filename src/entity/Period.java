@@ -65,4 +65,9 @@ public class Period
 	{
 		return startTime + "," + endTime + "," + day;
 	}
+	
+	public String toTimeString()
+	{
+		return startTime + "," + endTime;
+	}
 }

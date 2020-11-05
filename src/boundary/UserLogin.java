@@ -2,7 +2,6 @@ package boundary;
 import java.io.IOException;
 import java.util.Scanner;
 
-import test_cases.PreLoadedAccount;
 import entity.LoginAccount;
 import control.Container;
 import control.HashingPassword;
@@ -14,24 +13,25 @@ public class UserLogin {
 
 		try
 		{
-			Container.readLessonFile("Lesson.txt", Container.lessonList);
-			Container.readCourseFile("Course.txt", Container.courseList);
-			Container.readCoursePlanFile("CoursePlan.txt", Container.coursePlanList);
-			Container.readCourseSlotsFile("CourseSlots.txt", Container.courseSlotsList);
-			Container.readStudentFile("StudentAccount.txt", Container.studentList);
-			Container.readAdminFile("Admin.txt", Container.adminList);
+			Container.readLessonFile(Container.LESSON_FILE, Container.lessonList);
+			Container.readCourseFile(Container.COURSE_FILE, Container.courseList);
+			Container.readCoursePlanFile(Container.COURSEPLAN_FILE, Container.coursePlanList);
+			Container.readCourseSlotsFile(Container.COURSESLOT_FILE, Container.courseSlotsList);
+			Container.readStudentFile(Container.STUDENT_FILE, Container.studentList);
+			Container.readAdminFile(Container.ADMIN_FILE, Container.adminList);
 		
 			// read all other files
-		}catch(IOException e) {};
+		}catch(IOException e)
+		{
+			System.out.println("Reading of datafiles failed!");
+		}
 		
 		// for checking
-//		for (int i=0;i<Container.lessonList.size();i++)
+//		for (int i=0;i<Container.studentList.size();i++)
 //		{
-//			System.out.println(Container.lessonList.get(i).getWeekly());
-//			System.out.println(Container.lessonList.get(i).getCourseID());
-//			System.out.println(Container.lessonList.get(i).getIsOnline());
-//			System.out.println("\n");
-//			
+//			System.out.println(Container.studentList.get(i));
+//			System.out.println(Container.studentList.get(i).getAccessPeriod());
+//			System.out.println(Container.studentList.get(i).getAccessDate());
 //		}
 		
 
@@ -40,7 +40,7 @@ public class UserLogin {
 		String userName, password;
 
 		System.out.println("Welcome to My Student Automated Registration System (MySTARS)");
-
+		
 		Scanner sc = new Scanner(System.in);
 		do {
 			System.out.println("(1) Student Login");
@@ -57,15 +57,17 @@ public class UserLogin {
 					userName = sc.next(); 
 					
 					System.out.print("Enter your Password: ");
-					password = sc.next(); // If want test password masking, comment this line
 					
-					// The bottom two lines is for masking password.
-					// Can't work now cause IDE can't support System.console()
-					char[] passMask = System.console().readPassword(); 
-					password = new String(passMask);
-					
+					if(Container.DEBUG_MODE)
+						password = sc.next();
+					else
+					{
+						// For masking password.
+						char[] passMask = System.console().readPassword(); 
+						password = new String(passMask);
+					}
+
 					password = HashingPassword.encryptThisString(password);
-					//System.out.println(password);
 					
 					if(LoginAccount.getFileInfo(userName, password))
 					{

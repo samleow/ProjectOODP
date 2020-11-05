@@ -23,6 +23,7 @@ public class Student extends LoginAccount implements IOData<Student>
 	// May need to change to all semesters
 	List<CoursePlan> coursePlanList;
 	// Access Period - The period Student can access the course application
+	// Only uses the Time of the period, Day is not used
 	Period accessPeriod;
 	// Access Date - The access date of the course application
 	Date accessDate;
@@ -41,6 +42,8 @@ public class Student extends LoginAccount implements IOData<Student>
 		this.maxAU = -1;
 		this.gender = Gender.DEFAULT;;
 		coursePlanList = new ArrayList<CoursePlan>();
+		this.accessPeriod = null;
+		this.accessDate = null;
 		exemptedCourseList = new ArrayList<String>();
 	}
 	
@@ -48,13 +51,16 @@ public class Student extends LoginAccount implements IOData<Student>
 	public Student(String name, String userName,
 			String password, AccountType type,
 			String matricNo, Gender gender,
-			String nationality, int maxAU)
+			String nationality, int maxAU,
+			Period accessPeriod, Date accessDate)
 	{
 		super(name, userName, password, type);
 		this.matricNo = matricNo;
 		this.nationality = nationality;
 		this.maxAU = maxAU;
 		this.gender = gender;
+		this.accessPeriod = accessPeriod;
+		this.accessDate = accessDate;
 		coursePlanList = new ArrayList<CoursePlan>();
 		exemptedCourseList = new ArrayList<String>();
 	}
@@ -118,6 +124,16 @@ public class Student extends LoginAccount implements IOData<Student>
 	{
 		this.accessPeriod = accessPeriod;
 	}
+
+	public Date getAccessDate()
+	{
+		return this.accessDate;
+	}
+
+	public void setAccessDate(Date accessDate)
+	{
+		this.accessDate = accessDate;
+	}
 	
 	public List<String> getExemptedCourseList()
 	{
@@ -141,7 +157,8 @@ public class Student extends LoginAccount implements IOData<Student>
 
 		return super.getName() + "|" + super.getUserName() + "|" + super.getType()
 		+ "|" +  matricNo  + "|" + nationality  + "|" +  maxAU + "|" + gender 
-		+ "|" + strList  + "|" + exemptedCourseList + "|" + super.getPassword();
+		+ "|" + strList  + "|" + exemptedCourseList + "|" + accessPeriod.toTimeString()
+		+ "|" + accessDate + "|" + super.getPassword();
 	}
 	
 	@Override
@@ -204,11 +221,22 @@ public class Student extends LoginAccount implements IOData<Student>
     			this.exemptedCourseList.add(exemptedCourseIDList.get(i).trim());
     		}
         }
+
+		String[] apdata  = star.nextToken().trim().split(",");
+		String[] stdata = apdata[0].split(":");
+		String[] etdata = apdata[1].split(":");
+		Time[] tdata = {null,null};
+		tdata[0] = new Time(Integer.parseInt(stdata[0]),Integer.parseInt(stdata[1]));
+		tdata[1] = new Time(Integer.parseInt(etdata[0]),Integer.parseInt(etdata[1]));
+		Day day = Day.DEFAULT;
+		this.accessPeriod = new Period(tdata[0], tdata[1], day);
+
+		String[] addata  = star.nextToken().trim().split(",");
+		this.accessDate = new Date(Integer.parseInt(addata[0]),Integer.parseInt(addata[1]),Integer.parseInt(addata[2]));
         
 		super.setPassword(star.nextToken().trim());
 		
 		return this;
-		
 		
 	}
 	
