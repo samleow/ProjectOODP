@@ -23,7 +23,7 @@ public class CourseSlots implements IOData<CourseSlots>
 	
 	public CourseSlots()
 	{
-		this.totalSlots = 0;
+		this.totalSlots = -1;
 		this.coursePlan = null;
 		this.waitingList = new ArrayList<String>();
 		this.slotList = new ArrayList<String>();

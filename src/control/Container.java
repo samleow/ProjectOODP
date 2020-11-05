@@ -18,7 +18,7 @@ public class Container
 	public static ArrayList<Student> studentList = new ArrayList<Student>();
 	public static ArrayList<Course> courseList = new ArrayList<Course>();
 	public static ArrayList<CourseSlots> courseSlotsList = new ArrayList<CourseSlots>();
-	
+
 	
 	public static boolean readLessonFile(String fileName, ArrayList<Lesson> list) throws IOException
 	{
@@ -89,6 +89,25 @@ public class Container
         	if(!stringArray.get(i).toString().isBlank())
         	{
         		CourseSlots l = new CourseSlots();
+        		l.readDataFile((String)stringArray.get(i));
+        		list.add(l);
+        	}
+        }
+        return true;
+    }
+	
+	
+	public static boolean readStudentFile(String fileName, ArrayList<Student> list) throws IOException
+	{
+		// read String from text file
+		ArrayList stringArray = (ArrayList)read(fileName);
+		ArrayList alr = new ArrayList() ;// to store data
+
+        for (int i = 0 ; i < stringArray.size() ; i++)
+        {
+        	if(!stringArray.get(i).toString().isBlank())
+        	{
+        		Student l = new Student();
         		l.readDataFile((String)stringArray.get(i));
         		list.add(l);
         	}

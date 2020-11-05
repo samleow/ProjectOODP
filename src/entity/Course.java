@@ -1,15 +1,7 @@
 package entity;
 
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.StringTokenizer;
-
+import java.io.*;
+import java.util.*;
 import control.Container;
 import entity.AllEnums.Day;
 
@@ -30,7 +22,7 @@ public class Course implements IOData<Course>
 		this.name = "";
 		this.school = "";
 		this.courseID = "";
-		this.courseAU = 0;
+		this.courseAU = -1;
 	}
 
 	// To preload the data to create the text file, can be removed later on

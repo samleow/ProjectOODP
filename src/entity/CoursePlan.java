@@ -23,9 +23,9 @@ public class CoursePlan implements IOData<CoursePlan>
 	
 	public CoursePlan()
 	{
-		this.courseID = "0";
-		this.groupID = "0";
-		this.index = 0;
+		this.courseID = "";
+		this.groupID = "";
+		this.index = -1;
 		this.course = null;
 		this.lessons = new ArrayList<Lesson>();		
 	}

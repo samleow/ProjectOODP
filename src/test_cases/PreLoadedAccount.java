@@ -1,23 +1,9 @@
 package test_cases;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.io.*;
-import entity.Course;
-import entity.CoursePlan;
-import entity.CourseSlots;
-import entity.IOData;
-import entity.Lesson;
-import entity.Location;
-import entity.Period;
-import entity.AllEnums.Day;
-import entity.AllEnums.LessonType;
-import entity.AllEnums.WeekType;
-import control.Container;
-import control.HashingPassword;
-import entity.AllEnums;
-import entity.Time;
+import entity.*;
+import entity.AllEnums.*;
+import control.*;
 
 public class PreLoadedAccount {
 
@@ -72,10 +58,10 @@ public class PreLoadedAccount {
 		{
 			Container.readCourseFile("Course.txt", Container.courseList);
 		}catch(IOException e) {};
-		for (int i=0;i<Container.courseList.size();i++)
-		{
-			//System.out.println(Container.courseList.get(i).toString());
-		}
+//		for (int i=0;i<Container.courseList.size();i++)
+//		{
+//			System.out.println(Container.courseList.get(i).toString());
+//		}
 		
 	
 		
@@ -103,10 +89,10 @@ public class PreLoadedAccount {
 		{
 			Container.readCoursePlanFile("CoursePlan.txt", Container.coursePlanList);
 		}catch(IOException e) {};
-		for (int i=0;i<Container.coursePlanList.size();i++)
-		{
-			//System.out.println(Container.coursePlanList.get(i).toString());
-		}
+//		for (int i=0;i<Container.coursePlanList.size();i++)
+//		{
+//			System.out.println(Container.coursePlanList.get(i).toString());
+//		}
 		
 		
 //		
@@ -132,19 +118,37 @@ public class PreLoadedAccount {
 //		cp1.writeDataToFile("CourseSlots.txt",false);
 		
 		
-		
-	
-		
+
+
 		try
 		{
 			Container.readCourseSlotsFile("CourseSlots.txt", Container.courseSlotsList);
 		}catch(IOException e) {};
-		for (int i=0;i<Container.courseSlotsList.size();i++)
-		{
-			System.out.println(Container.courseSlotsList.get(i).toString());
-			
-		}
+//		for (int i=0;i<Container.courseSlotsList.size();i++)
+//		{
+//			System.out.println(Container.courseSlotsList.get(i).toString());
+//			
+//		}
 		
+		
+		//Adding Student
+//		Student cp1 = new Student("Samuel","sleow007","123", AccountType.STUDENT, "U1912123C",Gender.MALE,
+//				"Singaporean", 23);
+//		
+//		//System.out.println(cp1.toString());
+//		cp1.writeDataToFile("StudentAccount.txt",false);
+		
+		
+
+		try
+		{
+			Container.readStudentFile("StudentAccount.txt", Container.studentList);
+		}catch(IOException e) {};
+//		for (int i=0;i<Container.studentList.size();i++)
+//		{
+//			System.out.println(Container.studentList.get(i).toString());
+//			
+//		}
 		
 
 	}

@@ -1,12 +1,8 @@
 package entity;
 
-import entity.AllEnums.AccountType;
+import entity.AllEnums.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 // Base class for any login accounts
 public class LoginAccount
@@ -20,6 +16,16 @@ public class LoginAccount
 	private String password;
 	// Type - Eg. AccountType.ADMIN
 	private AccountType type;
+	
+	
+	public LoginAccount()
+	{
+		this.name = "";
+		this.userName =  "";
+		this.password =  "";
+		this.type = AccountType.DEFAULT;
+	}
+	
 	
 	public LoginAccount(String name, String userName,
 			String password, AccountType type)

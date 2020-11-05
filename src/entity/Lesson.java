@@ -24,7 +24,7 @@ public class Lesson implements IOData<Lesson>
 	
 	public Lesson()
 	{
-		this.lessonID = 0;
+		this.lessonID = -1;
 		this.courseID = "";
 		this.type = LessonType.DEFAULT;
 		this.weekly = WeekType.DEFAULT;
