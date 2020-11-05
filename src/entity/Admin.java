@@ -18,16 +18,17 @@ public class Admin extends LoginAccount implements IOData
 	
 	private int adminID;
 	
-	// Admin Name - Eg Mr Tan
+	// Admin Name - Eg. "Mr Tan"
 	private String name;
 	
-	// The Username for the Admin - Eg tan123
+	// The Username for the Admin - Eg. "tan123"
 	private String userName;
 
-	// Account Type - Eg ADMIN
+	// Type - Eg. AccountType.ADMIN
 	private AccountType type;
 	
-	// Password must be in hashed format
+	// Password - Eg. "hfWFIOAFohiwfhaWAWOH902HWJ0912WADdawaW"
+	// Store password's hash value
 	private String password;
 	
 	public Admin() 
