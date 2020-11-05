@@ -1,2 +1,2 @@
-0|Mr Tan|tan123|ADMIN|p@ssw0rd
-1|Mr Lee|lee321|ADMIN|p@ssw0rd
+Mr Tan|tan123|ADMIN|p@ssw0rd
+Mr Lee|lee321|ADMIN|p@ssw0rd

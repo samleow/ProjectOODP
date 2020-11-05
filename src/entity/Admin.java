@@ -16,29 +16,9 @@ import entity.AllEnums.WeekType;
 public class Admin extends LoginAccount implements IOData
 {
 	
-	private int adminID;
-	
-	// Admin Name - Eg. "Mr Tan"
-	private String name;
-	
-	// The Username for the Admin - Eg. "tan123"
-	private String userName;
-
-	// Type - Eg. AccountType.ADMIN
-	private AccountType type;
-	
-	// Password - Eg. "hfWFIOAFohiwfhaWAWOH902HWJ0912WADdawaW"
-	// Store password's hash value
-	private String password;
-	
 	public Admin() 
 	{
 		super();
-		this.name = "";
-		this.userName = "";
-		this.password = "";
-		this.type = type.DEFAULT;
-		
 		
 	}
 	
@@ -48,68 +28,14 @@ public class Admin extends LoginAccount implements IOData
 	{
 		super(name, userName, password, type);
 		
-		this.name = name;
-		this.userName = userName;
-		this.password = password;
-		this.type = type;
-		
 	}
 
 
-	public int getAdminID() {
-		return adminID;
-	}
-
-
-	public void setAdminID(int adminID) {
-		this.adminID = adminID;
-	}
-
-
-	public String getName() {
-		return name;
-	}
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-	public String getUserName() {
-		return userName;
-	}
-
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-
-	public String getPassword() {
-		return password;
-	}
-
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-
-	public AccountType getType() {
-		return type;
-	}
-
-
-	public void setType(AccountType type) {
-		this.type = type;
-	}
-	
 	@Override
 	public String toString()
 	{
-		return adminID + "|" + name + "|" + userName + "|" + type + "|"
-				+ password ;
+		return super.getName() + "|" + super.getUserName() + "|" + super.getType() + "|"
+		+ super.getPassword();
 	}
 	
 	// this may be for Add new Student
@@ -136,11 +62,10 @@ public class Admin extends LoginAccount implements IOData
 		// get individual 'fields' of the string separated by SEPARATOR
 		StringTokenizer star = new StringTokenizer(st , "|");	// pass in the string to the string tokenizer using delimiter ","
 
-		this.adminID = Integer.parseInt(star.nextToken().trim());
-		this.name = star.nextToken().trim();
-		this.userName = star.nextToken().trim();
-		this.type = AccountType.valueOf(star.nextToken().trim());
-		this.password = star.nextToken().trim();
+		super.setName(star.nextToken().trim());
+		super.setUserName(star.nextToken().trim());
+		super.setType(AccountType.valueOf(star.nextToken().trim()));
+		super.setPassword(star.nextToken().trim()); 
 		
 		
 		return this;
