@@ -27,6 +27,7 @@ public class Student extends LoginAccount implements IOData<Student>
 	// Access Date - The access date of the course application
 	Date accessDate;
 	
+	List<String> exemptedCourseList;
 	// ADDITIONAL INFO NEEDED !!! Ignore first
 	// Need pursuing degree, current studying year, etc.
 	// for Admin to check what access period and date to give
@@ -40,6 +41,7 @@ public class Student extends LoginAccount implements IOData<Student>
 		this.maxAU = -1;
 		this.gender = Gender.DEFAULT;;
 		coursePlanList = new ArrayList<CoursePlan>();
+		exemptedCourseList = new ArrayList<String>();
 	}
 	
 	
@@ -54,6 +56,7 @@ public class Student extends LoginAccount implements IOData<Student>
 		this.maxAU = maxAU;
 		this.gender = gender;
 		coursePlanList = new ArrayList<CoursePlan>();
+		exemptedCourseList = new ArrayList<String>();
 	}
 
 	public String getMatricNo()
@@ -116,6 +119,16 @@ public class Student extends LoginAccount implements IOData<Student>
 		this.accessPeriod = accessPeriod;
 	}
 	
+	public List<String> getExemptedCourseList()
+	{
+		return this.exemptedCourseList;
+	}
+
+	public void setExemptedCourseList(List<String> exemptedCourseList)
+	{
+		this.exemptedCourseList = exemptedCourseList;
+	}
+	
 	public String toString()
 	{
 		List<Integer> strList = new ArrayList<Integer>();
@@ -123,10 +136,12 @@ public class Student extends LoginAccount implements IOData<Student>
 		{
 			strList.add(coursePlanList.get(i).getIndex());
 		}
+		
+		
 
 		return super.getName() + "|" + super.getUserName() + "|" + super.getType()
 		+ "|" +  matricNo  + "|" + nationality  + "|" +  maxAU + "|" + gender 
-		+ "|" + strList  + "|" + super.getPassword();
+		+ "|" + strList  + "|" + exemptedCourseList + "|" + super.getPassword();
 	}
 	
 	@Override
@@ -178,6 +193,18 @@ public class Student extends LoginAccount implements IOData<Student>
     		}
         }
 
+		String exemptedCourseID  = star.nextToken().trim();
+		exemptedCourseID = exemptedCourseID.substring(1, exemptedCourseID.length() - 1); //remove the first and last char, which are the [ ]
+        
+        if(!exemptedCourseID.isBlank()) {
+        	List<String> exemptedCourseIDList = Arrays.asList(exemptedCourseID.split(",",-1)); // store as [1,2,3,...]
+    		
+    		for(int i = 0;i < exemptedCourseIDList.size(); i++) 
+    		{
+    			this.exemptedCourseList.add(exemptedCourseIDList.get(i).trim());
+    		}
+        }
+        
 		super.setPassword(star.nextToken().trim());
 		
 		return this;

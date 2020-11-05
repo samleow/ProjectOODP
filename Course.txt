@@ -1,2 +1,6 @@
-Algorthim|SCSE|CZ2002|3
-Object Oriented Design and Programming|SCSE|CZ2002|3
+Algorthim|SCSE|CZ2001|3|CORE
+Object Oriented Design and Programming|SCSE|CZ2002|3|CORE
+Computer Graphics|SCSE|CZ2003|3|CORE
+Human Computer Interaction|SCSE|CZ2004|3|CORE
+Operating System|SCSE|CZ2005|3|CORE
+Software Engineering|SCSE|CZ2006|3|CORE

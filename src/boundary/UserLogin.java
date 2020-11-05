@@ -12,32 +12,27 @@ public class UserLogin {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		// Adding a lesson
-//		String courseID, LessonType type, WeekType weekly,
-//		Period lessonPeriod, boolean isOnline, Location location
-//		Lesson l1 = new Lesson("CZ2005",LessonType.LAB,WeekType.EVEN,
-//				new Period(new Time(10,30,0), new Time(12,30,0), Day.MONDAY),
-//				false, new Location("HWLAB3", "Hardware Lab 3", "N4-02B-05"));
-//		
-//		System.out.println(l1.toStringData());
-//		l1.writeDataToFile("Lesson.txt",false);
-		
-		// Reading from file and storing as class object
 		try
 		{
 			Container.readLessonFile("Lesson.txt", Container.lessonList);
+			Container.readCourseFile("Course.txt", Container.courseList);
+			Container.readCoursePlanFile("CoursePlan.txt", Container.coursePlanList);
+			Container.readCourseSlotsFile("CourseSlots.txt", Container.courseSlotsList);
+			Container.readStudentFile("StudentAccount.txt", Container.studentList);
+			Container.readAdminFile("Admin.txt", Container.adminList);
+		
 			// read all other files
 		}catch(IOException e) {};
 		
 		// for checking
-		for (int i=0;i<Container.lessonList.size();i++)
-		{
-			System.out.println(Container.lessonList.get(i).getWeekly());
-			System.out.println(Container.lessonList.get(i).getCourseID());
-			System.out.println(Container.lessonList.get(i).getIsOnline());
-			System.out.println("\n");
-			
-		}
+//		for (int i=0;i<Container.lessonList.size();i++)
+//		{
+//			System.out.println(Container.lessonList.get(i).getWeekly());
+//			System.out.println(Container.lessonList.get(i).getCourseID());
+//			System.out.println(Container.lessonList.get(i).getIsOnline());
+//			System.out.println("\n");
+//			
+//		}
 		
 
 		int choice;
@@ -66,8 +61,8 @@ public class UserLogin {
 					
 					// The bottom two lines is for masking password.
 					// Can't work now cause IDE can't support System.console()
-//					char[] passMask = System.console().readPassword(); 
-//					password = new String(passMask);
+					char[] passMask = System.console().readPassword(); 
+					password = new String(passMask);
 					
 					password = HashingPassword.encryptThisString(password);
 					//System.out.println(password);

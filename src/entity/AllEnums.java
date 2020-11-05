@@ -38,4 +38,12 @@ public class AllEnums {
 		WEEKLY
 	}
 	
+	public enum CourseType {
+		DEFAULT,
+		CORE,
+		UNRESTRICTED_ELECTIVE,
+		GER,
+		PRESCRIBED,
+	}
+	
 }

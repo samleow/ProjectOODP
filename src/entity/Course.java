@@ -3,7 +3,7 @@ package entity;
 import java.io.*;
 import java.util.*;
 import control.Container;
-import entity.AllEnums.Day;
+import entity.AllEnums.*;
 
 // Course along with CoursePlan assigned to Student
 public class Course implements IOData<Course>
@@ -16,6 +16,8 @@ public class Course implements IOData<Course>
 	private String courseID;
 	// Course AU - Eg. 3
 	private int courseAU;
+	
+	private CourseType courseType;
 
 	public Course()
 	{
@@ -23,15 +25,17 @@ public class Course implements IOData<Course>
 		this.school = "";
 		this.courseID = "";
 		this.courseAU = -1;
+		this.courseType = CourseType.DEFAULT;
 	}
 
 	// To preload the data to create the text file, can be removed later on
-	public Course(String name, String school, String courseID, int courseAU)
+	public Course(String name, String school, String courseID, int courseAU, CourseType courseType)
 	{
 		this.name = name;
 		this.school = school;
 		this.courseID = courseID;
 		this.courseAU = courseAU;
+		this.courseType = courseType;
 	}
 
 	public String getName()
@@ -74,9 +78,19 @@ public class Course implements IOData<Course>
 		this.courseAU = courseAU;
 	}
 	
+	public CourseType getCourseType()
+	{
+		return this.courseType;
+	}
+
+	public void setCourseType(CourseType courseType)
+	{
+		this.courseType = courseType;
+	}
+	
 	public String toString()
 	{
-		return name + "|" + school + "|" + courseID + "|" + courseAU;
+		return name + "|" + school + "|" + courseID + "|" + courseAU + "|" + courseType;
 	}
 	
 	@Override
@@ -106,6 +120,7 @@ public class Course implements IOData<Course>
 		this.school = star.nextToken().trim();
 		this.courseID = star.nextToken().trim();
 		this.courseAU = Integer.parseInt(star.nextToken().trim());
+		this.courseType = CourseType.valueOf(star.nextToken().trim());
 		return this;
 	}
 	
