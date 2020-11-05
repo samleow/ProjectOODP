@@ -1,13 +1,12 @@
 package control;
 
-
 import java.io.IOException;
 import java.util.*;
 
+import entity.Date;
+import entity.Period;
 import entity.Student;
-
 import test_cases.CreateStudentAccount;
-
 import entity.AllEnums.AccountType;
 import entity.AllEnums.Gender;
 
@@ -22,7 +21,7 @@ public class AdminControl {
 	public static void createStudAcc(String name, String userName,
 			String password, AccountType type,
 			String matricNo, Gender gender,
-			String nationality, int maxAU) // please help to add gender etc
+			String nationality, int maxAU, Period accessPeriod, Date accessDate ) // please help to add gender etc
 	{
     	CreateStudentAccount studDB = new CreateStudentAccount();
     	String filename = "StudentAccount.txt" ;
@@ -46,7 +45,7 @@ public class AdminControl {
 			Student addStud = new Student(name, userName,
 					password, type,
 					matricNo, gender,
-					nationality, maxAU);
+					nationality, maxAU,accessPeriod,accessDate);
 			
 			studList.add(addStud);
 			

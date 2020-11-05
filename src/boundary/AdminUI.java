@@ -83,9 +83,9 @@ public class AdminUI {
 					}
 					hashPassword = HashingPassword.encryptThisString(password);
 					
-					AdminControl.createStudAcc(name, matricNo,
-							hashPassword, AccountType.STUDENT,
-							matricNo, gender, nationality, maxAU );
+//					AdminControl.createStudAcc(name, matricNo,
+//							hashPassword, AccountType.STUDENT,
+//							matricNo, gender, nationality, maxAU );
 
 					break;
 				case 3: /* (3) Add/Update a course (course code, school, its index numbers and vacancy).*/

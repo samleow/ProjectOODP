@@ -94,13 +94,13 @@ public class CreateStudentAccount {
 					String  password = star.nextToken().trim();
 					
 					// create Student object from file data
-					Student student = new Student(name, matricNo,
-							password, AccountType.STUDENT,
-							matricNo, gender,
-							nationality, maxAU);
-					
-					// add to Professors list
-					studentList.add(student) ;
+//					Student student = new Student(name, matricNo,
+//							password, AccountType.STUDENT,
+//							matricNo, gender,
+//							nationality, maxAU);
+//					
+//					// add to Professors list
+//					studentList.add(student) ;
 				}
 				return studentList ;
 		}
