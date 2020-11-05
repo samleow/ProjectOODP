@@ -11,11 +11,13 @@ import entity.IOData;
 import entity.Lesson;
 import entity.Location;
 import entity.Period;
+import entity.AllEnums.AccountType;
 import entity.AllEnums.Day;
 import entity.AllEnums.LessonType;
 import entity.AllEnums.WeekType;
 import control.Container;
 import control.HashingPassword;
+import entity.Admin;
 import entity.AllEnums;
 import entity.Time;
 
@@ -69,6 +71,10 @@ public class PreLoadedAccount {
 			System.out.println(Container.coursePlanList.get(i).toString());
 			
 		}
+		
+		Admin addAmin = new Admin("Mr Tan", "tan123", "p@ssword", AccountType.ADMIN);
+		//System.out.println(addAmin.toString());
+		addAmin.writeDataToFile("Admin.txt",false);
 		
 		
 		try
