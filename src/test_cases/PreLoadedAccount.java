@@ -70,6 +70,19 @@ public class PreLoadedAccount {
 			
 		}
 		
+		
+		try
+		{
+			Container.readAdminFile(("Admin.txt"), Container.adminList);
+		}
+		catch(IOException e) {}
+		for (int i=0;i<Container.adminList.size();i++)
+		{
+//			System.out.println(Container.lessonList.get(i).getWeekly());
+			System.out.println(Container.adminList.get(i).toString());
+			
+		}
+		
 //		CoursePlan cp1 = new CoursePlan("CZ2001","SSP2",10012);
 //		for(int i = 0;i < Container.lessonList.size(); i++) {
 //			if(Container.lessonList.get(i).getLessonID() == 5) {

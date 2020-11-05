@@ -21,6 +21,9 @@ public class LoginAccount
 	// Type - Eg. AccountType.ADMIN
 	private AccountType type;
 	
+	// for testing use can delete <-- Added by Toby
+	public LoginAccount() {}
+	
 	public LoginAccount(String name, String userName,
 			String password, AccountType type)
 	{
