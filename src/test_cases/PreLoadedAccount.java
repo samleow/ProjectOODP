@@ -59,34 +59,93 @@ public class PreLoadedAccount {
 //			
 //		}
 		
+		
+		// Adding a Course
+//		Course courseobj = new Course("Algorthim","SCSE","CZ2002", 3);
+//		Course courseobj = new Course("Object Oriented Design and Programming","SCSE","CZ2002", 3);
+//		
+//		System.out.println(courseobj.toString());
+//		courseobj.writeDataToFile("Course.txt",false);
+		
+		
 		try
 		{
-			Container.readCoursePlanFile("CoursePlan.txt", Container.coursePlanList);
+			Container.readCourseFile("Course.txt", Container.courseList);
 		}catch(IOException e) {};
-		for (int i=0;i<Container.coursePlanList.size();i++)
+		for (int i=0;i<Container.courseList.size();i++)
 		{
-//			System.out.println(Container.lessonList.get(i).getWeekly());
-			System.out.println(Container.coursePlanList.get(i).toString());
-			
+			//System.out.println(Container.courseList.get(i).toString());
 		}
 		
-//		CoursePlan cp1 = new CoursePlan("CZ2001","SSP2",10012);
+	
+		
+	//Adding Course Plan
+//      CoursePlan cp1 = new CoursePlan("CZ2002","SS12",10209, new Course("Object Oriented Design and Programming","SCSE","CZ2002",3));
 //		for(int i = 0;i < Container.lessonList.size(); i++) {
-//			if(Container.lessonList.get(i).getLessonID() == 5) {
+//			if(Container.lessonList.get(i).getLessonID() == 2) {
 //				cp1.getLessons().add(Container.lessonList.get(i));
 //				//break;
 //			} 
-//			if(Container.lessonList.get(i).getLessonID() == 6) {
+//			if(Container.lessonList.get(i).getLessonID() == 3) {
 //				cp1.getLessons().add(Container.lessonList.get(i));
 //				//break;
 //			}
-//			if(Container.lessonList.get(i).getLessonID() == 7) {
+//			if(Container.lessonList.get(i).getLessonID() == 4) {
 //				cp1.getLessons().add(Container.lessonList.get(i));
 //			}
 //		}
 //		System.out.println(cp1.toString());
 //		cp1.writeDataToFile("CoursePlan.txt",false);
 //		
+//	
+//		
+		try
+		{
+			Container.readCoursePlanFile("CoursePlan.txt", Container.coursePlanList);
+		}catch(IOException e) {};
+		for (int i=0;i<Container.coursePlanList.size();i++)
+		{
+			//System.out.println(Container.coursePlanList.get(i).toString());
+		}
+		
+		
+//		
+//		//Adding Course Slots
+//		CourseSlots cp1 = new CourseSlots(25, new CoursePlan("CZ2002","SS12",10209, 
+//				new Course("Object Oriented Design and Programming","SCSE","CZ2002",3)));
+//		
+//		for(int i = 0;i < Container.lessonList.size(); i++) {
+//			if(Container.lessonList.get(i).getLessonID() == 2) {
+//				cp1.getCoursePlan().getLessons().add(Container.lessonList.get(i));
+//				//break;
+//			} 
+//			if(Container.lessonList.get(i).getLessonID() == 3) {
+//				cp1.getCoursePlan().getLessons().add(Container.lessonList.get(i));
+//				//break;
+//			}
+//			if(Container.lessonList.get(i).getLessonID() == 4) {
+//				cp1.getCoursePlan().getLessons().add(Container.lessonList.get(i));
+//			}
+//		}
+//		
+//		System.out.println(cp1.toString());
+//		cp1.writeDataToFile("CourseSlots.txt",false);
+		
+		
+		
+	
+		
+		try
+		{
+			Container.readCourseSlotsFile("CourseSlots.txt", Container.courseSlotsList);
+		}catch(IOException e) {};
+		for (int i=0;i<Container.courseSlotsList.size();i++)
+		{
+			System.out.println(Container.courseSlotsList.get(i).toString());
+			
+		}
+		
+		
 
 	}
 	

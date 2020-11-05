@@ -1,2 +1,2 @@
-Algorithm|CZ2001|3|[CZ2001|LAB|EVEN|10:30|12:30|MONDAY|false|HWLab2|Hardware Lab 2|N4-01B-05, CZ2001|LECTURE|EVEN|12:30|13:30|MONDAY|true|null|null|null, CZ2001|TUTORIAL|WEEKLY|12:30|13:30|WEDNESDAY|false|TR+33|Tutorial Room + 33|NS4-05-93, CZ2001|LECTURE|ODD|10:30|11:30|FRIDAY|true|null|null|null]
-Object Oriented Design and Programming|CZ2002|3|[CZ2002|LECTURE|WEEKLY|09:30|10:30|TUESDAY|true|null|null|null, CZ2002|LAB|WEEKLY|10:30|12:30|WEDNESDAY|false|SPL|Software Project Lab|NS4-05-93, CZ2002|TUTORIAL|WEEKLY|15:30|16:30|WEDNESDAY|false|LHN-TR+17|Learning Hub North Tutorial Room + 17|NS4-05-94, CZ2002|LECTURE|WEEKLY|11:30|12:30|FRIDAY|true|null|null|null]
+Algorthim|SCSE|CZ2002|3
+Object Oriented Design and Programming|SCSE|CZ2002|3

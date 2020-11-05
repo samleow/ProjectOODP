@@ -2,7 +2,6 @@ package entity;
 
 import java.io.*;
 import java.util.*;
-
 import control.Container;
 import entity.AllEnums.*;
 
@@ -15,25 +14,29 @@ public class CoursePlan implements IOData<CoursePlan>
 	// Group ID - Eg. "SSP2"
 	private String groupID;
 	// Index - Eg. 10192
+	// Assumption Index is unique among course plan
 	private int index;
 	// List of lessons - Stores the different lessons of this index
 	private List<Lesson> lessons;
+	//Course - Eg. "CZ2001"
+	private Course course;
 	
 	public CoursePlan()
 	{
 		this.courseID = "0";
 		this.groupID = "0";
 		this.index = 0;
-		this.lessons = new ArrayList<Lesson>();
-		
+		this.course = null;
+		this.lessons = new ArrayList<Lesson>();		
 	}
 
-	public CoursePlan(String courseID, String groupID, int index)
+	public CoursePlan(String courseID, String groupID, int index, Course course)
 	{
 		this.courseID = courseID;
 		this.groupID = groupID;
 		this.index = index;
-		this.lessons = new ArrayList<Lesson>();
+		this.course = course;
+		this.lessons = new ArrayList<Lesson>();	
 	}
 
 	public String getCourseID()
@@ -75,6 +78,15 @@ public class CoursePlan implements IOData<CoursePlan>
 	{
 		this.lessons = lessons;
 	}
+	public Course getCourse()
+	{
+		return this.course;
+	}
+
+	public void setCourse(Course course)
+	{
+		this.course = course;
+	}
 	
 	@Override
 	public String toString()
@@ -115,12 +127,24 @@ public class CoursePlan implements IOData<CoursePlan>
 		this.groupID = star.nextToken().trim();
 		this.index = Integer.parseInt(star.nextToken().trim());
 		
+		//Course
+		for(int i = 0; i < Container.courseList.size(); i++) 
+		{
+			if(Container.courseList.get(i).getCourseID() == courseID)
+			{
+				this.course = Container.courseList.get(i);
+				break;
+			}
+		}
+		
+		
 		String str  = star.nextToken().trim();
         str = str.substring(1, str.length() - 1); //remove the first and last char, which are the [ ]
         
         if(str.isBlank()) {
         	return this;
         }
+        
 
         List<String> lessonIDs = Arrays.asList(str.split(",",-1)); // store as [1,2,3,...]
 		
@@ -134,6 +158,7 @@ public class CoursePlan implements IOData<CoursePlan>
 				}
 			}
 		}
+
 		return this;
 	}
 	
