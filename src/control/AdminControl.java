@@ -13,9 +13,24 @@ import entity.AllEnums.Gender;
 import control.Container;
 
 public class AdminControl {
-	
-	public void setStudentAccessPeriod(int matricNo) {
+//	, Period period, Date date
+//	10:30,14:30,DEFAULT
+//	2020,7,25
+	public static void setStudentAccessPeriod(String matricNo, Period period, Date date) {
 		
+		for(int i = 0; i < Container.studentList.size(); i++) {
+			if(Container.studentList.get(i).getMatricNo().equals(matricNo)) {
+				//System.out.println(Container.studentList.get(i).getName());
+				Container.studentList.get(i).setAccessDate(date);
+				Container.studentList.get(i).setAccessPeriod(period);
+			}
+			if(i==0) {
+				Container.studentList.get(i).writeDataToFile("StudentAccount.txt",true);
+			} else {
+				Container.studentList.get(i).writeDataToFile("StudentAccount.txt",false);
+			}
+			
+		}
 	}
 	
 	public static void createStudAcc(String name, String userName,
@@ -42,15 +57,15 @@ public class AdminControl {
 			
 			
 			//create student obj to add into the studList
-			Student addStud = new Student(name, userName,
-					password, type,
-					matricNo, gender,
-					nationality, maxAU,accessPeriod,accessDate);
-			
-			studList.add(addStud);
-			
-			// resave the whole studList to the txt file
-			studDB.saveStudent(filename, studList);
+//			Student addStud = new Student(name, userName,
+//					password, type,
+//					matricNo, gender,
+//					nationality, maxAU);
+//			
+//			studList.add(addStud);
+//			
+//			// resave the whole studList to the txt file
+//			studDB.saveStudent(filename, studList);
 			
 		}
 		catch (IOException e) {
