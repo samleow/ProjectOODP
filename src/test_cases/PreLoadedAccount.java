@@ -78,7 +78,6 @@ public class PreLoadedAccount {
 		catch(IOException e) {}
 		for (int i=0;i<Container.adminList.size();i++)
 		{
-//			System.out.println(Container.lessonList.get(i).getWeekly());
 			System.out.println(Container.adminList.get(i).toString());
 			
 		}
