@@ -13,12 +13,25 @@ public class Container
 	private Container()
 	{}
 	
-	public static ArrayList<Lesson> lessonList = new ArrayList<Lesson>();
-	public static ArrayList<CoursePlan> coursePlanList = new ArrayList<CoursePlan>();
-	public static ArrayList<Student> studentList = new ArrayList<Student>();
-	public static ArrayList<Course> courseList = new ArrayList<Course>();
-	public static ArrayList<CourseSlots> courseSlotsList = new ArrayList<CourseSlots>();
-	public static ArrayList<Admin> adminList = new ArrayList<Admin>();
+	// Debug mode
+	public static final boolean DEBUG_MODE			= true;
+	
+	// Constant strings
+	public static final String DIVIDER				= "|";
+	public static final String ADMIN_FILE			= "Admin.txt";
+	public static final String COURSE_FILE			= "Course.txt";
+	public static final String COURSEPLAN_FILE		= "CoursePlan.txt";
+	public static final String COURSESLOT_FILE		= "CourseSlots.txt";
+	public static final String LESSON_FILE			= "Lesson.txt";
+	public static final String STUDENT_FILE			= "StudentAccount.txt";
+	
+	// Reference List
+	public static ArrayList<Lesson> lessonList				= new ArrayList<Lesson>();
+	public static ArrayList<CoursePlan> coursePlanList		= new ArrayList<CoursePlan>();
+	public static ArrayList<Student> studentList			= new ArrayList<Student>();
+	public static ArrayList<Course> courseList				= new ArrayList<Course>();
+	public static ArrayList<CourseSlots> courseSlotsList 	= new ArrayList<CourseSlots>();
+	public static ArrayList<Admin> adminList				= new ArrayList<Admin>();
 
 	
 	public static boolean readLessonFile(String fileName, ArrayList<Lesson> list) throws IOException

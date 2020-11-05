@@ -111,7 +111,7 @@ public class LoginAccount
 				String[] indivUserData = userInfo.split("\\|"); // <-- Java | have issue
 
 				// .equal() in java check only values while == check memory location
-				if (userName.equals(indivUserData[0]) && passwordHashed.equals(indivUserData[5])) // indivUserData[4]
+				if (userName.equals(indivUserData[0]) && passwordHashed.equals(indivUserData[11])) // indivUserData[5]
 																									// rmb to change to
 																									// different
 																									// posistion
