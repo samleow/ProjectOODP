@@ -34,6 +34,11 @@ public class Admin extends LoginAccount implements IOData
 	public Admin() 
 	{
 		super();
+		this.name = "";
+		this.userName = "";
+		this.password = "";
+		this.type = type.DEFAULT;
+		
 		
 	}
 	
