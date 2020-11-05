@@ -5,6 +5,7 @@ import entity.*;
 import entity.AllEnums.*;
 import control.*;
 
+
 public class PreLoadedAccount {
 
 	public static void main(String[] args) {
@@ -40,9 +41,7 @@ public class PreLoadedAccount {
 		}catch(IOException e) {};
 //		for (int i=0;i<Container.lessonList.size();i++)
 //		{
-//			//System.out.println(Container.lessonList.get(i).getWeekly());
 //			System.out.println(Container.lessonList.get(i).toString());
-//			
 //		}
 		
 		
@@ -64,9 +63,24 @@ public class PreLoadedAccount {
 //		}
 		
 	
+//	
+//		Admin addAmin = new Admin("Mr Tan", "tan123", "p@ssword", AccountType.ADMIN);
+//		//System.out.println(addAmin.toString());
+//		addAmin.writeDataToFile("Admin.txt",false);
+//		
 		
-	//Adding Course Plan
-//      CoursePlan cp1 = new CoursePlan("CZ2002","SS12",10209, new Course("Object Oriented Design and Programming","SCSE","CZ2002",3));
+		try
+		{
+			Container.readAdminFile(("Admin.txt"), Container.adminList);
+		}
+		catch(IOException e) {}
+//		for (int i=0;i<Container.adminList.size();i++)
+//		{
+//			System.out.println(Container.adminList.get(i).toString());
+//			
+//		}
+		
+//		CoursePlan cp1 = new CoursePlan("CZ2001","SSP2",10012);
 //		for(int i = 0;i < Container.lessonList.size(); i++) {
 //			if(Container.lessonList.get(i).getLessonID() == 2) {
 //				cp1.getLessons().add(Container.lessonList.get(i));
@@ -149,8 +163,6 @@ public class PreLoadedAccount {
 //			System.out.println(Container.studentList.get(i).toString());
 //			
 //		}
-		
-
 	}
 	
 	/*public PreLoadedAccount() {

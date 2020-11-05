@@ -18,6 +18,7 @@ public class Container
 	public static ArrayList<Student> studentList = new ArrayList<Student>();
 	public static ArrayList<Course> courseList = new ArrayList<Course>();
 	public static ArrayList<CourseSlots> courseSlotsList = new ArrayList<CourseSlots>();
+	public static ArrayList<Admin> adminList = new ArrayList<Admin>();
 
 	
 	public static boolean readLessonFile(String fileName, ArrayList<Lesson> list) throws IOException
@@ -112,6 +113,26 @@ public class Container
         		list.add(l);
         	}
         }
+        return true;
+    }
+	
+	
+	public static boolean readAdminFile(String fileName, ArrayList<Admin> list) throws IOException
+	{
+		// read String from text file
+		ArrayList stringArray = (ArrayList)read(fileName);
+		ArrayList alr = new ArrayList() ;// to store data
+
+        for (int i = 0 ; i < stringArray.size() ; i++)
+        {
+        	if(!stringArray.get(i).toString().isBlank())
+        	{
+        		Admin a = new Admin();
+        		a.readDataFile((String)stringArray.get(i));
+        		list.add(a);
+        	}
+        }
+        
         return true;
     }
 //	

@@ -17,7 +17,6 @@ public class LoginAccount
 	// Type - Eg. AccountType.ADMIN
 	private AccountType type;
 	
-	
 	public LoginAccount()
 	{
 		this.name = "";
