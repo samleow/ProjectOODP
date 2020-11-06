@@ -147,7 +147,6 @@ public class CoursePlan implements IOData<CoursePlan>
 			}
 		}
 		
-		
 		String str  = star.nextToken().trim();
         str = str.substring(1, str.length() - 1); //remove the first and last char, which are the [ ]
         

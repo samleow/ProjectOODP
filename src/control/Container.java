@@ -165,6 +165,21 @@ public class Container
 //        return true;
 //    }
 
+	// FIXME Currently got problem polymorphing List<Child_class> to List<IOData>
+	public static boolean overwriteFileWithData(String fileName, List<IOData> l)
+	{
+
+		for(int i = 0; i < l.size(); i++) {
+			if(i==0) {
+				l.get(i).writeDataToFile(fileName,true);
+			}
+			else {
+				l.get(i).writeDataToFile(fileName,false);
+			}
+		}
+		return true;
+	}
+	
 	/** Read the contents of the given file. */
 	  public static List read(String fileName) throws IOException {
 	    List data = new ArrayList() ;

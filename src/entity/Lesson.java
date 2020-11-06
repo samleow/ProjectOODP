@@ -8,6 +8,7 @@ import entity.AllEnums.*;
 // Details of a particular lesson block
 public class Lesson implements IOData<Lesson>
 {
+	// Lesson ID - Eg. 1
 	private int lessonID;
 	// Course ID - Eg. "CZ2001"
 	private String courseID;
