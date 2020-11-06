@@ -167,7 +167,7 @@ public class StudentControl {
 							break;
 						}
 		    		}
-		    		
+
 		    		//Overwriting the StudentAccount txt file with the updated data
 	//	    		for(int i = 0; i < Container.studentList.size(); i++) {
 	//	    			if(i==0) {
@@ -196,46 +196,139 @@ public class StudentControl {
 		}
 		
 		if(checkCoursesTook) {
+			
+			//Remove CoursePlan from List<CoursePlan> in Student class
     		for (int k=0;k < Container.coursePlanList.size();k++)
     		{
 				if(Container.coursePlanList.get(k).getIndex() == indexno) {
 					studentInfo.getCoursePlan().remove(Container.coursePlanList.get(k));
+					//overwriteCourseSlotsData();
 					break;
 				}
     		}
     		
+    		//Need to overwrite first to update the data
+    		//overwriteCourseSlotsData();
+    		
 //    		//Overwriting the StudentAccount txt file with the updated data
-    		for(int i = 0; i < Container.studentList.size(); i++) {
-    			if(i==0) {
-    				Container.studentList.get(i).writeDataToFile("StudentAccount.txt",true);
-    			}
-    			else {
-    				Container.studentList.get(i).writeDataToFile("StudentAccount.txt",false);
-    			}
-    		}
+//    		for(int i = 0; i < Container.studentList.size(); i++) {
+//    			if(i==0) {
+//    				Container.studentList.get(i).writeDataToFile("StudentAccount.txt",true);
+//    			}
+//    			else {
+//    				Container.studentList.get(i).writeDataToFile("StudentAccount.txt",false);
+//    			}
+//    		}
     		
     		//Remove Student Matric No from the CourseSlots slotList
     		for (int k=0;k < Container.courseSlotsList.size();k++)
     		{
     			if(Container.courseSlotsList.get(k).getCoursePlan().getIndex() == indexno) {
 					Container.courseSlotsList.get(k).getSlotList().remove(studentInfo.getMatricNo());
-					
+					//overwriteStudentAccountData();
+					break;
     			}
     		}
     		
-    		//Overwriting the CourseSlots txt file with the updated data
-    		for(int i = 0; i < Container.courseSlotsList.size(); i++) {
-    			if(i==0) {
-    				Container.courseSlotsList.get(i).writeDataToFile("CourseSlots.txt",true);
-    			}
-    			else {
-    				Container.courseSlotsList.get(i).writeDataToFile("CourseSlots.txt",false);
-    			}
+    		
+    		String student = "";
+    		
+    		for (int k=0;k < Container.courseSlotsList.size();k++)
+			{
+				//Check if got vacancy, if have then check waiting list got student a not
+				if(Container.courseSlotsList.get(k).getSlotList().size()<Container.courseSlotsList.get(k).getTotalSlots()) {
+					if(Container.courseSlotsList.get(k).getWaitingList().size() != 0) {
+						student = Container.courseSlotsList.get(k).getWaitingList().get(0);
+						break;
+					}
+					break;
+				}
+			}
+    		
+    		//Check 
+    		if(!student.equals("")) {
+    			//check if this student current course clashes with other courses he took
+    			
+    			
+    			
+    			//if no clashes then add his matric no in the slotList
+    			for (int k=0;k < Container.courseSlotsList.size();k++)
+				{
+    				if(Container.courseSlotsList.get(k).getCoursePlan().getIndex() == indexno) {
+						Container.courseSlotsList.get(k).getSlotList().add(student);
+						Container.courseSlotsList.get(k).getWaitingList().remove(0);
+						
+						//Overwrite the text file with the latest update data
+						//overwriteCourseSlotsData();
+						break;
+					}
+				}
+    			
+    			//add index no into List<CoursePlan> in Student class
+    			for (int k=0;k < Container.coursePlanList.size();k++)
+	    		{
+					if(Container.coursePlanList.get(k).getIndex() == indexno) {
+						studentInfo.getCoursePlan().add(Container.coursePlanList.get(k));
+						//overwriteStudentAccountData();
+						break;
+					}
+	    		}
+    			
+    			//A notification will be sent to the student
+    			//Student class need to have email 
+    			
+    			
+    			
+    			
+    			
+    			
+        		//Will update if the student on the waiting list can add the course
+//        		//Overwriting the CourseSlots txt file with the updated data
+    			//overwriteStudentAccountData();
+    			
+//        		for(int i = 0; i < Container.courseSlotsList.size(); i++) {
+//        			if(i==0) {
+//        				Container.courseSlotsList.get(i).writeDataToFile("CourseSlots.txt",true);
+//        			}
+//        			else {
+//        				Container.courseSlotsList.get(i).writeDataToFile("CourseSlots.txt",false);
+//        			}
+//        		}
+    			
+
+    		
     		}
     		System.out.println("Successfully Removed the Course \n");
 		}
 		System.out.println("You never take this Course \n");
 	}
+	
+	public static void overwriteCourseSlotsData()
+	{
+		//Overwriting the CourseSlots txt file with the updated data
+		for(int i = 0; i < Container.courseSlotsList.size(); i++) {
+			if(i==0) {
+				Container.courseSlotsList.get(i).writeDataToFile("CourseSlots.txt",true);
+			}
+			else {
+				Container.courseSlotsList.get(i).writeDataToFile("CourseSlots.txt",false);
+			}
+		}
+	}
+	
+	public static void overwriteStudentAccountData()
+	{
+		//Overwriting the StudentAccount txt file with the updated data
+		for(int i = 0; i < Container.studentList.size(); i++) {
+			if(i==0) {
+				Container.studentList.get(i).writeDataToFile("StudentAccount.txt",true);
+			}
+			else {
+				Container.studentList.get(i).writeDataToFile("StudentAccount.txt",false);
+			}
+		}
+	}
+
 	
 	
 	public static void displayCourse()
