@@ -2,6 +2,7 @@ package control;
 
 import java.io.IOException;
 
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -11,13 +12,24 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import entity.Date;
+
+import entity.Course;
+import entity.CoursePlan;
+import entity.CourseSlots;
+import entity.Date;
+import entity.Lesson;
+import entity.Location;
+
 import entity.Period;
 import entity.Student;
 
 import test_cases.CreateStudentAccount;
 
 import entity.AllEnums.AccountType;
+import entity.AllEnums.CourseType;
 import entity.AllEnums.Gender;
+import entity.AllEnums.LessonType;
+import entity.AllEnums.WeekType;
 
 import control.Container;
 
@@ -122,17 +134,19 @@ public class AdminControl {
 		return check;
 	}
 	
+	//Admin 2
 	public static void createStudAcc(String name, String userName,
 			String password, AccountType type,
 			String matricNo, Gender gender,
-			String nationality, int maxAU, Period accessPeriod, Date accessDate ) // please help to add gender etc
-	{
-    	CreateStudentAccount studDB = new CreateStudentAccount();
-    	String filename = "StudentAccount.txt" ;
 
-		try {
-			// read file containing Student records and store into a list
-			ArrayList studList = studDB.readStudents(filename);
+//			String nationality, int maxAU, Period accessPeriod, Date accessDate ) // please help to add gender etc
+//	{
+//    	CreateStudentAccount studDB = new CreateStudentAccount();
+//    	String filename = "StudentAccount.txt" ;
+//
+//		try {
+//			// read file containing Student records and store into a list
+//			ArrayList studList = studDB.readStudents(filename);
 			
 			//Displaying the current data in the StudentAccount.txt
 			/*
@@ -146,6 +160,47 @@ public class AdminControl {
 			
 			
 			//create student obj to add into the studList
+
+			String nationality, int maxAU, Period accessPeriod, Date accessDate)
+	{
+		
+		Student createStudAcc = new Student(name, userName, password, type, matricNo, gender, nationality, maxAU, accessPeriod, accessDate); 
+		
+		createStudAcc.writeDataToFile("StudentAccount.txt", false);
+		
+		try
+		{
+			Container.readStudentFile("StudentAccount.txt", Container.studentList);
+		}catch(IOException e) {};
+		for (int i=0 ;i<Container.studentList.size(); i++)
+		{
+			//System.out.println(Container.studentList.get(i).toString());
+			
+		}
+		
+		
+		
+		
+//    	CreateStudentAccount studDB = new CreateStudentAccount();
+//    	String filename = "StudentAccount.txt" ;
+//
+//		try {
+//			// read file containing Student records and store into a list
+//			ArrayList studList = studDB.readStudents(filename);
+//			
+//			//Displaying the current data in the StudentAccount.txt
+//			/*
+//			 * for (int i = 0 ; i < studList.size() ; i++) { Student student =
+//			 * (Student)studList.get(i); System.out.println("Matric No " +
+//			 * student.getMatricNo()); System.out.println("Name " + student.getName());
+//			 * System.out.println("Gender " + student.getGender());
+//			 * System.out.println("Nationality " + student.getNationality());
+//			 * System.out.println("Max AU " + student.getMaxAU()); }
+//			 */
+//			
+//			
+//			//create student obj to add into the studList
+
 //			Student addStud = new Student(name, userName,
 //					password, type,
 //					matricNo, gender,
@@ -155,14 +210,86 @@ public class AdminControl {
 //			
 //			// resave the whole studList to the txt file
 //			studDB.saveStudent(filename, studList);
-			
-		}
-		catch (IOException e) {
-			System.out.println("IOException > " + e.getMessage());
-		}
+
+
+//			
+//		}
+//		catch (IOException e) {
+//			System.out.println("IOException > " + e.getMessage());
+//		}
 		
 	}
 	
+	// Admin 3 Add course
+	public static void addCourse(String name, String school, String courseID, int courseAU, CourseType courseType)
+	{
+		//System.out.println(name);
+		
+		Course add_Course = new Course(name, school, courseID, courseAU, courseType);
+		add_Course.writeDataToFile("Course.txt", false);
+		
+
+		for (int i=0 ;i<Container.courseList.size(); i++)
+		{
+			System.out.println(Container.courseList.get(i).toString());
+			
+		}
+	}
+	
+	// Admin 3 Add index
+	public static void addIndex(String courseID, String groupID, int index)
+	{
+		
+		
+		CoursePlan add_index = new CoursePlan(courseID, groupID, index);
+		add_index.writeDataToFile("CoursePlan.txt", false);
+		
+
+		for (int i=0 ;i<Container.coursePlanList.size(); i++)
+		{
+			System.out.println(Container.coursePlanList.get(i).toString());
+
+			
+		}
+	}
+	
+	// Admin 3 Add Slots
+	public static void addSlots(int totalSlots, CoursePlan courseIndex)
+	{
+		
+		
+		CourseSlots add_Slots = new CourseSlots(totalSlots, courseIndex);
+		add_Slots.writeDataToFile("CourseSlots.txt", false);
+		
+
+		for (int i=0 ;i<Container.courseSlotsList.size(); i++)
+		{
+			System.out.println(Container.courseSlotsList.get(i).toString());
+			
+		}
+	}
+	
+	
+	
+	// Admin 3 Add Lesson
+	public static void addLessonLocation(int lessonID, String courseID, LessonType type, WeekType weekly,
+			Period lessonPeriod, boolean isOnline, Location location)
+	{
+		
+		
+		Lesson add_LessonLocation = new Lesson(lessonID, courseID, type, weekly,
+			lessonPeriod, isOnline, location);
+		add_LessonLocation.writeDataToFile("Lesson.txt", false);
+		
+
+		for (int i=0 ;i<Container.lessonList.size(); i++)
+		{
+			System.out.println(Container.lessonList.get(i).toString());
+			
+		}
+	}
+	
+
 	// Admin Feature: 4
 	public static int getNoOfSlotsByCourseIndex(int index) {
 		int availableSlots = -1;
@@ -248,4 +375,5 @@ public class AdminControl {
 		
 		return check;
 	}
+
 }
