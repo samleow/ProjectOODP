@@ -30,6 +30,12 @@ public class Period
 		else return true;
 	}
 	
+	public boolean clashWith(Period p)
+	{
+		return !( ( this.startTime.compareWith(p.startTime) < 0 && this.endTime.compareWith(p.startTime) <= 0 ) || 
+				( this.startTime.compareWith(p.startTime) >= 0 && this.endTime.compareWith(p.startTime) > 0 ) );
+	}
+	
 	public Time getStartTime()
 	{
 		return this.startTime;
