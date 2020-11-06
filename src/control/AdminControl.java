@@ -45,24 +45,49 @@ public class AdminControl {
 	
 	public static boolean checkIfValidDate(String strAccessDate) {
 		
-//		StringTokenizer star = new StringTokenizer(strAccessDate , "-");
+		StringTokenizer star = new StringTokenizer(strAccessDate , "-");
 //		Date accessDate = new Date(Integer.parseInt(star.nextToken().trim()),Integer.parseInt(star.nextToken().trim())
 //				,Integer.parseInt(star.nextToken().trim()));
-//		String year = star.nextToken().trim();
-//		String month = star.nextToken().trim();
-//		String day = star.nextToken().trim();
+		String year = star.nextToken().trim();
+		String month = star.nextToken().trim();
+		String day = star.nextToken().trim();
 //		boolean check = false;
+		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");  
 		LocalDateTime now = LocalDateTime.now();  
 		String currentDate = dtf.format(now);
-		int intCurrentDate = Integer.parseInt(currentDate.replace("-", ""));
+		StringTokenizer currentStar = new StringTokenizer(currentDate, "-");
+		
+		
+		String currentYear = currentStar.nextToken().trim();
+		String currentMonth = currentStar.nextToken().trim();
+		String currentDay = currentStar.nextToken().trim();
+		
+		if(currentMonth.length() < 2) {
+			currentMonth = "0" + currentMonth;
+        }
+        if(currentDay.length() < 2) {
+        	currentDay = "0" + currentDay;
+        }
+		
+		int intCurrentDate = Integer.parseInt(currentYear+currentMonth+currentDay);
+
 		
 		try {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             df.setLenient(false);
             df.parse(strAccessDate);
+
+            if(month.length() < 2) {
+            	month = "0" + month;
+            }
+            if(day.length() < 2) {
+            	day = "0" + day;
+            }
+            int intAccessDate = Integer.parseInt(year+month+day);
+            System.out.println(intAccessDate);
+            //int length = (int)(Math.log10(intAccessDate)+1);
             
-            int intAccessDate = Integer.parseInt(strAccessDate.replace("-", ""));
             if(intAccessDate < intCurrentDate) {
             	System.out.println("Date entered cannot be in the past.");
             	return false;
