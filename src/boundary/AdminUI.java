@@ -52,29 +52,45 @@ public class AdminUI {
 				choice = sc.nextInt();
 				switch (choice) {
 				case 1: /* (1) Edit student access period */
-					System.out.println("Enter student matric number: ");
+					System.out.println("\nEnter student matric number: ");
 					matricNo = sc.next();
-//					accessPeriod = new Period(new Time(9,30),new Time(12,30),Day.MONDAY);
-//					accessDate = new Date(2020,11,9);
-					System.out.println("Enter Access Date (e.g. YYYY-MM-DD): ");
-					String strAccessDate = sc.next();
-					StringTokenizer star = new StringTokenizer(strAccessDate , "-");
-					accessDate = new Date(Integer.parseInt(star.nextToken().trim()),Integer.parseInt(star.nextToken().trim())
-							,Integer.parseInt(star.nextToken().trim()));
-					
-					System.out.println("Enter starting time (e.g. HH:MM): ");
-					String strStartTime = sc.next();
-					StringTokenizer startT = new StringTokenizer(strStartTime , ":");
-					
-					System.out.println("Enter ending time (e.g. HH:MM): ");
-					String strEndTime = sc.next();
-					StringTokenizer endT = new StringTokenizer(strEndTime , ":");
-					
-					accessPeriod = new Period(new Time(Integer.parseInt(startT.nextToken().trim()),Integer.parseInt(startT.nextToken().trim())), 
-							new Time(Integer.parseInt(endT.nextToken().trim()),Integer.parseInt(endT.nextToken().trim())), Day.DEFAULT);
+					if(AdminControl.checkIfValidMatricNo(matricNo)) {
+						System.out.println("\nEnter Access Date (e.g. YYYY-MM-DD): ");
+						String strAccessDate = sc.next();
+						
+						if(AdminControl.checkIfValidDate(strAccessDate)) {
+							StringTokenizer star = new StringTokenizer(strAccessDate , "-");
+							accessDate = new Date(Integer.parseInt(star.nextToken().trim()),Integer.parseInt(star.nextToken().trim())
+									,Integer.parseInt(star.nextToken().trim()));
+							
+							System.out.println("\nEnter starting time (e.g. HH:MM): ");
+							String strStartTime = sc.next();
+							if(AdminControl.checkIfValidTime(strStartTime)) {
+								StringTokenizer startT = new StringTokenizer(strStartTime , ":");
+								System.out.println("\nEnter ending time (e.g. HH:MM): ");
+								String strEndTime = sc.next();
+								
+								if(AdminControl.checkIfValidTime(strEndTime)) {
+									StringTokenizer endT = new StringTokenizer(strEndTime , ":");
+									
+									accessPeriod = new Period(new Time(Integer.parseInt(startT.nextToken().trim()),Integer.parseInt(startT.nextToken().trim())), 
+											new Time(Integer.parseInt(endT.nextToken().trim()),Integer.parseInt(endT.nextToken().trim())), Day.DEFAULT);
 
-					AdminControl.setStudentAccessPeriod(matricNo,accessPeriod,accessDate);
-					System.out.println("Updated " + matricNo + " access period");
+									AdminControl.setStudentAccessPeriod(matricNo,accessPeriod,accessDate);
+									System.out.println("\nUpdated " + matricNo + " access period");
+								} else {
+									System.out.println("\nTime is invalid.");
+								}
+							} else {
+								System.out.println("\nTime is invalid.");
+							}
+						} else {
+							System.out.println("\nDate is invalid.");
+						}
+						
+					} else {
+						System.out.println("\nStudent does not exist currently.");
+					}
 					
 					break;
 				case 2: /* (2) Add a student (matric, name, number, gender, nationality, Max AU, Password  etc) */
@@ -120,10 +136,10 @@ public class AdminUI {
 					break;
 				case 4: /* (4) Check available slot for an index number (vacancy in a class)*/
 					System.out.println("\nEnter the index number for the Course you would like to check: ");
-					if(sc.hasNextInt()) { // weird error bug here
+					if(sc.hasNextInt()) { 
 						index = sc.nextInt();
 						if(AdminControl.checkIfValidIndex(index)) {
-							int availableSlots = AdminControl.checkNoOfSlotsByCourseIndex(index);
+							int availableSlots = AdminControl.getNoOfSlotsByCourseIndex(index);
 							//System.out.println("There are " + availableSlots + " available slots for index " + index + "\n");
 							System.out.println("\nIndex: " + index);
 							System.out.println("Available Slots: " + availableSlots + "\n");

@@ -1,12 +1,21 @@
 package control;
 
 import java.io.IOException;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.*;
 
 import entity.Date;
 import entity.Period;
 import entity.Student;
+
 import test_cases.CreateStudentAccount;
+
 import entity.AllEnums.AccountType;
 import entity.AllEnums.Gender;
 
@@ -16,6 +25,7 @@ public class AdminControl {
 //	, Period period, Date date
 //	10:30,14:30,DEFAULT
 //	2020,7,25
+	// Admin feature: 1
 	public static void setStudentAccessPeriod(String matricNo, Period period, Date date) {
 		
 		for(int i = 0; i < Container.studentList.size(); i++) {
@@ -31,6 +41,60 @@ public class AdminControl {
 			}
 			
 		}
+	}
+	
+	public static boolean checkIfValidDate(String strAccessDate) {
+		
+//		StringTokenizer star = new StringTokenizer(strAccessDate , "-");
+//		Date accessDate = new Date(Integer.parseInt(star.nextToken().trim()),Integer.parseInt(star.nextToken().trim())
+//				,Integer.parseInt(star.nextToken().trim()));
+//		String year = star.nextToken().trim();
+//		String month = star.nextToken().trim();
+//		String day = star.nextToken().trim();
+//		boolean check = false;
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");  
+		LocalDateTime now = LocalDateTime.now();  
+		String currentDate = dtf.format(now);
+		int intCurrentDate = Integer.parseInt(currentDate.replace("-", ""));
+		
+		try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            df.setLenient(false);
+            df.parse(strAccessDate);
+            
+            int intAccessDate = Integer.parseInt(strAccessDate.replace("-", ""));
+            if(intAccessDate < intCurrentDate) {
+            	System.out.println("Date entered cannot be in the past.");
+            	return false;
+            }
+            
+            return true;
+        } catch (Exception e) {
+            return false;
+		}
+		
+	}
+	
+	public static boolean checkIfValidTime(String time) {
+		boolean check = true;
+		if (!time.matches("^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")){
+//		     System.out.println("Invalid time string: " + time);
+			check= false;
+		} 
+		
+		return check;
+	}
+	
+	public static boolean checkIfValidMatricNo(String matricNo) {
+		boolean check = false;
+		for(int i = 0; i < Container.studentList.size(); i++) {
+			if(Container.studentList.get(i).getMatricNo().equals(matricNo)) {
+				check = true;
+				break;
+			}
+		}
+		
+		return check;
 	}
 	
 	public static void createStudAcc(String name, String userName,
@@ -75,7 +139,7 @@ public class AdminControl {
 	}
 	
 	// Admin Feature: 4
-	public static int checkNoOfSlotsByCourseIndex(int index) {
+	public static int getNoOfSlotsByCourseIndex(int index) {
 		int availableSlots = -1;
 		
 		for(int i = 0; i < Container.courseSlotsList.size(); i++) {
