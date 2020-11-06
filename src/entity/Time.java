@@ -13,14 +13,14 @@ public class Time
 	}
 	
 	// returns the time in an array
-	// in the order HR:MIN:SEC
+	// in the order HR:MIN
 	public int[] getTime()
 	{
 		return new int[] { this.hour, this.minute};
 	}
 	
 	// sets the time using an array
-	// in the order HR:MIN:SEC
+	// in the order HR:MIN
 	public void setTime(int[] time)
 	{
 		time[0] = this.hour;
@@ -43,7 +43,7 @@ public class Time
 				return -1;
 			else if (this.minute > time.getTime()[1])
 				return 1;
-			else 
+			else
 				return 0;
 		}
 	}
