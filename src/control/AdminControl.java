@@ -134,7 +134,7 @@ public class AdminControl {
 		return check;
 	}
 	
-	//Admin 2
+	//Admin Feature: 2
 	public static void createStudAcc(String name, String userName,
 			String password, AccountType type,
 			String matricNo, Gender gender,
@@ -161,23 +161,23 @@ public class AdminControl {
 			
 			//create student obj to add into the studList
 
-			String nationality, int maxAU, Period accessPeriod, Date accessDate)
-	{
-		
-		Student createStudAcc = new Student(name, userName, password, type, matricNo, gender, nationality, maxAU, accessPeriod, accessDate); 
-		
+			String nationality, int maxAU, Period accessPeriod, Date accessDate) {
+
+		Student createStudAcc = new Student(name, userName, password, type, matricNo, gender, nationality, maxAU,
+				accessPeriod, accessDate);
+
 		createStudAcc.writeDataToFile("StudentAccount.txt", false);
-		
-		try
-		{
+
+		try {
 			Container.readStudentFile("StudentAccount.txt", Container.studentList);
-		}catch(IOException e) {};
-		for (int i=0 ;i<Container.studentList.size(); i++)
-		{
-			//System.out.println(Container.studentList.get(i).toString());
-			
+		} 
+		catch (IOException e) {
 		}
 		
+		for (int i = 0; i < Container.studentList.size(); i++) {
+			// System.out.println(Container.studentList.get(i).toString());
+
+		}
 		
 		
 		
@@ -220,7 +220,7 @@ public class AdminControl {
 		
 	}
 	
-	// Admin 3 Add course
+	// Admin Feature: 3 Add course
 	public static void addCourse(String name, String school, String courseID, int courseAU, CourseType courseType)
 	{
 		//System.out.println(name);
@@ -236,7 +236,7 @@ public class AdminControl {
 		}
 	}
 	
-	// Admin 3 Add index
+	// Admin Feature: 3 Add index
 	public static void addIndex(String courseID, String groupID, int index)
 	{
 		
@@ -253,7 +253,7 @@ public class AdminControl {
 		}
 	}
 	
-	// Admin 3 Add Slots
+	// Admin Feature: 3 Add Slots
 	public static void addSlots(int totalSlots, CoursePlan courseIndex)
 	{
 		
@@ -271,7 +271,7 @@ public class AdminControl {
 	
 	
 	
-	// Admin 3 Add Lesson
+	// Admin Feature: 3 Add Lesson
 	public static void addLessonLocation(int lessonID, String courseID, LessonType type, WeekType weekly,
 			Period lessonPeriod, boolean isOnline, Location location)
 	{
@@ -289,6 +289,190 @@ public class AdminControl {
 		}
 	}
 	
+	
+	// Admin Feature: 3 Update Course Name
+	public static void setCourseName(String courseID, String courseName) {
+		
+		for(int i = 0; i < Container.courseList.size(); i++) {
+			if(Container.courseList.get(i).getCourseID().equals(courseID)) {
+//				System.out.println(Container.courseList.get(i).getName());
+//				System.out.println(i);
+				Container.courseList.get(i).setName(courseName);
+			}
+			if(i==0) {
+				Container.courseList.get(i).writeDataToFile("Course.txt",true);
+			} else {
+				Container.courseList.get(i).writeDataToFile("Course.txt",false);
+			}
+			
+		}
+	}
+	
+	
+	// Admin Feature: 3 Update School Name
+	public static void setSchoolName(String courseID, String schoolName) {
+		
+		for(int i = 0; i < Container.courseList.size(); i++) {
+			if(Container.courseList.get(i).getCourseID().equals(courseID)) {
+
+				Container.courseList.get(i).setSchool(schoolName);
+			}
+			if(i==0) {
+				Container.courseList.get(i).writeDataToFile("Course.txt",true);
+			} else {
+				Container.courseList.get(i).writeDataToFile("Course.txt",false);
+			}
+			
+		}
+	}
+	
+	
+	// Admin Feature: 3 Update CourseID 
+	public static void setCourseID(String courseID, String newCourseID) {
+		
+		// update Course.txt
+		for(int i = 0; i < Container.courseList.size(); i++) {
+			if(Container.courseList.get(i).getCourseID().equals(courseID)) {
+
+				Container.courseList.get(i).setCourseID(newCourseID);
+			}
+			if(i==0) {
+				Container.courseList.get(i).writeDataToFile("Course.txt",true);
+			} else {
+				Container.courseList.get(i).writeDataToFile("Course.txt",false);
+			}
+			
+		}
+		
+		// update CoursePlan.txt
+		for(int i = 0; i < Container.coursePlanList.size(); i++) {
+			if(Container.coursePlanList.get(i).getCourseID().equals(courseID)) {
+
+				Container.coursePlanList.get(i).setCourseID(newCourseID);
+			}
+			if(i==0) {
+				Container.coursePlanList.get(i).writeDataToFile("CoursePlan.txt",true);
+			} else {
+				Container.coursePlanList.get(i).writeDataToFile("CoursePlan.txt",false);
+			}
+			
+		}
+		
+		// update Lesson.txt
+		for(int i = 0; i < Container.lessonList.size(); i++) {
+			if(Container.lessonList.get(i).getCourseID().equals(courseID)) {
+
+				Container.lessonList.get(i).setCourseID(newCourseID);
+			}
+			if(i==0) {
+				Container.lessonList.get(i).writeDataToFile("Lesson.txt",true);
+			} else {
+				Container.lessonList.get(i).writeDataToFile("Lesson.txt",false);
+			}
+			
+		}
+	}
+	
+	// Admin Feature: 3 Update Course AU
+	public static void setCourseAU(String courseID, int newAU) {
+		
+		for(int i = 0; i < Container.courseList.size(); i++) {
+			if(Container.courseList.get(i).getCourseID().equals(courseID)) {
+
+				Container.courseList.get(i).setCourseAU(newAU);
+			}
+			if(i==0) {
+				Container.courseList.get(i).writeDataToFile("Course.txt",true);
+			} else {
+				Container.courseList.get(i).writeDataToFile("Course.txt",false);
+			}
+			
+		}
+	}
+	
+	// Admin Feature: 3 Update Course type
+	public static void setCourseType(String courseID, CourseType newCourseType) {
+		
+		for(int i = 0; i < Container.courseList.size(); i++) {
+			if(Container.courseList.get(i).getCourseID().equals(courseID)) {
+
+				Container.courseList.get(i).setCourseType(newCourseType);
+			}
+			if(i==0) {
+				Container.courseList.get(i).writeDataToFile("Course.txt",true);
+			} else {
+				Container.courseList.get(i).writeDataToFile("Course.txt",false);
+			}
+			
+		}
+	}
+	
+	
+	// Admin Feature: 3 Update CoursePlan GroupID
+	public static void setCoursePlanGroupID(int index, String newGroupID) {
+		
+		for(int i = 0; i < Container.coursePlanList.size(); i++) {
+			if(Container.coursePlanList.get(i).getIndex() == index) {
+
+				Container.coursePlanList.get(i).setGroupID(newGroupID);
+			}
+			if(i==0) {
+				Container.coursePlanList.get(i).writeDataToFile("CoursePlan.txt",true);
+			} else {
+				Container.coursePlanList.get(i).writeDataToFile("CoursePlan.txt",false);
+			}
+			
+		}
+	}
+	
+	
+	// Admin Feature: 3 Update CoursePlan Index
+	public static void setCoursePlanIndex(int index, int newIndex) {
+		
+		for(int i = 0; i < Container.coursePlanList.size(); i++) {
+			if(Container.coursePlanList.get(i).getIndex() == index) {
+
+				Container.coursePlanList.get(i).setIndex(newIndex);
+			}
+			if(i==0) {
+				Container.coursePlanList.get(i).writeDataToFile("CoursePlan.txt",true);
+			} else {
+				Container.coursePlanList.get(i).writeDataToFile("CoursePlan.txt",false);
+			}
+			
+		}
+		
+		// update CourseSlots.txt
+		for(int i = 0; i < Container.courseSlotsList.size(); i++) {
+			if(Container.courseSlotsList.get(i).getCoursePlan().getIndex() == index) {
+				//System.out.println("TEST");
+				Container.courseSlotsList.get(i).getCoursePlan().setIndex(newIndex);
+			}
+			if(i==0) {
+				Container.courseSlotsList.get(i).writeDataToFile("CourseSlots.txt",true);
+			} else {
+				Container.courseSlotsList.get(i).writeDataToFile("CourseSlots.txt",false);
+			}
+			
+		}
+	}
+	
+	// Admin Feature: 3 Update CoursePlan Lesson List
+	public static void setCoursePlanLesson(int index, List<Lesson> newLesson) {
+		
+		for(int i = 0; i < Container.coursePlanList.size(); i++) {
+			if(Container.coursePlanList.get(i).getIndex() == index) {
+
+				Container.coursePlanList.get(i).setLessons(newLesson);
+			}
+			if(i==0) {
+				Container.coursePlanList.get(i).writeDataToFile("CoursePlan.txt",true);
+			} else {
+				Container.coursePlanList.get(i).writeDataToFile("CoursePlan.txt",false);
+			}
+			
+		}
+	}
 
 	// Admin Feature: 4
 	public static int getNoOfSlotsByCourseIndex(int index) {

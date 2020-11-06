@@ -83,6 +83,8 @@ public class UserLogin {
 					break;
 				case 2: /* (2) Admin Login*/
 
+					sc.nextLine(); // Consume newline left-over
+					
 					// After login successful
 					AdminUI.adminLogin();
 					break;
