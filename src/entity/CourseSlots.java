@@ -28,6 +28,7 @@ public class CourseSlots implements IOData<CourseSlots>
 		this.waitingList = new ArrayList<String>();
 		this.slotList = new ArrayList<String>();
 	}
+	
 
 	public CourseSlots(int totalSlots, CoursePlan coursePlan)
 	{

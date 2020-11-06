@@ -6,6 +6,12 @@ public class Time
 	private int hour;
 	private int minute;
 	
+	public Time()
+	{
+		this.hour = -1;
+		this.minute = -1;
+	}
+	
 	public Time(int hour, int minute)
 	{
 		this.hour = hour;

@@ -10,6 +10,14 @@ public class Location
 	// Address - Eg. "N4-01B-05"
 	private String address;
 
+	// Default constructor for no location lesson
+	public Location()
+	{
+		this.name = "null";
+		this.nameExtended = "null";
+		this.address = "null";
+	}
+	
 	// To preload the data to create the text file, can be removed later on
 	public Location(String name, String nameExtended, String address)
 	{

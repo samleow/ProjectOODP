@@ -12,13 +12,21 @@ public class Period
 	private Time endTime;
 	// Day - The day of this period
 	private Day day;
-
+	
 	// To preload the data to create the text file, can be removed later on
 	public Period(Time startTime, Time endTime, Day day)
 	{
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.day = day;
+	}
+	
+	// For creating of student account
+	public Period(Time startTime, Time endTime)
+	{
+		this.startTime = startTime;
+		this.endTime = endTime;
+		//this.day = day;
 	}
 	
 	// Time given is within this period
@@ -28,6 +36,12 @@ public class Period
 				|| time.compareWith(this.endTime) == 1)
 			return false;
 		else return true;
+	}
+	
+	public boolean clashWith(Period p)
+	{
+		return !( ( this.startTime.compareWith(p.startTime) < 0 && this.endTime.compareWith(p.startTime) <= 0 ) || 
+				( this.startTime.compareWith(p.startTime) >= 0 && this.endTime.compareWith(p.startTime) > 0 ) );
 	}
 	
 	public Time getStartTime()

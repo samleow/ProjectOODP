@@ -29,6 +29,16 @@ public class CoursePlan implements IOData<CoursePlan>
 		this.course = null;
 		this.lessons = new ArrayList<Lesson>();		
 	}
+	
+	// Create another constructor by zh
+	public CoursePlan(String courseID, String groupID, int index)
+	{
+		this.courseID = courseID;
+		this.groupID = groupID;
+		this.index = index;
+		//this.course = course;
+		this.lessons = new ArrayList<Lesson>();	
+	}
 
 	public CoursePlan(String courseID, String groupID, int index, Course course)
 	{
@@ -136,7 +146,6 @@ public class CoursePlan implements IOData<CoursePlan>
 				break;
 			}
 		}
-		
 		
 		String str  = star.nextToken().trim();
         str = str.substring(1, str.length() - 1); //remove the first and last char, which are the [ ]

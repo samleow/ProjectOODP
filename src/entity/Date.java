@@ -7,6 +7,14 @@ public class Date
 	private int month;
 	private int day;
 	
+	// default constructor
+	public Date()
+	{
+		this.year = -1;
+		this.month = -1;
+		this.day = -1;
+	}
+	
 	public Date(int year, int month, int day)
 	{
 		this.year = year;
