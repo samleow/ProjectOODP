@@ -143,8 +143,6 @@ public class CourseSlots implements IOData<CourseSlots>
 				this.slotList.add(tempSlotList.get(i).trim());
 			}	
 	    }
-
-		
 		return this;
 	}
 	

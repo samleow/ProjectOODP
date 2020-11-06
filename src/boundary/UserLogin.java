@@ -5,6 +5,7 @@ import java.util.Scanner;
 import entity.LoginAccount;
 import control.Container;
 import control.HashingPassword;
+import control.StudentControl;
 
 public class UserLogin {
 
@@ -72,6 +73,7 @@ public class UserLogin {
 					if(LoginAccount.getFileInfo(userName, password))
 					{
 						// After login successful
+						StudentControl.saveStudentInfo(userName);
 						StudentUI.studentLogin();
 					}
 					else
