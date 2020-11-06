@@ -55,7 +55,6 @@ public class StudentControl {
 		
 
 		if(!checkCoursesTook && !checkCoursesExempted) {
-			
 			//Get the user input of indexno information
 			CoursePlan tempcourseplan = null;
 			for(int i = 0; i < Container.coursePlanList.size(); i++) {
@@ -158,8 +157,7 @@ public class StudentControl {
 //    			}
 //    		}
     		
-    		
-    		
+				//If not in waitingList then add the Course in the Student Class CoursePlan List
 				if(!waitingList) {
 					
 					//Adding the Index No
@@ -199,9 +197,6 @@ public class StudentControl {
 				checkCoursesTook = true;
 				break;
 			}
-		}
-		if(!checkCoursesTook) {
-			System.out.println("You never take this Course \n");
 		}
 		
 		if(checkCoursesTook) {
@@ -243,6 +238,7 @@ public class StudentControl {
     		}
     		System.out.println("Successfully Removed the Course \n");
 		}
+		System.out.println("You never take this Course \n");
 	}
 	
 	
@@ -268,17 +264,5 @@ public class StudentControl {
 					" | AU: " + AU  + " | Course Type: " + courseType + 
 					" | Index No: " + studentInfo.getCoursePlan().get(i).getIndex());
 		}
-		
-
-	}
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
+	}	
 }
