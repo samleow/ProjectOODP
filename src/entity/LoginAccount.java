@@ -87,7 +87,7 @@ public class LoginAccount
 		// Open a new connection to the file
 
 		// File listOfNames = new File("User.txt");
-		File listOfNames = new File("StudentAccount.txt");
+		//File listOfNames = new File("StudentAccount.txt");
 
 		try
 		{
@@ -95,7 +95,7 @@ public class LoginAccount
 			// FileReader reads character files
 			// BufferedReader reads as many characters as possible
 
-			BufferedReader getInfo = new BufferedReader(new FileReader(listOfNames));
+			BufferedReader getInfo = new BufferedReader(new FileReader("StudentAccount.txt"));
 
 			// Reads a whole line from the file and saves it in a String
 
@@ -109,9 +109,8 @@ public class LoginAccount
 				// Break lines into pieces
 
 				String[] indivUserData = userInfo.split("\\|"); // <-- Java | have issue
-
 				// .equal() in java check only values while == check memory location
-				if (userName.equals(indivUserData[0]) && passwordHashed.equals(indivUserData[5])) // indivUserData[4]
+				if (userName.equals(indivUserData[1]) && passwordHashed.equals(indivUserData[9])) // indivUserData[4]
 																									// rmb to change to
 																									// different
 																									// posistion

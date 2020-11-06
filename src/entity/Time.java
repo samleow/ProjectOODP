@@ -41,8 +41,10 @@ public class Time
 		{
 			if (this.minute < time.getTime()[1])
 				return -1;
-			else
+			else if (this.minute > time.getTime()[1])
 				return 1;
+			else 
+				return 0;
 		}
 	}
 	

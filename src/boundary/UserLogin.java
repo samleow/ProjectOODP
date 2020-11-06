@@ -6,6 +6,7 @@ import test_cases.PreLoadedAccount;
 import entity.LoginAccount;
 import control.Container;
 import control.HashingPassword;
+import control.StudentControl;
 
 public class UserLogin {
 
@@ -61,8 +62,8 @@ public class UserLogin {
 					
 					// The bottom two lines is for masking password.
 					// Can't work now cause IDE can't support System.console()
-					char[] passMask = System.console().readPassword(); 
-					password = new String(passMask);
+					//char[] passMask = System.console().readPassword(); 
+					//password = new String(passMask);
 					
 					password = HashingPassword.encryptThisString(password);
 					//System.out.println(password);
@@ -70,6 +71,7 @@ public class UserLogin {
 					if(LoginAccount.getFileInfo(userName, password))
 					{
 						// After login successful
+						StudentControl.saveStudentInfo(userName);
 						StudentUI.studentLogin();
 					}
 					else

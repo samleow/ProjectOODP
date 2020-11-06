@@ -99,12 +99,12 @@ public class Student extends LoginAccount implements IOData<Student>
 		this.maxAU = maxAU;
 	}
 
-	public List<CoursePlan> getCourses()
+	public List<CoursePlan> getCoursePlan()
 	{
 		return this.coursePlanList;
 	}
 
-	public void setCourses(List<CoursePlan> coursePlan)
+	public void setCoursePlan(List<CoursePlan> coursePlan)
 	{
 		this.coursePlanList = coursePlan;
 	}
@@ -137,8 +137,6 @@ public class Student extends LoginAccount implements IOData<Student>
 			strList.add(coursePlanList.get(i).getIndex());
 		}
 		
-		
-
 		return super.getName() + "|" + super.getUserName() + "|" + super.getType()
 		+ "|" +  matricNo  + "|" + nationality  + "|" +  maxAU + "|" + gender 
 		+ "|" + strList  + "|" + exemptedCourseList + "|" + super.getPassword();
@@ -155,7 +153,7 @@ public class Student extends LoginAccount implements IOData<Student>
 		}
 		catch(IOException e)
 		{
-			System.out.println("File for overwriting Course data not found!");
+			System.out.println("File for overwriting Student data not found!");
 			return false;
 		}
 	}
@@ -219,6 +217,8 @@ public class Student extends LoginAccount implements IOData<Student>
 		// copy ori into temp
 		// modify temp
 		// save into ori
+		
+		
 		
 		// for now lessons don't need update
 		
