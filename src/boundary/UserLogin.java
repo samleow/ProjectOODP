@@ -72,7 +72,7 @@ public class UserLogin {
 					if(LoginAccount.getFileInfo(userName, password))
 					{
 						// After login successful
-						StudentUI.studentLogin();
+						StudentUI.studentLogin(userName);
 					}
 					else
 					{
