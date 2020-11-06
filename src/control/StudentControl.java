@@ -26,8 +26,6 @@ public class StudentControl {
 		boolean timetableClash = false;
 		boolean waitingList = false;
 		
-		System.out.println(studentInfo);
-		
 		//Check whether user got take the Course already a not
 		for(int i = 0; i < studentInfo.getCoursePlan().size(); i++) {
 			if(studentInfo.getCoursePlan().get(i).getIndex() == indexno) {
@@ -63,8 +61,6 @@ public class StudentControl {
 					break;
 				}
 			}
-			System.out.println(studentInfo.getCoursePlan());
-			
 			
 			//Check for same Lesson ID 
 			outerloop:

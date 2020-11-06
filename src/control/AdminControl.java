@@ -196,8 +196,8 @@ public class AdminControl {
 		List<List<String>> listOfListString = new ArrayList<>();
 		
 		for(int i = 0; i < Container.studentList.size(); i++) {
-			for(int k = 0; k < Container.studentList.get(i).getCourses().size();k++) {
-				if (Container.studentList.get(i).getCourses().get(k).getIndex() == index) {
+			for(int k = 0; k < Container.studentList.get(i).getCoursePlan().size();k++) {
+				if (Container.studentList.get(i).getCoursePlan().get(k).getIndex() == index) {
 					listString.add(Container.studentList.get(i).getName());
 					listString.add(Container.studentList.get(i).getGender().toString());
 					listString.add(Container.studentList.get(i).getNationality());
@@ -220,8 +220,8 @@ public class AdminControl {
 		List<List<String>> listOfListString = new ArrayList<>();
 		
 		for(int i = 0; i < Container.studentList.size(); i++) {
-			for(int k = 0; k < Container.studentList.get(i).getCourses().size();k++) {
-				if(Container.studentList.get(i).getCourses().get(k).getCourseID().equals(courseID)) {
+			for(int k = 0; k < Container.studentList.get(i).getCoursePlan().size();k++) {
+				if(Container.studentList.get(i).getCoursePlan().get(k).getCourseID().equals(courseID)) {
 					listString.add(Container.studentList.get(i).getName());
 					listString.add(Container.studentList.get(i).getGender().toString());
 					listString.add(Container.studentList.get(i).getNationality());
