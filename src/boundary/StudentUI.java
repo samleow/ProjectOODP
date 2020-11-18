@@ -53,12 +53,19 @@ public class StudentUI {
 				case 4: /* (4) Check Vacancies Available*/
 					boolean op4 = true;
 					do {
+						// TODO Break loop if user input escape character
 						indexno = -1;
 						System.out.println("(4) Check Vacancies Available");
-						System.out.print("Enter course index no. to check: ");
+						System.out.printf("Enter course index no. to check (%d to return): ",Container.BREAK_MENU);
 						if (sc.hasNextInt())
 						{
 							indexno = sc.nextInt();
+							
+							if(indexno==Container.BREAK_MENU)
+							{
+								op4=false;
+								break;
+							}
 							for (int i=0;i<Container.courseSlotsList.size();i++)
 							{
 								if(Container.courseSlotsList.get(i).getCoursePlan().getIndex()==indexno)
@@ -87,13 +94,19 @@ public class StudentUI {
 				case 5: /* (5) Change Index Number of Course*/
 					boolean op5 = true;
 					do {
+						// TODO Break loop if user input escape character
 						indexno = -1;
 						cIndex = -1;
 						System.out.println("(5) Change Index Number of Course");
-						System.out.print("Enter course index no. to change: ");
+						System.out.printf("Enter course index no. to change (%d to return): ",Container.BREAK_MENU);
 						if (sc.hasNextInt())
 						{
 							cIndex = sc.nextInt();
+							if(cIndex==Container.BREAK_MENU)
+							{
+								op5=false;
+								break;
+							}
 							
 							CoursePlan currCP = null;
 							for(int i=0;i<StudentControl.studentInfo.getCoursePlan().size();i++)
@@ -111,10 +124,15 @@ public class StudentUI {
 								continue;
 							}
 
-							System.out.print("Enter new course index no.: ");
+							System.out.printf("Enter new course index no. (%d to return): ",Container.BREAK_MENU);
 							if (sc.hasNextInt())
 							{
 								indexno = sc.nextInt();
+								if(indexno==Container.BREAK_MENU)
+								{
+									op5=false;
+									break;
+								}
 								
 								if(currCP.getIndex()==indexno)
 								{
@@ -183,7 +201,7 @@ public class StudentUI {
 									}
 								}
 								
-								// TODO: update and save to file here
+								// TODO: update and save to file here (overwriteFileWithData)
 								// Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
 								
 								// TODO: print out stuff according to manual
@@ -226,14 +244,20 @@ public class StudentUI {
 					String userName, password;
 					Student st2;
 					do {
+						// TODO Break loop if user input escape character
 						indexno = -1;
 						cIndex = -1;
 						st2 = null;
 						System.out.println("(6) Swop Index Number with Another Student");
-						System.out.print("Enter course index no. to swop: ");
+						System.out.printf("Enter course index no. to swop (%d to return): ", Container.BREAK_MENU);
 						if (sc.hasNextInt())
 						{
 							cIndex = sc.nextInt();
+							if(cIndex==Container.BREAK_MENU)
+							{
+								op6=false;
+								break;
+							}
 
 							CoursePlan currCP = null;
 							for(int i=0;i<StudentControl.studentInfo.getCoursePlan().size();i++)
@@ -252,8 +276,18 @@ public class StudentUI {
 							}
 
 							System.out.println("\tFOR PEER (STUDENT 2):");
-							System.out.printf("Please enter user name: ");
+							System.out.printf("Please enter user name (%d to return): ", Container.BREAK_MENU);
 							userName = sc.next();
+							if(userName.equals(""+Container.BREAK_MENU))
+							{
+								op6=false;
+								break;
+							}
+							else if(userName.equals(StudentControl.studentInfo.getUserName()))
+							{
+								System.out.println("You have entered the same username as the one currently logged in!");
+								continue;
+							}
 							
 							System.out.print("Enter your Password: ");
 							
@@ -292,10 +326,15 @@ public class StudentUI {
 								continue;
 							}
 
-							System.out.print("Enter student 2's course index no. to swop: ");
+							System.out.printf("Enter student 2's course index no. to swop (%d to return): ", Container.BREAK_MENU);
 							if (sc.hasNextInt())
 							{
 								indexno = sc.nextInt();
+								if(indexno==Container.BREAK_MENU)
+								{
+									op6=false;
+									break;
+								}
 								
 								if(cIndex == indexno)
 								{
