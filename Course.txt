@@ -1,9 +1,6 @@
-Algorithm|SCSE|CZ2001|6|CORE
-Object Oriented Design and Programming|SCSE|CZ2002|6|CORE
-Computer Graphics|SCSE|CZ2003|6|CORE
-Human Computer Interaction|SCSE|CZ2004|6|CORE
-Operating System|SCSE|CZ2005|6|CORE
-Software Engineering|SCSE|CZ2006|6|CORE
-LALA algo|BABA|CZ5001|4|UNRESTRICTED_ELECTIVE
-Super Mario|SCSE|CZ6001|3|GER
-
+Algorithm|SCSE|CZ2001|3|CORE
+Object Oriented Design and Programming|SCSE|CZ2002|3|CORE
+Computer Graphics|SCSE|CZ2003|3|CORE
+Human Computer Interaction|SCSE|CZ2004|3|CORE
+Operating System|SCSE|CZ2005|3|CORE
+Software Engineering|SCSE|CZ2006|3|CORE
