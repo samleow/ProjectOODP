@@ -4,3 +4,6 @@ Computer Graphics|SCSE|CZ2003|6|CORE
 Human Computer Interaction|SCSE|CZ2004|6|CORE
 Operating System|SCSE|CZ2005|6|CORE
 Software Engineering|SCSE|CZ2006|6|CORE
+LALA algo|BABA|CZ5001|4|UNRESTRICTED_ELECTIVE
+Super Mario|SCSE|CZ6001|3|GER
+

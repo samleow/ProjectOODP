@@ -40,8 +40,12 @@ public class Period
 	
 	public boolean clashWith(Period p)
 	{
+		// days are different
+		if(!this.day.equals(p.day))
+			return false;
+		
 		return !( ( this.startTime.compareWith(p.startTime) < 0 && this.endTime.compareWith(p.startTime) <= 0 ) || 
-				( this.startTime.compareWith(p.startTime) >= 0 && this.endTime.compareWith(p.startTime) > 0 ) );
+				( this.startTime.compareWith(p.endTime) >= 0 && this.endTime.compareWith(p.endTime) > 0 ) );
 	}
 	
 	public Time getStartTime()

@@ -16,7 +16,8 @@ public class Container
 	// Debug mode
 	public static final boolean DEBUG_MODE			= true;
 	
-	// Constant strings
+	// Constants
+	public static final int BREAK_MENU				= -1;
 	public static final String DIVIDER				= "|";
 	public static final String ADMIN_FILE			= "Admin.txt";
 	public static final String COURSE_FILE			= "Course.txt";
@@ -165,7 +166,7 @@ public class Container
 //        return true;
 //    }
 
-	// FIXME Currently got problem polymorphing List<Child_class> to List<IOData>
+	// FIXME S: Currently got problem polymorphing List<Child_class> to List<IOData>
 	public static boolean overwriteFileWithData(String fileName, List<IOData> l)
 	{
 

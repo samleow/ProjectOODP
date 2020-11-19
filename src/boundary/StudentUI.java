@@ -55,10 +55,16 @@ public class StudentUI {
 					do {
 						indexno = -1;
 						System.out.println("(4) Check Vacancies Available");
-						System.out.print("Enter course index no. to check: ");
+						System.out.printf("Enter course index no. to check (%d to return): ",Container.BREAK_MENU);
 						if (sc.hasNextInt())
 						{
 							indexno = sc.nextInt();
+							
+							if(indexno==Container.BREAK_MENU)
+							{
+								op4=false;
+								break;
+							}
 							for (int i=0;i<Container.courseSlotsList.size();i++)
 							{
 								if(Container.courseSlotsList.get(i).getCoursePlan().getIndex()==indexno)
@@ -90,10 +96,15 @@ public class StudentUI {
 						indexno = -1;
 						cIndex = -1;
 						System.out.println("(5) Change Index Number of Course");
-						System.out.print("Enter course index no. to change: ");
+						System.out.printf("Enter course index no. to change (%d to return): ",Container.BREAK_MENU);
 						if (sc.hasNextInt())
 						{
 							cIndex = sc.nextInt();
+							if(cIndex==Container.BREAK_MENU)
+							{
+								op5=false;
+								break;
+							}
 							
 							CoursePlan currCP = null;
 							for(int i=0;i<StudentControl.studentInfo.getCoursePlan().size();i++)
@@ -111,10 +122,15 @@ public class StudentUI {
 								continue;
 							}
 
-							System.out.print("Enter new course index no.: ");
+							System.out.printf("Enter new course index no. (%d to return): ",Container.BREAK_MENU);
 							if (sc.hasNextInt())
 							{
 								indexno = sc.nextInt();
+								if(indexno==Container.BREAK_MENU)
+								{
+									op5=false;
+									break;
+								}
 								
 								if(currCP.getIndex()==indexno)
 								{
@@ -143,8 +159,8 @@ public class StudentUI {
 									continue;
 								}
 								
-								// TODO need check for clash in timetable here [WIP]
-								// TODO need check if weekly type didn't clash yet
+								// TODO S: need check for clash in timetable here [WIP]
+								// TODO S: need check if weekly type didn't clash yet
 //								outerloop:
 //								for(int i=0;i<StudentControl.studentInfo.getCoursePlan().size();i++)
 //								{
@@ -166,7 +182,7 @@ public class StudentUI {
 //									}
 //								}
 								
-								// TODO need check for valid slots here
+								// TODO S: need check for valid slots here
 								
 								// student update
 								StudentControl.studentInfo.getCoursePlan().remove(currCP);
@@ -183,12 +199,12 @@ public class StudentUI {
 									}
 								}
 								
-								// TODO: update and save to file here
+								// TODO S: update and save to file here (overwriteFileWithData)
 								// Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
 								
-								// TODO: print out stuff according to manual
+								// TODO S: print out stuff according to manual
 								
-								// TODO: do proper checks on courseslots after proper test cases population
+								// TODO S: do proper checks on courseslots after proper test cases population
 								if(Container.DEBUG_MODE)
 								{
 									System.out.println(StudentControl.studentInfo.getCoursePlan());
@@ -230,10 +246,15 @@ public class StudentUI {
 						cIndex = -1;
 						st2 = null;
 						System.out.println("(6) Swop Index Number with Another Student");
-						System.out.print("Enter course index no. to swop: ");
+						System.out.printf("Enter course index no. to swop (%d to return): ", Container.BREAK_MENU);
 						if (sc.hasNextInt())
 						{
 							cIndex = sc.nextInt();
+							if(cIndex==Container.BREAK_MENU)
+							{
+								op6=false;
+								break;
+							}
 
 							CoursePlan currCP = null;
 							for(int i=0;i<StudentControl.studentInfo.getCoursePlan().size();i++)
@@ -252,8 +273,18 @@ public class StudentUI {
 							}
 
 							System.out.println("\tFOR PEER (STUDENT 2):");
-							System.out.printf("Please enter user name: ");
+							System.out.printf("Please enter user name (%d to return): ", Container.BREAK_MENU);
 							userName = sc.next();
+							if(userName.equals(""+Container.BREAK_MENU))
+							{
+								op6=false;
+								break;
+							}
+							else if(userName.equals(StudentControl.studentInfo.getUserName()))
+							{
+								System.out.println("You have entered the same username as the one currently logged in!");
+								continue;
+							}
 							
 							System.out.print("Enter your Password: ");
 							
@@ -292,10 +323,15 @@ public class StudentUI {
 								continue;
 							}
 
-							System.out.print("Enter student 2's course index no. to swop: ");
+							System.out.printf("Enter student 2's course index no. to swop (%d to return): ", Container.BREAK_MENU);
 							if (sc.hasNextInt())
 							{
 								indexno = sc.nextInt();
+								if(indexno==Container.BREAK_MENU)
+								{
+									op6=false;
+									break;
+								}
 								
 								if(cIndex == indexno)
 								{
@@ -319,7 +355,7 @@ public class StudentUI {
 									continue;
 								}
 								
-								// TODO Check if new indexes clashes with timetable for both students
+								// TODO S: Check if new indexes clashes with timetable for both students
 								// Dont need to check if slot have vacancy
 								
 								System.out.println("Swopping ...");
@@ -345,11 +381,11 @@ public class StudentUI {
 									}
 								}
 								
-								// TODO: update and save to file here
+								// TODO S: update and save to file here
 								
-								// TODO: print out stuff according to manual
+								// TODO S: print out stuff according to manual
 								
-								// TODO: do proper checks on courseslots after proper test cases population
+								// TODO S: do proper checks on courseslots after proper test cases population
 								if(Container.DEBUG_MODE)
 								{
 									System.out.println(StudentControl.studentInfo.getCoursePlan());
