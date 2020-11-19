@@ -21,6 +21,8 @@ public class StudentControl {
 
 	public static void addCourse(int indexno)
 	{
+		//validation of checking only integer 
+		
 		boolean checkCoursesTook = false;
 		boolean checkCoursesExempted = false;
 		boolean timetableClash = false;
@@ -88,6 +90,14 @@ public class StudentControl {
 								|| (studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime()) == 1
 								&& studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime()) == -1)
 								
+								//Check if this.getStartTime is it in between startTime and EndTime of another object
+								|| (studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime()) == 1
+								&& studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime()) == -1)
+								
+								//Check if this.getEndTime is it in between startTime and EndTime of another object
+								|| (studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime()) == 1
+								&& studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime()) == -1)
+								
 								//If same end time and studentInfo startTime > temp startTime
 								|| (studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime()) == 1
 								&& studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().toString().equals(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime().toString()))
@@ -99,24 +109,33 @@ public class StudentControl {
 								//Check if starTime and endTime equals
 								|| (studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().toString().equals(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime().toString())
 								&& studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().toString().equals(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime().toString())
-								)){
+								)) {
 									System.out.println("Break at Start time and End time");
 									System.out.println("Displaying TimeTable Clashes:");
 									
 									//Display Start Time
 									System.out.println(studentInfo.getCoursePlan().get(i).getLessons().get(j));
-//									int start = studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime());
-//									System.out.println("Start : " + start);
+									int start = studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime());
+									System.out.println("Start : " + start);
 									//Display End Time
 									System.out.println(tempcourseplan.getLessons().get(z));
-//									int end = studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime());
-//									System.out.println("end : " + end);
+									int end = studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime());
+									System.out.println("end : " + end);
 									System.out.println("TimeTable Clashes. Failed to add the Course\n");
 									timetableClash = true;
 									break outerloop;
 									
 								}
-							}
+								
+								//Display Start Time
+								System.out.println(studentInfo.getCoursePlan().get(i).getLessons().get(j));
+								int start = studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime());
+								System.out.println("Start : " + start);
+								//Display End Time
+								System.out.println(tempcourseplan.getLessons().get(z));
+								int end = studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime());
+								System.out.println("end : " + end);
+							}	
 						}
 					}
 				}
@@ -141,18 +160,9 @@ public class StudentControl {
 						}
 					}
 				}
-			
-    		
-    		//Overwriting the CourseSlots txt file with the updated data
-//    		for(int i = 0; i < Container.courseSlotsList.size(); i++) {
-//    			if(i==0) {
-//    				Container.courseSlotsList.get(i).writeDataToFile("CourseSlots.txt",true);
-//    			}
-//    			else {
-//    				Container.courseSlotsList.get(i).writeDataToFile("CourseSlots.txt",false);
-//    			}
-//    		}
-    		
+				
+				//overwriteCourseSlotsData();
+
 				//If not in waitingList then add the Course in the Student Class CoursePlan List
 				if(!waitingList) {
 					
@@ -163,20 +173,12 @@ public class StudentControl {
 							// i dk why adding the course plan into the studentInfo
 							// Can also add into the container studentList???
 							// MAGIC???
+							//It is link and reference
 							studentInfo.getCoursePlan().add(Container.coursePlanList.get(k));
+							//overwriteStudentAccountData();
 							break;
 						}
 		    		}
-
-		    		//Overwriting the StudentAccount txt file with the updated data
-	//	    		for(int i = 0; i < Container.studentList.size(); i++) {
-	//	    			if(i==0) {
-	//	    				Container.studentList.get(i).writeDataToFile("StudentAccount.txt",true);
-	//	    			}
-	//	    			else {
-	//	    				Container.studentList.get(i).writeDataToFile("StudentAccount.txt",false);
-	//	    			}
-	//	    		}
 		    		System.out.println("Successfully Added the Course \n");
 				}
 			}
