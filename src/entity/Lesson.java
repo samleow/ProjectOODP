@@ -47,6 +47,20 @@ public class Lesson implements IOData<Lesson>
 		this.location = location;
 	}
 	
+	public boolean clashWith(Lesson l)
+	{
+		// check if weekly type have clashes
+		if(!(this.weekly.equals(WeekType.WEEKLY) || l.getWeekly().equals(WeekType.WEEKLY) || 
+				this.weekly.equals(l.getWeekly())))
+			return false;
+		
+		// check if lesson periods clash
+		if(this.lessonPeriod.clashWith(l.getLessonPeriod()))
+			return true;
+		
+		return false;
+	}
+	
 	public int getLessonID() {
 		return this.lessonID;
 	}

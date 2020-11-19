@@ -260,5 +260,30 @@ public class StudentControl {
 					" | AU: " + AU  + " | Course Type: " + courseType + 
 					" | Index No: " + studentInfo.getCoursePlan().get(i).getIndex());
 		}
-	}	
+	}
+	
+	public static boolean timetableClash(Student s, CoursePlan oldCP, CoursePlan newCP)
+	{
+		Lesson l1,l2;
+		for(int i=0;i<s.getCoursePlan().size();i++)
+		{
+			if(s.getCoursePlan().get(i).equals(oldCP))
+				continue;
+			
+			for(int j=0;j<s.getCoursePlan().get(i).getLessons().size();j++)
+			{
+				l1 = s.getCoursePlan().get(i).getLessons().get(j);
+				for(int k=0;k<newCP.getLessons().size();k++)
+				{
+					l2 = newCP.getLessons().get(k);
+					if(l1.clashWith(l2))
+					{
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
 }
