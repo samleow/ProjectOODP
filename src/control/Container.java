@@ -166,7 +166,7 @@ public class Container
 //        return true;
 //    }
 
-	// FIXME S: Currently got problem polymorphing List<Child_class> to List<IOData> [CHECK IF WORKING!]
+	// FIXME S: [CHECK IF WORKING!] Currently got problem polymorphing List<Child_class> to List<IOData>
 	public static boolean overwriteFileWithData(String fileName, ArrayList<? extends IOData> l)
 	{
 

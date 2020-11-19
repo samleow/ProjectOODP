@@ -160,14 +160,14 @@ public class StudentUI {
 									System.out.println("Course index no. does not match with course!");
 									continue;
 								}
-								// TODO S: need check for valid slots here [CHECK IF WORKING]
+								// TODO S: [CHECK IF WORKING] need check for valid slots here
 								else if(newCS.getTotalSlots() == newCS.getSlotList().size())
 								{
 									System.out.println("No vacancy for new course index!");
 									continue;
 								}
 								
-								// TODO S: check clash in timetable (can extract into reusable method) [CHECK IF WORKING]
+								// TODO S: [CHECK IF WORKING] check clash in timetable (can extract into reusable method)
 								if(StudentControl.timetableClash(StudentControl.studentInfo, currCP, newCS.getCoursePlan()))
 								{
 									System.out.println("Course index no. clashes with timetable!");
@@ -185,20 +185,17 @@ public class StudentUI {
 									if(Container.courseSlotsList.get(i).getCoursePlan().getIndex()==cIndex)
 									{
 										Container.courseSlotsList.get(i).getSlotList().remove(StudentControl.studentInfo.getMatricNo());
-										// TODO S: Update course slot waiting list -> move user into courseslot to fill vacancy
+										// TODO S: [WIP HALTED] Update course slot waiting list -> move user into courseslot to fill vacancy
 										break;
 									}
 								}
 								
-								// TODO S: update and save to file here (overwriteFileWithData)
-								// FIXME S: overwriteFileWithData casting List type [CHECK IF WORKING!]
+								// TODO S: [CHECK IF WORKING] update and save to file here (overwriteFileWithData)
 								if(Container.DEBUG_MODE) // TODO S: remove DEBUG_MODE limitation for saving to txt file
 								{
 									Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
 									Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
 								}
-								
-								// TODO S: print out stuff according to manual
 								
 								// TODO S: do proper checks on courseslots after proper test cases population
 								if(Container.DEBUG_MODE)
@@ -352,8 +349,17 @@ public class StudentUI {
 									continue;
 								}
 								
-								// TODO S: Check if new indexes clashes with timetable for both students [WIP]
-								// Dont need to check if slot have vacancy
+								// TODO S: [CHECK IF WORKING] Check if new indexes clashes with timetable for both students
+								if(StudentControl.timetableClash(StudentControl.studentInfo, currCP, newCP))
+								{
+									System.out.println("Course index no. clashes with timetable for Student " + StudentControl.studentInfo.getUserName() + "!");
+									continue;
+								}
+								else if(StudentControl.timetableClash(st2, newCP, currCP))
+								{
+									System.out.println("Course index no. clashes with timetable for Student " + st2.getUserName() + "!");
+									continue;
+								}
 								
 								System.out.println("Swopping ...");
 								
@@ -378,15 +384,12 @@ public class StudentUI {
 									}
 								}
 								
-								// TODO S: update and save to file here
-								// FIXME S: overwriteFileWithData casting List type [CHECK IF WORKING!]
+								// TODO S: [CHECK IF WORKING] update and save to file here
 								if(Container.DEBUG_MODE) // TODO S: remove DEBUG_MODE limitation for saving to txt file
 								{
 									Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
 									Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
 								}
-								
-								// TODO S: print out stuff according to manual
 								
 								// TODO S: do proper checks on courseslots after proper test cases population
 								if(Container.DEBUG_MODE)
