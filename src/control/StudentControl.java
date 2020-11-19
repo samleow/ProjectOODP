@@ -81,65 +81,25 @@ public class StudentControl {
 							tempcourseplan.getLessons().get(z).getWeekly().equals(WeekType.WEEKLY) ||
 							(studentInfo.getCoursePlan().get(i).getLessons().get(j).getWeekly().equals(tempcourseplan.getLessons().get(z).getWeekly())))){
 
-							//Timetable Checking
-							//Check day if same then do a comparison else timetableclash = false
-							if(studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getDay().equals(tempcourseplan.getLessons().get(z).getLessonPeriod().getDay())) {
-								//Compare start time and end time
-								if((studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime()) == -1
-								&& studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime()) == 1)
-								|| (studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime()) == 1
-								&& studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime()) == -1)
-								
-								//Check if this.getStartTime is it in between startTime and EndTime of another object
-								|| (studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime()) == 1
-								&& studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime()) == -1)
-								
-								//Check if this.getEndTime is it in between startTime and EndTime of another object
-								|| (studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime()) == 1
-								&& studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime()) == -1)
-								
-								//If same end time and studentInfo startTime > temp startTime
-								|| (studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime()) == 1
-								&& studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().toString().equals(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime().toString()))
-								
-								//If same start time and studentInfo endTime > temp endTime
-								|| (studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime()) == 1
-								&& studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().toString().equals(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime().toString()))
-								
-								//Check if starTime and endTime equals
-								|| (studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().toString().equals(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime().toString())
-								&& studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().toString().equals(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime().toString())
-								)) {
-									System.out.println("Break at Start time and End time");
-									System.out.println("Displaying TimeTable Clashes:");
-									
-									//Display Start Time
-									System.out.println(studentInfo.getCoursePlan().get(i).getLessons().get(j));
-									int start = studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime());
-									System.out.println("Start : " + start);
-									//Display End Time
-									System.out.println(tempcourseplan.getLessons().get(z));
-									int end = studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime());
-									System.out.println("end : " + end);
-									System.out.println("TimeTable Clashes. Failed to add the Course\n");
-									timetableClash = true;
-									break outerloop;
-									
-								}
-								
+							//Check 
+							if(studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().clashWith(tempcourseplan.getLessons().get(z).getLessonPeriod())) {
+								System.out.println("Displaying TimeTable Clashes:");
 								//Display Start Time
 								System.out.println(studentInfo.getCoursePlan().get(i).getLessons().get(j));
 								int start = studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime());
-								System.out.println("Start : " + start);
 								//Display End Time
 								System.out.println(tempcourseplan.getLessons().get(z));
 								int end = studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime());
-								System.out.println("end : " + end);
-							}	
-						}
+								System.out.println("TimeTable Clashes. Failed to add the Course\n");
+								timetableClash = true;
+								break outerloop;
+								
+							}
+						}	
 					}
 				}
 			}
+		}
 			
 			
 			if(!timetableClash) {
@@ -183,7 +143,7 @@ public class StudentControl {
 				}
 			}
 		}
-	}
+	//}
 	
 	public static void dropCourse(int indexno)
 	{
