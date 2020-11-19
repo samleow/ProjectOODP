@@ -53,7 +53,6 @@ public class StudentUI {
 				case 4: /* (4) Check Vacancies Available*/
 					boolean op4 = true;
 					do {
-						// TODO Break loop if user input escape character
 						indexno = -1;
 						System.out.println("(4) Check Vacancies Available");
 						System.out.printf("Enter course index no. to check (%d to return): ",Container.BREAK_MENU);
@@ -94,7 +93,6 @@ public class StudentUI {
 				case 5: /* (5) Change Index Number of Course*/
 					boolean op5 = true;
 					do {
-						// TODO Break loop if user input escape character
 						indexno = -1;
 						cIndex = -1;
 						System.out.println("(5) Change Index Number of Course");
@@ -161,8 +159,8 @@ public class StudentUI {
 									continue;
 								}
 								
-								// TODO need check for clash in timetable here [WIP]
-								// TODO need check if weekly type didn't clash yet
+								// TODO S: need check for clash in timetable here [WIP]
+								// TODO S: need check if weekly type didn't clash yet
 //								outerloop:
 //								for(int i=0;i<StudentControl.studentInfo.getCoursePlan().size();i++)
 //								{
@@ -184,7 +182,7 @@ public class StudentUI {
 //									}
 //								}
 								
-								// TODO need check for valid slots here
+								// TODO S: need check for valid slots here
 								
 								// student update
 								StudentControl.studentInfo.getCoursePlan().remove(currCP);
@@ -201,12 +199,12 @@ public class StudentUI {
 									}
 								}
 								
-								// TODO: update and save to file here (overwriteFileWithData)
+								// TODO S: update and save to file here (overwriteFileWithData)
 								// Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
 								
-								// TODO: print out stuff according to manual
+								// TODO S: print out stuff according to manual
 								
-								// TODO: do proper checks on courseslots after proper test cases population
+								// TODO S: do proper checks on courseslots after proper test cases population
 								if(Container.DEBUG_MODE)
 								{
 									System.out.println(StudentControl.studentInfo.getCoursePlan());
@@ -244,7 +242,6 @@ public class StudentUI {
 					String userName, password;
 					Student st2;
 					do {
-						// TODO Break loop if user input escape character
 						indexno = -1;
 						cIndex = -1;
 						st2 = null;
@@ -358,7 +355,7 @@ public class StudentUI {
 									continue;
 								}
 								
-								// TODO Check if new indexes clashes with timetable for both students
+								// TODO S: Check if new indexes clashes with timetable for both students
 								// Dont need to check if slot have vacancy
 								
 								System.out.println("Swopping ...");
@@ -384,11 +381,11 @@ public class StudentUI {
 									}
 								}
 								
-								// TODO: update and save to file here
+								// TODO S: update and save to file here
 								
-								// TODO: print out stuff according to manual
+								// TODO S: print out stuff according to manual
 								
-								// TODO: do proper checks on courseslots after proper test cases population
+								// TODO S: do proper checks on courseslots after proper test cases population
 								if(Container.DEBUG_MODE)
 								{
 									System.out.println(StudentControl.studentInfo.getCoursePlan());

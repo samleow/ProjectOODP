@@ -287,7 +287,6 @@ public class AdminUI {
 
 
 	private static void updateCoursePlan(Scanner sc) {
-		// TODO Auto-generated method stub
 		
 		sc.nextLine(); // Consume newline left-over
 		
@@ -688,7 +687,6 @@ public class AdminUI {
 
 
 	private static void updateCourseInfo(Scanner sc) {
-		// TODO Auto-generated method stub
 		
 		sc.nextLine(); // Consume newline left-over
 		
@@ -943,7 +941,6 @@ public class AdminUI {
 
 
 	private static void addLesson(Scanner sc) {
-		// TODO Auto-generated method stub
 
 		sc.nextLine(); // Consume newline left-over
 		
@@ -1185,7 +1182,6 @@ public class AdminUI {
 	}
 
 	private static void addVacancy(Scanner sc) {
-		// TODO Auto-generated method stub
 		
 		
 		sc.nextLine(); // Consume newline left-over
@@ -1296,7 +1292,6 @@ public class AdminUI {
 
 
 	private static void addCourseIndex(Scanner sc) {
-		// TODO Auto-generated method stub
 		
 		sc.nextLine(); // Consume newline left-over
 		
@@ -1419,7 +1414,6 @@ public class AdminUI {
 
 
 	private static void addCourse(Scanner sc) {
-		// TODO Auto-generated method stub
 		
 		sc.nextLine(); // Consume newline left-over
 
