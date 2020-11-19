@@ -5,6 +5,7 @@ import control.StudentControl;
 import control.Container;
 import control.HashingPassword;
 import entity.*;
+import entity.AllEnums.WeekType;
 
 public class StudentUI {
 
@@ -53,6 +54,7 @@ public class StudentUI {
 				case 4: /* (4) Check Vacancies Available*/
 					boolean op4 = true;
 					do {
+						// TODO S: Menu going back to previous error input instead of back to start
 						indexno = -1;
 						System.out.println("(4) Check Vacancies Available");
 						System.out.printf("Enter course index no. to check (%d to return): ",Container.BREAK_MENU);
@@ -83,7 +85,6 @@ public class StudentUI {
 						else
 						{
 							System.out.println("Invalid input for course index no.!");
-							// Clear sc
 							sc.next();
 						}
 					}
@@ -93,6 +94,7 @@ public class StudentUI {
 				case 5: /* (5) Change Index Number of Course*/
 					boolean op5 = true;
 					do {
+						// TODO S: Menu going back to previous error input instead of back to start
 						indexno = -1;
 						cIndex = -1;
 						System.out.println("(5) Change Index Number of Course");
@@ -158,31 +160,19 @@ public class StudentUI {
 									System.out.println("Course index no. does not match with course!");
 									continue;
 								}
+								// TODO S: need check for valid slots here [CHECK IF WORKING]
+								else if(newCS.getTotalSlots() == newCS.getSlotList().size())
+								{
+									System.out.println("No vacancy for new course index!");
+									continue;
+								}
 								
-								// TODO S: need check for clash in timetable here [WIP]
-								// TODO S: need check if weekly type didn't clash yet
-//								outerloop:
-//								for(int i=0;i<StudentControl.studentInfo.getCoursePlan().size();i++)
-//								{
-//									if(StudentControl.studentInfo.getCoursePlan().get(i).equals(currCP))
-//										continue;
-//									
-//									for(int j=0;j<StudentControl.studentInfo.getCoursePlan().get(i).getLessons().size();j++)
-//									{
-//										Lesson l1 = StudentControl.studentInfo.getCoursePlan().get(i).getLessons().get(j);
-//										for(int k=0;k<newCS.getCoursePlan().getLessons().size();k++)
-//										{
-//											Lesson l2 = newCS.getCoursePlan().getLessons().get(k);
-//											if(l1.getLessonPeriod().clashWith(l2.getLessonPeriod()))
-//											{
-//												System.out.println("Course index no. clashes with timetable!");
-//												break outerloop;
-//											}
-//										}
-//									}
-//								}
-								
-								// TODO S: need check for valid slots here
+								// TODO S: check clash in timetable (can extract into reusable method) [CHECK IF WORKING]
+								if(StudentControl.timetableClash(StudentControl.studentInfo, currCP, newCS.getCoursePlan()))
+								{
+									System.out.println("Course index no. clashes with timetable!");
+									continue;
+								}
 								
 								// student update
 								StudentControl.studentInfo.getCoursePlan().remove(currCP);
@@ -195,12 +185,18 @@ public class StudentUI {
 									if(Container.courseSlotsList.get(i).getCoursePlan().getIndex()==cIndex)
 									{
 										Container.courseSlotsList.get(i).getSlotList().remove(StudentControl.studentInfo.getMatricNo());
+										// TODO S: Update course slot waiting list -> move user into courseslot to fill vacancy
 										break;
 									}
 								}
 								
 								// TODO S: update and save to file here (overwriteFileWithData)
-								// Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
+								// FIXME S: overwriteFileWithData casting List type [CHECK IF WORKING!]
+								if(Container.DEBUG_MODE) // TODO S: remove DEBUG_MODE limitation for saving to txt file
+								{
+									Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
+									Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
+								}
 								
 								// TODO S: print out stuff according to manual
 								
@@ -242,6 +238,7 @@ public class StudentUI {
 					String userName, password;
 					Student st2;
 					do {
+						// TODO S: Menu going back to previous error input instead of back to start
 						indexno = -1;
 						cIndex = -1;
 						st2 = null;
@@ -355,7 +352,7 @@ public class StudentUI {
 									continue;
 								}
 								
-								// TODO S: Check if new indexes clashes with timetable for both students
+								// TODO S: Check if new indexes clashes with timetable for both students [WIP]
 								// Dont need to check if slot have vacancy
 								
 								System.out.println("Swopping ...");
@@ -382,6 +379,12 @@ public class StudentUI {
 								}
 								
 								// TODO S: update and save to file here
+								// FIXME S: overwriteFileWithData casting List type [CHECK IF WORKING!]
+								if(Container.DEBUG_MODE) // TODO S: remove DEBUG_MODE limitation for saving to txt file
+								{
+									Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
+									Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
+								}
 								
 								// TODO S: print out stuff according to manual
 								
