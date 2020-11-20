@@ -2792,8 +2792,10 @@ public class AdminUI {
 		
 		
 		// Add student Email
-		System.out.print("Enter new student email: ");
-		email = sc.nextLine();
+		//System.out.print("Enter new student email: ");
+		//email = sc.nextLine();
+		email = "testing@gmail.com";
+		System.out.printf("Auto Genternated Email: %s\n ",email);
 		
 		
 		
@@ -2828,13 +2830,6 @@ public class AdminUI {
 			
 		}
 		
-		
-
-
-//		AdminControl.createStudAcc(name, userName,
-//				hashPassword, acctype,
-//				matricNo, gender, nationality, maxAU, period, date, email);
-
 		int totalNumberAdd;
 		int count = 0;
 		String courseID;
