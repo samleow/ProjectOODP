@@ -137,7 +137,7 @@ public class AdminControl {
 	//Admin Feature: 2
 	public static void createStudAcc(String name, String userName,
 			String password, AccountType type,
-			String matricNo, Gender gender,
+			String matricNo, Gender gender, 
 
 //			String nationality, int maxAU, Period accessPeriod, Date accessDate ) // please help to add gender etc
 //	{
@@ -161,10 +161,10 @@ public class AdminControl {
 			
 			//create student obj to add into the studList
 
-			String nationality, int maxAU, Period accessPeriod, Date accessDate) {
+			String nationality, int maxAU, Period accessPeriod, Date accessDate, String email) {
 
 		Student createStudAcc = new Student(name, userName, password, type, matricNo, gender, nationality, maxAU,
-				accessPeriod, accessDate);
+				accessPeriod, accessDate, email);
 
 		createStudAcc.writeDataToFile("StudentAccount.txt", false);
 

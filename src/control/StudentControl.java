@@ -2,9 +2,18 @@ package control;
 
 import java.io.*;
 import java.util.*;
+import java.util.Properties;
 import control.Container;
 import entity.AllEnums.*;
 import entity.*;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class StudentControl {
 	
@@ -63,46 +72,9 @@ public class StudentControl {
 					break;
 				}
 			}
-			
-			//Check for same Lesson ID 
-			outerloop:
-			for(int i = 0; i < studentInfo.getCoursePlan().size(); i++) {
-				for(int j = 0; j < studentInfo.getCoursePlan().get(i).getLessons().size(); j++) {
-					for(int z = 0; z < tempcourseplan.getLessons().size(); z++) {
-						if(studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonID() == tempcourseplan.getLessons().get(z).getLessonID()) {
-							System.out.println("Break at Lesson ID");
-							System.out.println("Timetable Clashes. Failed to add the Course\n");
-							timetableClash = true;
-							break outerloop;
-						}
-						
-						//Check if it is weekly or (old==old or even==even)
-						if((studentInfo.getCoursePlan().get(i).getLessons().get(j).getWeekly().equals(WeekType.WEEKLY) ||
-							tempcourseplan.getLessons().get(z).getWeekly().equals(WeekType.WEEKLY) ||
-							(studentInfo.getCoursePlan().get(i).getLessons().get(j).getWeekly().equals(tempcourseplan.getLessons().get(z).getWeekly())))){
 
-							//Check 
-							if(studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().clashWith(tempcourseplan.getLessons().get(z).getLessonPeriod())) {
-								System.out.println("Displaying TimeTable Clashes:");
-								//Display Start Time
-								System.out.println(studentInfo.getCoursePlan().get(i).getLessons().get(j));
-								int start = studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getStartTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getStartTime());
-								//Display End Time
-								System.out.println(tempcourseplan.getLessons().get(z));
-								int end = studentInfo.getCoursePlan().get(i).getLessons().get(j).getLessonPeriod().getEndTime().compareWith(tempcourseplan.getLessons().get(z).getLessonPeriod().getEndTime());
-								System.out.println("TimeTable Clashes. Failed to add the Course\n");
-								timetableClash = true;
-								break outerloop;
-								
-							}
-						}	
-					}
-				}
-			}
-		}
-			
-			
-			if(!timetableClash) {
+			//Check for timetable clash
+			if(!timetableClash(studentInfo, null, tempcourseplan)) {
 			//Add Student Matric No into the CourseSlots slotList
 				for (int k=0;k < Container.courseSlotsList.size();k++)
 				{
@@ -120,8 +92,9 @@ public class StudentControl {
 						}
 					}
 				}
+				//Overwrite the latest data into the CourseSlots.txt
+				Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
 				
-				//overwriteCourseSlotsData();
 
 				//If not in waitingList then add the Course in the Student Class CoursePlan List
 				if(!waitingList) {
@@ -130,169 +103,131 @@ public class StudentControl {
 		    		for (int k=0;k < Container.coursePlanList.size();k++)
 		    		{
 						if(Container.coursePlanList.get(k).getIndex() == indexno) {
-							// i dk why adding the course plan into the studentInfo
-							// Can also add into the container studentList???
-							// MAGIC???
 							//It is link and reference
 							studentInfo.getCoursePlan().add(Container.coursePlanList.get(k));
-							//overwriteStudentAccountData();
+							//Overwrite the latest data into the StudentAccount.txt
+							Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
 							break;
 						}
 		    		}
 		    		System.out.println("Successfully Added the Course \n");
 				}
 			}
+			else {
+				System.out.println("TimeTable Clashes. Failed to add the Course.\n");
+			}
 		}
-	//}
+	}
 	
 	public static void dropCourse(int indexno)
 	{
 		boolean checkCoursesTook = false;
+		CoursePlan tempCoursePlan = null;
+		boolean addStudents = true;
 
 		//Do a check
 		for(int i = 0; i < studentInfo.getCoursePlan().size(); i++) {
 			if(studentInfo.getCoursePlan().get(i).getIndex() == indexno) {
+				tempCoursePlan = studentInfo.getCoursePlan().get(i);
 				checkCoursesTook = true;
 				break;
 			}
 		}
 		
 		if(checkCoursesTook) {
-			
 			//Remove CoursePlan from List<CoursePlan> in Student class
     		for (int k=0;k < Container.coursePlanList.size();k++)
     		{
 				if(Container.coursePlanList.get(k).getIndex() == indexno) {
 					studentInfo.getCoursePlan().remove(Container.coursePlanList.get(k));
-					//overwriteCourseSlotsData();
+					//Hide first
+					Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
 					break;
 				}
     		}
-    		
-    		//Need to overwrite first to update the data
-    		//overwriteCourseSlotsData();
-    		
-//    		//Overwriting the StudentAccount txt file with the updated data
-//    		for(int i = 0; i < Container.studentList.size(); i++) {
-//    			if(i==0) {
-//    				Container.studentList.get(i).writeDataToFile("StudentAccount.txt",true);
-//    			}
-//    			else {
-//    				Container.studentList.get(i).writeDataToFile("StudentAccount.txt",false);
-//    			}
-//    		}
     		
     		//Remove Student Matric No from the CourseSlots slotList
     		for (int k=0;k < Container.courseSlotsList.size();k++)
     		{
     			if(Container.courseSlotsList.get(k).getCoursePlan().getIndex() == indexno) {
 					Container.courseSlotsList.get(k).getSlotList().remove(studentInfo.getMatricNo());
-					//overwriteStudentAccountData();
+					//Hide first
+					Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
 					break;
     			}
     		}
     		
-    		
-    		String student = "";
-    		
-    		for (int k=0;k < Container.courseSlotsList.size();k++)
+
+    		for (int i=0; i < Container.courseSlotsList.size(); i++)
 			{
-				//Check if got vacancy, if have then check waiting list got student a not
-				if(Container.courseSlotsList.get(k).getSlotList().size()<Container.courseSlotsList.get(k).getTotalSlots()) {
-					if(Container.courseSlotsList.get(k).getWaitingList().size() != 0) {
-						student = Container.courseSlotsList.get(k).getWaitingList().get(0);
-						break;
-					}
-					break;
-				}
-			}
-    		
-    		//Check 
-    		if(!student.equals("")) {
-    			//check if this student current course clashes with other courses he took
-    			
-    			
-    			
-    			//if no clashes then add his matric no in the slotList
-    			for (int k=0;k < Container.courseSlotsList.size();k++)
-				{
-    				if(Container.courseSlotsList.get(k).getCoursePlan().getIndex() == indexno) {
-						Container.courseSlotsList.get(k).getSlotList().add(student);
-						Container.courseSlotsList.get(k).getWaitingList().remove(0);
-						
-						//Overwrite the text file with the latest update data
-						//overwriteCourseSlotsData();
-						break;
-					}
-				}
-    			
-    			//add index no into List<CoursePlan> in Student class
-    			for (int k=0;k < Container.coursePlanList.size();k++)
-	    		{
-					if(Container.coursePlanList.get(k).getIndex() == indexno) {
-						studentInfo.getCoursePlan().add(Container.coursePlanList.get(k));
-						//overwriteStudentAccountData();
-						break;
-					}
-	    		}
-    			
-    			//A notification will be sent to the student
-    			//Student class need to have email 
-    			
-    			
-    			
-    			
-    			
-    			
-        		//Will update if the student on the waiting list can add the course
-//        		//Overwriting the CourseSlots txt file with the updated data
-    			//overwriteStudentAccountData();
-    			
-//        		for(int i = 0; i < Container.courseSlotsList.size(); i++) {
-//        			if(i==0) {
-//        				Container.courseSlotsList.get(i).writeDataToFile("CourseSlots.txt",true);
-//        			}
-//        			else {
-//        				Container.courseSlotsList.get(i).writeDataToFile("CourseSlots.txt",false);
-//        			}
-//        		}
-    			
+				//Find the courseSlots based on indexno
+    			if(Container.courseSlotsList.get(i).getCoursePlan().getIndex() == indexno) {
+    				//check the first student first, if failed, then check another and so on 
+    				while(addStudents) {
+    					//Check if got vacancy, if have then check waiting list got student a not
+						if(Container.courseSlotsList.get(i).getSlotList().size()<Container.courseSlotsList.get(i).getTotalSlots()) {
+							if(Container.courseSlotsList.get(i).getWaitingList().size() != 0) {
+									String student = "";
+						    		Student tempstudent = null;
+						    		boolean timetableClash = false;
+									
+						    		//get the student in the waiting list
+									student = Container.courseSlotsList.get(i).getWaitingList().get(0);
+									
+									for(int z = 0; z < Container.studentList.size(); z++) {
+										if(Container.studentList.get(z).getMatricNo().equals(student)) {
+											tempstudent = Container.studentList.get(z);
+											break;
+										}
+									}
 
-    		
-    		}
+									if(timetableClash(tempstudent, null, tempCoursePlan)) {
+										//sendEmail(tempstudent.getName(), tempCoursePlan.getCourseID(), tempstudent.getEmail(), false);
+										Container.courseSlotsList.get(i).getWaitingList().remove(0);
+										Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
+										System.out.println("Removed students from waiting list as his current timetable clashes.");
+									}
+									else {
+										//remove student from the waiting list and add them
+						    			for (int k=0;k < Container.courseSlotsList.size();k++)
+										{
+						    				if(Container.courseSlotsList.get(k).getCoursePlan().getIndex() == indexno) {
+												Container.courseSlotsList.get(k).getSlotList().add(student);
+												Container.courseSlotsList.get(k).getWaitingList().remove(0);
+												Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
+												break;
+											}
+										}
+						    			
+						    			//add index no into List<CoursePlan> in Student class
+						    			for (int k=0;k < Container.coursePlanList.size();k++)
+							    		{
+											if(Container.coursePlanList.get(k).getIndex() == indexno) {
+												tempstudent.getCoursePlan().add(Container.coursePlanList.get(k));
+												Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
+												//sendEmail(tempstudent.getName(), Container.coursePlanList.get(k).getCourseID(), tempstudent.getEmail(), true);
+												System.out.println("Successfully added student into the Course and send email to notify him/her.");
+												break;
+											}
+							    		}
+									}
+								}
+							//break while loop if no students in the waiting list
+							else addStudents = false;
+							
+						}
+						// break while loop if the slot list is full
+						else addStudents = false;
+					}
+				
+    			}
+			}
     		System.out.println("Successfully Removed the Course \n");
-		}
-		System.out.println("You never take this Course \n");
-	}
-	
-	public static void overwriteCourseSlotsData()
-	{
-		//Overwriting the CourseSlots txt file with the updated data
-		for(int i = 0; i < Container.courseSlotsList.size(); i++) {
-			if(i==0) {
-				Container.courseSlotsList.get(i).writeDataToFile("CourseSlots.txt",true);
-			}
-			else {
-				Container.courseSlotsList.get(i).writeDataToFile("CourseSlots.txt",false);
-			}
-		}
-	}
-	
-	public static void overwriteStudentAccountData()
-	{
-		//Overwriting the StudentAccount txt file with the updated data
-		for(int i = 0; i < Container.studentList.size(); i++) {
-			if(i==0) {
-				Container.studentList.get(i).writeDataToFile("StudentAccount.txt",true);
-			}
-			else {
-				Container.studentList.get(i).writeDataToFile("StudentAccount.txt",false);
-			}
+		} else {
+			System.out.println("You never take this Course \n");
 		}
 	}
 
-	
-	
 	public static void displayCourse()
 	{
 		CourseType courseType = CourseType.DEFAULT;
@@ -340,5 +275,55 @@ public class StudentControl {
 		}
 		
 		return false;
+	}
+	
+	public static void sendEmail(String name, String CourseID, String email, boolean add) {
+		String sendMessage = "";
+		final String username = ""; // need to be added
+		final String password = ""; // need to be added
+		
+		if(add) {
+			sendMessage = "Dear " + name + ","
+					+ "\n\n You have been notified that this course " + CourseID + " has been successfully added into your STARSPlanner."
+					+ "\n\n (This is an auto-generated email. Please do not reply directly to this email.)"
+					+ "\n_________________________________________________________________________________________________"
+					+ "\nCONFIDENTIALITY: This email is intended solely for the person(s) named and may be confidential and/or privileged. "
+					+ "If you are not the intended recipient, please delete it, notify us and do not copy, use, or disclose its contents.";
+		} else {
+			sendMessage = "Dear " + name + ","
+					+ "\n\n You have been notified that this course " + CourseID + " is currently clashing with your current other modules. You will be removed from the waiting list."
+					+ "\n\n (This is an auto-generated email. Please do not reply directly to this email.)"
+					+ "\n_________________________________________________________________________________________________"
+					+ "\nCONFIDENTIALITY: This email is intended solely for the person(s) named and may be confidential and/or privileged. "
+					+ "If you are not the intended recipient, please delete it, notify us and do not copy, use, or disclose its contents.";
+		}
+
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+
+		Session session = Session.getInstance(props,
+		  new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		  });
+
+		try {
+
+			Message message = new MimeMessage(session);
+			//message.setFrom(new InternetAddress("do-not-reply@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO,
+				InternetAddress.parse(email)); // to be added an email address
+			message.setSubject("Testing Subject");
+			message.setText(sendMessage);
+
+			Transport.send(message);
+
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

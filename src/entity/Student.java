@@ -29,6 +29,8 @@ public class Student extends LoginAccount implements IOData<Student>
 	Date accessDate;
 	
 	List<String> exemptedCourseList;
+	
+	String email; 
 	// ADDITIONAL INFO NEEDED !!! Ignore first
 	// Need pursuing degree, current studying year, etc.
 	// for Admin to check what access period and date to give
@@ -45,6 +47,7 @@ public class Student extends LoginAccount implements IOData<Student>
 		this.accessPeriod = null;
 		this.accessDate = null;
 		exemptedCourseList = new ArrayList<String>();
+		this.email = null;
 	}
 	
 	
@@ -52,7 +55,7 @@ public class Student extends LoginAccount implements IOData<Student>
 			String password, AccountType type,
 			String matricNo, Gender gender,
 			String nationality, int maxAU,
-			Period accessPeriod, Date accessDate)
+			Period accessPeriod, Date accessDate, String email)
 	{
 		super(name, userName, password, type);
 		this.matricNo = matricNo;
@@ -63,6 +66,7 @@ public class Student extends LoginAccount implements IOData<Student>
 		this.accessDate = accessDate;
 		coursePlanList = new ArrayList<CoursePlan>();
 		exemptedCourseList = new ArrayList<String>();
+		this.email = email;
 	}
 
 	public String getMatricNo()
@@ -145,6 +149,16 @@ public class Student extends LoginAccount implements IOData<Student>
 		this.exemptedCourseList = exemptedCourseList;
 	}
 	
+	public String getEmail()
+	{
+		return this.email;
+	}
+
+	public void setEmail(String email)
+	{
+		this.email = email;
+	}
+	
 	public String toString()
 	{
 		List<Integer> strList = new ArrayList<Integer>();
@@ -156,7 +170,7 @@ public class Student extends LoginAccount implements IOData<Student>
 		return super.getName() + "|" + super.getUserName() + "|" + super.getType()
 		+ "|" +  matricNo  + "|" + nationality  + "|" +  maxAU + "|" + gender 
 		+ "|" + strList  + "|" + exemptedCourseList + "|" + accessPeriod.toTimeString()
-		+ "|" + accessDate + "|" + super.getPassword();
+		+ "|" + accessDate + "|" + email + "|" + super.getPassword();
 	}
 	
 	@Override
@@ -231,7 +245,7 @@ public class Student extends LoginAccount implements IOData<Student>
 
 		String[] addata  = star.nextToken().trim().split(",");
 		this.accessDate = new Date(Integer.parseInt(addata[0]),Integer.parseInt(addata[1]),Integer.parseInt(addata[2]));
-        
+		this.email = star.nextToken().trim();
 		super.setPassword(star.nextToken().trim());
 		
 		return this;

@@ -1553,6 +1553,7 @@ public class AdminUI {
 		Time endTime = new Time();
 		Date date = new Date();
 		Period period;
+		String email;
 		
 		
 		String hashPassword;
@@ -1696,10 +1697,13 @@ public class AdminUI {
 		
 		period = new Period(startTime, endTime);
 		
+		System.out.print("Enter new student email: ");
+		email = sc.nextLine();
+		
 		
 		AdminControl.createStudAcc(name, userName,
 				hashPassword, acctype,
-				matricNo, gender, nationality, maxAU, period, date);
+				matricNo, gender, nationality, maxAU, period, date, email);
 	}
 	
 	
