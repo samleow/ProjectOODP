@@ -13,7 +13,7 @@ public class Period
 	// Day - The day of this period
 	private Day day;
 	
-	// To preload the data to create the text file, can be removed later on
+	// For Adding and updating Course
 	public Period(Time startTime, Time endTime, Day day)
 	{
 		this.startTime = startTime;
