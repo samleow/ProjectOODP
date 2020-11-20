@@ -579,7 +579,7 @@ public class AdminControl {
 				Container.courseSlotsList.get(i).setTotalSlots(totalSlots);
 				
 				//need to shift waiting list student to the register slots
-				if(Container.courseSlotsList.get(i).getSlotList().size() <= totalSlots)
+				if(Container.courseSlotsList.get(i).getSlotList().size() <= totalSlots && Container.courseSlotsList.get(i).getWaitingList().isEmpty() == false)
 				{
 					// get the first person in the waiting list
 					String matricNo = Container.courseSlotsList.get(i).getWaitingList().get(0);
