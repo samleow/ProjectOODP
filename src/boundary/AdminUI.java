@@ -70,23 +70,45 @@ public class AdminUI {
 				choice = sc.nextInt();
 				switch (choice) {
 				case 1: /* (1) Edit student access period */
-					System.out.println("\nEnter student matric number: ");
+					do {
+					System.out.printf("\nEnter student matric number: (%d to return): ", Container.BREAK_MENU);
+
 					matricNo = sc.next();
+					
+					if(matricNo.equals(Integer.toString(Container.BREAK_MENU))) {
+						break;
+					}
 					if(AdminControl.checkIfValidMatricNo(matricNo)) {
-						System.out.println("\nEnter Access Date (e.g. YYYY-MM-DD): ");
+						do {
+						System.out.printf("\nEnter Access Date (e.g. YYYY-MM-DD) (%d to return): ", Container.BREAK_MENU);
 						String strAccessDate = sc.next();
+						
+						if(strAccessDate.equals(Integer.toString(Container.BREAK_MENU))) {
+							break;
+						}
 						
 						if(AdminControl.checkIfValidDate(strAccessDate)) {
 							StringTokenizer star = new StringTokenizer(strAccessDate , "-");
 							accessDate = new Date(Integer.parseInt(star.nextToken().trim()),Integer.parseInt(star.nextToken().trim())
 									,Integer.parseInt(star.nextToken().trim()));
 							
-							System.out.println("\nEnter starting time (e.g. HH:MM): ");
+							do {
+							System.out.printf("\nEnter starting time (e.g. HH:MM) (%d to return): ", Container.BREAK_MENU);
 							String strStartTime = sc.next();
+							
+							if(strStartTime.equals(Integer.toString(Container.BREAK_MENU))) {
+								break;
+							}
+							
 							if(AdminControl.checkIfValidTime(strStartTime)) {
+								do {
 								StringTokenizer startT = new StringTokenizer(strStartTime , ":");
-								System.out.println("\nEnter ending time (e.g. HH:MM): ");
+								System.out.printf("\nEnter ending time (e.g. HH:MM) (%d to return): ", Container.BREAK_MENU);
 								String strEndTime = sc.next();
+								
+								if(strEndTime.equals(Integer.toString(Container.BREAK_MENU))) {
+									break;
+								}
 								
 								if(AdminControl.checkIfValidTime(strEndTime)) {
 									StringTokenizer endT = new StringTokenizer(strEndTime , ":");
@@ -95,21 +117,27 @@ public class AdminUI {
 											new Time(Integer.parseInt(endT.nextToken().trim()),Integer.parseInt(endT.nextToken().trim())), Day.DEFAULT);
 
 									AdminControl.setStudentAccessPeriod(matricNo,accessPeriod,accessDate);
-									System.out.println("\nUpdated " + matricNo + " access period");
+									System.out.println("\nUpdated " + matricNo + "'s access period");
+									break;
 								} else {
 									System.out.println("\nTime is invalid.");
 								}
+								}while(true);
+								break;
 							} else {
 								System.out.println("\nTime is invalid.");
 							}
+							} while(true);
+							break;
 						} else {
 							System.out.println("\nDate is invalid.");
 						}
-						
+						}while(true);
+						break;
 					} else {
 						System.out.println("\nStudent does not exist currently.");
 					}
-					
+					} while(true);
 					break;
 				case 2: /* (2) Add a student (matric, name, number, gender, nationality, Max AU, Password  etc) */
 					
@@ -126,31 +154,77 @@ public class AdminUI {
 					
 					
 				case 4: /* (4) Check available slot for an index number (vacancy in a class)*/
-					System.out.println("\nEnter the index number for the Course you would like to check: ");
-					if(sc.hasNextInt()) { 
-						index = sc.nextInt();
-						if(AdminControl.checkIfValidIndex(index)) {
-							int availableSlots = AdminControl.getNoOfSlotsByCourseIndex(index);
-							//System.out.println("There are " + availableSlots + " available slots for index " + index + "\n");
-							System.out.println("\nIndex: " + index);
-							System.out.println("Available Slots: " + availableSlots + "\n");
+					do {
+						System.out.printf("\nEnter the index number for the Course you would like to check (%d to return): ", Container.BREAK_MENU);
+						if(sc.hasNextInt()) { 
+							index = sc.nextInt();
+							if(index == Container.BREAK_MENU) {
+								break;
+							}
+							
+							if(AdminControl.checkIfValidIndex(index)) {
+								int availableSlots = AdminControl.getNoOfSlotsByCourseIndex(index);
+								int totalSlots = AdminControl.getTotalSlotsByCourseIndex(index);
+								//System.out.println("There are " + availableSlots + " available slots for index " + index + "\n");
+								System.out.println("\nIndex: " + index);
+								System.out.println("Slots: " + availableSlots + "/" + totalSlots + " [Vacancy/Total Size]");
+							} else {
+								System.out.println("\nIndex does not exist.");
+							}
 						} else {
-							System.out.println("\nIndex does not exist currently.");
+							System.out.println("\n'" + sc.next() + "' is not a valid index. Please enter only Integers.");
 						}
-					} else {
-						System.out.println("\n'" + sc.next() + "' is not a valid index. Please enter only Integers.");
-					}
+					} while (true);
 					break;
 				case 5: /* (5) Display student list by index number.*/
-					System.out.println("\nEnter the index number: ");
-					if(sc.hasNextInt()) {
-						index = sc.nextInt();
+					do {
+						System.out.printf("\nEnter the index number (%d to return): ", Container.BREAK_MENU);
+						if(sc.hasNextInt()) {
+							index = sc.nextInt();
+							
+							if(index == Container.BREAK_MENU) {
+								break;
+							}
+							
+							if(AdminControl.checkIfValidIndex(index)) {
+								stringList = AdminControl.getStudentListByCourseIndex(index);
+								//System.out.println(stringList);
+								if(stringList.isEmpty()) {
+									System.out.println("\nNo student registered in this index.");
+								} else {
+									for(int i = 0;i<stringList.size();i++) {
+										System.out.println("\nStudent " + (i+1));
+										System.out.println("Name: " + stringList.get(i).get(0));
+										System.out.println("Gender: " + stringList.get(i).get(1));
+										System.out.println("Nationality: " + stringList.get(i).get(2));
+									}
+								}
+								
+							} else {
+								System.out.println("\nIndex does not exist.");
+							}
+							
+						} else {
+							System.out.println("\n'" + sc.next() + "' is not a valid index. Please enter only Integers.");
+						}		
+					} while(true);
+					break;
+				case 6: /* (6) Display student list by course (all students registered for the selected course)*/
+					do {
+						System.out.printf("\nEnter the Course ID (e.g. CZ2002, CZ2003,...) (%d to return): ", Container.BREAK_MENU);
+						courseID = sc.next();
 						
-						if(AdminControl.checkIfValidIndex(index)) {
-							stringList = AdminControl.getStudentListByCourseIndex(index);
-							//System.out.println(stringList);
+						if(courseID.equals(Integer.toString(Container.BREAK_MENU))) {
+							break;
+						}
+						
+						String capsCourseID = courseID.toUpperCase();
+						
+						stringList = AdminControl.getStudentListByCourseID(capsCourseID);
+						
+						if(AdminControl.checkIfValidCourseID(capsCourseID)) {
 							if(stringList.isEmpty()) {
-								System.out.println("\nNo student registered in this index.");
+								System.out.println("\nNo student registered in this course.");
 							} else {
 								for(int i = 0;i<stringList.size();i++) {
 									System.out.println("\nStudent " + (i+1));
@@ -159,35 +233,10 @@ public class AdminUI {
 									System.out.println("Nationality: " + stringList.get(i).get(2));
 								}
 							}
-							
 						} else {
-							System.out.println("\nIndex does not exist.");
+							System.out.println("\nCourse does not exist.");
 						}
-						
-					} else {
-						System.out.println("\n'" + sc.next() + "' is not a valid index. Please enter only Integers.");
-					}					
-					break;
-				case 6: /* (6) Display student list by course (all students registered for the selected course)*/
-					System.out.println("Enter the Course ID (e.g. CZ2002, CZ2003,...): ");
-					courseID = sc.next();
-					stringList = AdminControl.getStudentListByCourseID(courseID);
-					
-					if(AdminControl.checkIfValidCourseID(courseID)) {
-						if(stringList.isEmpty()) {
-							System.out.println("\nNo student registered in this course.");
-						} else {
-							for(int i = 0;i<stringList.size();i++) {
-								System.out.println("\nStudent " + (i+1));
-								System.out.println("Name: " + stringList.get(i).get(0));
-								System.out.println("Gender: " + stringList.get(i).get(1));
-								System.out.println("Nationality: " + stringList.get(i).get(2));
-							}
-						}
-					} else {
-						System.out.println("\nCourse does not exist.");
-					}
-					
+					} while(true);
 					break;
 				case 7: /* (7) Log Out*/
 					System.out.println("Log Out Admin...");

@@ -57,6 +57,10 @@ public class AdminControl {
 	
 	public static boolean checkIfValidDate(String strAccessDate) {
 		
+		if(!strAccessDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
+			return false;
+		}
+		
 		StringTokenizer star = new StringTokenizer(strAccessDate , "-");
 //		Date accessDate = new Date(Integer.parseInt(star.nextToken().trim()),Integer.parseInt(star.nextToken().trim())
 //				,Integer.parseInt(star.nextToken().trim()));
@@ -97,7 +101,7 @@ public class AdminControl {
             	day = "0" + day;
             }
             int intAccessDate = Integer.parseInt(year+month+day);
-            System.out.println(intAccessDate);
+            //System.out.println(intAccessDate);
             //int length = (int)(Math.log10(intAccessDate)+1);
             
             if(intAccessDate < intCurrentDate) {
@@ -109,7 +113,6 @@ public class AdminControl {
         } catch (Exception e) {
             return false;
 		}
-		
 	}
 	
 	public static boolean checkIfValidTime(String time) {
@@ -485,6 +488,18 @@ public class AdminControl {
 		}
 		
 		return availableSlots;
+	}
+	
+	public static int getTotalSlotsByCourseIndex(int index) {
+		int totalSlots = -1;
+		
+		for(int i = 0; i < Container.courseSlotsList.size(); i++) {
+			if(Container.courseSlotsList.get(i).getCoursePlan().getIndex() == index) {
+				totalSlots = Container.courseSlotsList.get(i).getTotalSlots();
+			}
+		}
+		
+		return totalSlots;
 	}
 	
 	public static boolean checkIfValidIndex(int index) { // not sure if there's a better way to do this
