@@ -2805,7 +2805,7 @@ public class AdminUI {
 		
 		while(true)
 		{
-			System.out.printf("Does the student %s have expmted module? Y/N: ", name);
+			System.out.printf("Does the student %s have exempted module? Y/N: ", name);
 			isExemptedInput = sc.nextLine().toUpperCase();
 			// exit
 			if(isExemptedInput.equals(Integer.toString(Container.BREAK_MENU)))
