@@ -7,17 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-import control.AdminControl;
-import control.Container;
-import control.HashingPassword;
-
-import entity.Course;
-import entity.CoursePlan;
-import entity.Date;
-import entity.Lesson;
-import entity.Location;
-import entity.Period;
-import entity.Time;
+import control.*;
+import entity.*;
 
 import entity.Date;
 import entity.AllEnums.AccountType;
@@ -78,7 +69,7 @@ public class AdminUI {
 					if(matricNo.equals(Integer.toString(Container.BREAK_MENU))) {
 						break;
 					}
-					if(AdminControl.checkIfValidMatricNo(matricNo)) {
+					if(Validation.checkIfValidMatricNo(matricNo)) {
 						do {
 						System.out.printf("\nEnter Access Date (e.g. YYYY-MM-DD) (%d to return): ", Container.BREAK_MENU);
 						String strAccessDate = sc.next();
@@ -87,7 +78,7 @@ public class AdminUI {
 							break;
 						}
 						
-						if(AdminControl.checkIfValidDate(strAccessDate)) {
+						if(Validation.checkIfValidDate(strAccessDate)) {
 							StringTokenizer star = new StringTokenizer(strAccessDate , "-");
 							accessDate = new Date(Integer.parseInt(star.nextToken().trim()),Integer.parseInt(star.nextToken().trim())
 									,Integer.parseInt(star.nextToken().trim()));
@@ -100,7 +91,7 @@ public class AdminUI {
 								break;
 							}
 							
-							if(AdminControl.checkIfValidTime(strStartTime)) {
+							if(Validation.checkIfValidTime(strStartTime)) {
 								do {
 								StringTokenizer startT = new StringTokenizer(strStartTime , ":");
 								System.out.printf("\nEnter ending time (e.g. HH:MM) (%d to return): ", Container.BREAK_MENU);
@@ -110,7 +101,7 @@ public class AdminUI {
 									break;
 								}
 								
-								if(AdminControl.checkIfValidTime(strEndTime)) {
+								if(Validation.checkIfValidTime(strEndTime)) {
 									StringTokenizer endT = new StringTokenizer(strEndTime , ":");
 									
 									accessPeriod = new Period(new Time(Integer.parseInt(startT.nextToken().trim()),Integer.parseInt(startT.nextToken().trim())), 
@@ -162,7 +153,7 @@ public class AdminUI {
 								break;
 							}
 							
-							if(AdminControl.checkIfValidIndex(index)) {
+							if(Validation.checkIfValidIndex(index)) {
 								int availableSlots = AdminControl.getNoOfSlotsByCourseIndex(index);
 								int totalSlots = AdminControl.getTotalSlotsByCourseIndex(index);
 								//System.out.println("There are " + availableSlots + " available slots for index " + index + "\n");
@@ -186,7 +177,7 @@ public class AdminUI {
 								break;
 							}
 							
-							if(AdminControl.checkIfValidIndex(index)) {
+							if(Validation.checkIfValidIndex(index)) {
 								stringList = AdminControl.getStudentListByCourseIndex(index);
 								//System.out.println(stringList);
 								if(stringList.isEmpty()) {
@@ -222,7 +213,7 @@ public class AdminUI {
 						
 						stringList = AdminControl.getStudentListByCourseID(capsCourseID);
 						
-						if(AdminControl.checkIfValidCourseID(capsCourseID)) {
+						if(Validation.checkIfValidCourseID(capsCourseID)) {
 							if(stringList.isEmpty()) {
 								System.out.println("\nNo student registered in this course.");
 							} else {
@@ -932,7 +923,7 @@ public class AdminUI {
 								return;
 								
 							} 
-							else if (AdminControl.checkIfValidTime(timeInput)) 
+							else if (Validation.checkIfValidTime(timeInput)) 
 							{
 								String[] splitStartTime = timeInput.split("\\:");
 
@@ -960,7 +951,7 @@ public class AdminUI {
 								return;
 								
 							} 
-							else if (AdminControl.checkIfValidTime(timeInput)) {
+							else if (Validation.checkIfValidTime(timeInput)) {
 								String[] splitEndTime = timeInput.split("\\:");
 
 								endTime = new Time(Integer.parseInt(splitEndTime[0]), Integer.parseInt(splitEndTime[1]));
@@ -2006,7 +1997,7 @@ public class AdminUI {
 				return;
 				
 			} 
-			else if (AdminControl.checkIfValidTime(timeInput)) 
+			else if (Validation.checkIfValidTime(timeInput)) 
 			{
 				String[] splitStartTime = timeInput.split("\\:");
 
@@ -2031,7 +2022,7 @@ public class AdminUI {
 				return;
 				
 			} 
-			else if (AdminControl.checkIfValidTime(timeInput)) {
+			else if (Validation.checkIfValidTime(timeInput)) {
 				String[] splitEndTime = timeInput.split("\\:");
 
 				endTime = new Time(Integer.parseInt(splitEndTime[0]), Integer.parseInt(splitEndTime[1]));
@@ -2722,7 +2713,7 @@ public class AdminUI {
 			{
 				return;
 			} 
-			else if (AdminControl.checkIfValidDate(accessDate)) 
+			else if (Validation.checkIfValidDate(accessDate)) 
 			{
 				String[] splitDate = accessDate.split("\\-");
 	
@@ -2749,7 +2740,7 @@ public class AdminUI {
 			{
 				return;
 			}
-			else if(AdminControl.checkIfValidTime(accessTime))
+			else if(Validation.checkIfValidTime(accessTime))
 			{
 			
 			
@@ -2774,10 +2765,9 @@ public class AdminUI {
 			{
 				return;
 			}
-			else if(AdminControl.checkIfValidTime(accessTime))
+			else if(Validation.checkIfValidTime(accessTime))
 			{
 				String[] splitEndTime = accessTime.split("\\:");
-	
 				endTime = new Time(Integer.parseInt(splitEndTime[0]), Integer.parseInt(splitEndTime[1]));
 				break;
 			}
@@ -2927,6 +2917,73 @@ public class AdminUI {
 		System.out.printf("%s added.\n", name);
 
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 

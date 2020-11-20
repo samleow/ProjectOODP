@@ -3,7 +3,7 @@ package control;
 import java.io.*;
 import java.util.*;
 import java.util.Properties;
-import control.Container;
+import control.*;
 import entity.AllEnums.*;
 import entity.*;
 
@@ -124,6 +124,7 @@ public class StudentControl {
 		boolean checkCoursesTook = false;
 		CoursePlan tempCoursePlan = null;
 		boolean addStudents = true;
+		
 
 		//Do a check
 		for(int i = 0; i < studentInfo.getCoursePlan().size(); i++) {
@@ -182,7 +183,7 @@ public class StudentControl {
 									}
 
 									if(timetableClash(tempstudent, null, tempCoursePlan)) {
-										//sendEmail(tempstudent.getName(), tempCoursePlan.getCourseID(), tempstudent.getEmail(), false);
+										EmailNotification.getInstance().sendNotification(tempstudent, Notification.createMessage(tempstudent.getName(), tempCoursePlan.getCourseID(), false));
 										Container.courseSlotsList.get(i).getWaitingList().remove(0);
 										Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
 										System.out.println("Removed students from waiting list as his current timetable clashes.");
@@ -205,7 +206,8 @@ public class StudentControl {
 											if(Container.coursePlanList.get(k).getIndex() == indexno) {
 												tempstudent.getCoursePlan().add(Container.coursePlanList.get(k));
 												Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
-												//sendEmail(tempstudent.getName(), Container.coursePlanList.get(k).getCourseID(), tempstudent.getEmail(), true);
+												
+												EmailNotification.getInstance().sendNotification(tempstudent, Notification.createMessage(tempstudent.getName(), tempCoursePlan.getCourseID(), true));
 												System.out.println("Successfully added student into the Course and send email to notify him/her.");
 												break;
 											}
@@ -273,57 +275,58 @@ public class StudentControl {
 				}
 			}
 		}
-		
 		return false;
 	}
 	
-	public static void sendEmail(String name, String CourseID, String email, boolean add) {
-		String sendMessage = "";
-		final String username = ""; // need to be added
-		final String password = ""; // need to be added
-		
-		if(add) {
-			sendMessage = "Dear " + name + ","
-					+ "\n\n You have been notified that this course " + CourseID + " has been successfully added into your STARSPlanner."
-					+ "\n\n (This is an auto-generated email. Please do not reply directly to this email.)"
-					+ "\n_________________________________________________________________________________________________"
-					+ "\nCONFIDENTIALITY: This email is intended solely for the person(s) named and may be confidential and/or privileged. "
-					+ "If you are not the intended recipient, please delete it, notify us and do not copy, use, or disclose its contents.";
-		} else {
-			sendMessage = "Dear " + name + ","
-					+ "\n\n You have been notified that this course " + CourseID + " is currently clashing with your current other modules. You will be removed from the waiting list."
-					+ "\n\n (This is an auto-generated email. Please do not reply directly to this email.)"
-					+ "\n_________________________________________________________________________________________________"
-					+ "\nCONFIDENTIALITY: This email is intended solely for the person(s) named and may be confidential and/or privileged. "
-					+ "If you are not the intended recipient, please delete it, notify us and do not copy, use, or disclose its contents.";
-		}
-
-		Properties props = new Properties();
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
-
-		Session session = Session.getInstance(props,
-		  new javax.mail.Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(username, password);
-			}
-		  });
-
-		try {
-
-			Message message = new MimeMessage(session);
-			//message.setFrom(new InternetAddress("do-not-reply@gmail.com"));
-			message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse(email)); // to be added an email address
-			message.setSubject("Testing Subject");
-			message.setText(sendMessage);
-
-			Transport.send(message);
-
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
-		}
-	}
+//	public static void sendEmail(String name, String CourseID, String email, boolean add) {
+//		String sendMessage = "";
+//		final String username = "ntu20.cz2002@gmail.com"; // need to be added
+//		final String password = "cz2002@ntu"; // need to be added
+//		
+//		if(add) {
+//			sendMessage = "Dear " + name + ","
+//					+ "\n\n You have been notified that this course " + CourseID + " has been successfully added into your STARS Planner."
+//					+ "\n\n (This is an auto-generated email. Please do not reply directly to this email.)"
+//					+ "\n_________________________________________________________________________________________________"
+//					+ "\nCONFIDENTIALITY: This email is intended solely for the person(s) named and may be confidential and/or privileged. "
+//					+ "If you are not the intended recipient, please delete it, notify us and do not copy, use, or disclose its contents.";
+//		} else {
+//			sendMessage = "Dear " + name + ","
+//					+ "\n\n You have been notified that this course " + CourseID + " is currently clashing with your current other modules. You will be removed from the waiting list."
+//					+ "\n\n (This is an auto-generated email. Please do not reply directly to this email.)"
+//					+ "\n_________________________________________________________________________________________________"
+//					+ "\nCONFIDENTIALITY: This email is intended solely for the person(s) named and may be confidential and/or privileged. "
+//					+ "If you are not the intended recipient, please delete it, notify us and do not copy, use, or disclose its contents.";
+//		}
+//
+//		Properties props = new Properties();
+//		props.put("mail.smtp.auth", "true");
+//		props.put("mail.smtp.starttls.enable", "true");
+//		props.put("mail.smtp.host", "smtp.gmail.com");
+//		props.put("mail.smtp.port", "587");
+//
+//		Session session = Session.getInstance(props,
+//		  new javax.mail.Authenticator() {
+//			protected PasswordAuthentication getPasswordAuthentication() {
+//				return new PasswordAuthentication(username, password);
+//			}
+//		  });
+//
+//		try {
+//
+//			Message message = new MimeMessage(session);
+//			//message.setFrom(new InternetAddress("do-not-reply@gmail.com"));
+//			message.setRecipients(Message.RecipientType.TO,
+//				InternetAddress.parse(email)); // to be added an email address
+//			message.setSubject("STARS Planner Notification");
+//			message.setText(sendMessage);
+//
+//			Transport.send(message);
+//
+//		} catch (MessagingException e) {
+//			throw new RuntimeException(e);
+//		}
+//	}
+	
+	
 }
