@@ -490,6 +490,18 @@ public class AdminControl {
 		return availableSlots;
 	}
 	
+	public static int getTotalSlotsByCourseIndex(int index) {
+		int totalSlots = -1;
+		
+		for(int i = 0; i < Container.courseSlotsList.size(); i++) {
+			if(Container.courseSlotsList.get(i).getCoursePlan().getIndex() == index) {
+				totalSlots = Container.courseSlotsList.get(i).getTotalSlots();
+			}
+		}
+		
+		return totalSlots;
+	}
+	
 	public static boolean checkIfValidIndex(int index) { // not sure if there's a better way to do this
 		
 		boolean check = false;

@@ -117,7 +117,7 @@ public class AdminUI {
 											new Time(Integer.parseInt(endT.nextToken().trim()),Integer.parseInt(endT.nextToken().trim())), Day.DEFAULT);
 
 									AdminControl.setStudentAccessPeriod(matricNo,accessPeriod,accessDate);
-									System.out.println("\nUpdated " + matricNo + " access period");
+									System.out.println("\nUpdated " + matricNo + "'s access period");
 									break;
 								} else {
 									System.out.println("\nTime is invalid.");
@@ -164,11 +164,12 @@ public class AdminUI {
 							
 							if(AdminControl.checkIfValidIndex(index)) {
 								int availableSlots = AdminControl.getNoOfSlotsByCourseIndex(index);
+								int totalSlots = AdminControl.getTotalSlotsByCourseIndex(index);
 								//System.out.println("There are " + availableSlots + " available slots for index " + index + "\n");
 								System.out.println("\nIndex: " + index);
-								System.out.println("Available Slots: " + availableSlots + "\n");
+								System.out.println("Slots: " + availableSlots + "/" + totalSlots + " [Vacancy/Total Size]");
 							} else {
-								System.out.println("\nIndex does not exist currently.");
+								System.out.println("\nIndex does not exist.");
 							}
 						} else {
 							System.out.println("\n'" + sc.next() + "' is not a valid index. Please enter only Integers.");
