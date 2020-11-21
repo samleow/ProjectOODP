@@ -233,9 +233,21 @@ public class Container
 	{
 		for (int i = 0; i < studentList.size(); i++)
 		{
-			if (studentList.get(i).getUserName() == username)
+			if (studentList.get(i).getUserName().equals(username))
 			{
 				return studentList.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public static Admin getAdminByUsername(String username)
+	{
+		for (int i = 0; i < adminList.size(); i++)
+		{
+			if (adminList.get(i).getUserName().equals(username))
+			{
+				return adminList.get(i);
 			}
 		}
 		return null;

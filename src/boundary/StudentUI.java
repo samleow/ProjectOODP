@@ -1,17 +1,15 @@
 package boundary;
 import java.util.Scanner;
-import control.StudentControl;
-
-import control.Container;
-import control.HashingPassword;
+import control.*;
 import entity.*;
 import entity.AllEnums.WeekType;
 
 public class StudentUI {
 
 	public static void studentLogin() {
-		int choice, indexno = -1, cIndex = -1;
+		int choice;
 		boolean run = true;
+		int index;
 
 		System.out.println("Welcome " + StudentControl.studentInfo.getName());
 
@@ -30,22 +28,64 @@ public class StudentUI {
 				choice = sc.nextInt();
 				switch (choice) {
 				case 1: /* (1) *Add Course */
-					System.out.print("Enter the Index Number of the Course to add: ");
-					indexno = sc.nextInt();
-					StudentControl.addCourse(indexno);
+					do {
+						System.out.printf("\nEnter the Index Number of the Course to add (%d to return): ", Container.BREAK_MENU);
+						if(sc.hasNextInt()) { 
+							index = sc.nextInt();
+							if(index == Container.BREAK_MENU) {
+								break;
+							}
+							if(Validation.checkIfValidIndex(index)) {
+								if(!Validation.checkIfStudentTookThisIndex(index)) {
+									if(!Validation.checkIfCourseExempted(index)) {
+										if(!Validation.checkIfStudentInWaitingList(index)) {
+											StudentControl.addCourse(index);
+										break;
+										} else {
+											System.out.println("You are already in the waiting list. \n");
+										}
+									} else {
+										System.out.println("You are exempted from this Course.");
+									}
+								} else {
+									System.out.println("You have take this course. Please enter other course Index No.");
+								}
+							} else {
+								System.out.println("Index does not exist.");
+							}
+						} else {
+							System.out.println("'" + sc.next() + "' is not a valid index. Please enter only Integers.");
+						}
+					} while (true);
 					break;
+
 					
 				case 2: /* (2) *Drop Course */
-					System.out.println("Display Current Courses you have took");
-					for(int i = 0; i < StudentControl.studentInfo.getCoursePlan().size(); i++) 
-					{
-						System.out.println("CourseID: " + StudentControl.studentInfo.getCoursePlan().get(i).getCourseID() + " " + "IndexNo: " + StudentControl.studentInfo.getCoursePlan().get(i).getIndex());
-					}
-				
-					System.out.print("Enter the Index Number of the Course to drop: ");
-					indexno = sc.nextInt();
-					StudentControl.dropCourse(indexno);
+					do {
+						StudentControl.displayCurrentAndWaitingCourses();
+						System.out.printf("Enter the Index Number of the Course to drop (%d to return): ", Container.BREAK_MENU);
+						if(sc.hasNextInt()) { 
+							index = sc.nextInt();
+							if(index == Container.BREAK_MENU) {
+								break;
+							}
+							if(Validation.checkIfValidIndex(index)) {
+								if(Validation.checkIfStudentTookThisIndex(index) || (Validation.checkIfStudentInWaitingList(index))) {
+									StudentControl.dropCourse(index);
+									break;
+								} else {
+									System.out.println("Index not found. Please enter Index No. above.\n");
+								}
+							}
+							else {
+								System.out.println("Index does not exist.\n");
+							}
+						} else {
+							System.out.println("'" + sc.next() + "' is not a valid index. Please enter only Integers.\n");
+						}
+					} while (true);
 					break;
+					
 					
 				case 3: /* (3) Check/Print Courses Registered*/
 					StudentControl.displayCourse();
@@ -176,7 +216,7 @@ public class StudentUI {
 							System.out.println("No vacancy for new course index!");
 							continue;
 						}
-						if(StudentControl.timetableClash(StudentControl.studentInfo, currCP, newCS.getCoursePlan()))
+						if(StudentControl.timetableClash(StudentControl.studentInfo.getCoursePlan(), currCP, newCS.getCoursePlan()))
 						{
 							System.out.println("Course index no. clashes with timetable!");
 							continue;
@@ -478,20 +518,18 @@ public class StudentUI {
 						password = new String(passMask);
 					}
 					
-					password = HashingPassword.encryptThisString(password);
+					password = AccountControl.encryptThisString(password);
 					
-					if(LoginAccount.getFileInfo(userName, password))
+					if(AccountControl.accountLoginSuccess(userName, password, false))
 						st2 = Container.getStudentByUsername(userName);
 					else
 					{
-						System.out.println();
 						System.out.println("You have enter the wrong Username or Password");
 						continue;
 					}
 					
 					if(st2 == null)
 					{
-						System.out.println();
 						System.out.println("Student account not found!");
 						continue;
 					}
@@ -520,13 +558,13 @@ public class StudentUI {
 							}
 							
 							// if timetable clash for student 1
-							if(StudentControl.timetableClash(StudentControl.studentInfo, currCP, newCP))
+							if(StudentControl.timetableClash(StudentControl.studentInfo.getCoursePlan(), currCP, newCP))
 							{
 								System.out.println("Course index no. clashes with timetable for Student " + StudentControl.studentInfo.getUserName() + "!");
 								continue;
 							}
 							// if timetable clash for student 2
-							else if(StudentControl.timetableClash(st2, newCP, currCP))
+							else if(StudentControl.timetableClash(st2.getCoursePlan(), newCP, currCP))
 							{
 								System.out.println("Course index no. clashes with timetable for Student " + st2.getUserName() + "!");
 								continue;

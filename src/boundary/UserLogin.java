@@ -2,10 +2,7 @@ package boundary;
 import java.io.IOException;
 import java.util.Scanner;
 
-import entity.LoginAccount;
-import control.Container;
-import control.HashingPassword;
-import control.StudentControl;
+import control.*;
 
 public class UserLogin {
 
@@ -24,16 +21,7 @@ public class UserLogin {
 		}catch(IOException e)
 		{
 			System.out.println("Reading of datafiles failed!");
-		}
-		
-		// for checking
-//		for (int i=0;i<Container.studentList.size();i++)
-//		{
-//			System.out.println(Container.studentList.get(i));
-//			System.out.println(Container.studentList.get(i).getAccessPeriod());
-//			System.out.println(Container.studentList.get(i).getAccessDate());
-//		}
-		
+		}		
 
 		int choice;
 		boolean run = true;
@@ -68,26 +56,58 @@ public class UserLogin {
 						password = new String(passMask);
 					}
 
-					password = HashingPassword.encryptThisString(password);
+					password = AccountControl.encryptThisString(password);
 
 					System.out.println();
-					if(LoginAccount.getFileInfo(userName, password))
+					if(AccountControl.accountLoginSuccess(userName, password, false))
 					{
 						// After login successful
+						System.out.println();
 						StudentControl.saveStudentInfo(userName);
 						StudentUI.studentLogin();
 					}
 					else
 					{
+						System.out.println();
 						System.out.println("You have enter the wrong Username or Password");
 					}
 					break;
+					
 				case 2: /* (2) Admin Login*/
 
 					sc.nextLine(); // Consume newline left-over
 					
-					// After login successful
-					AdminUI.adminLogin();
+					
+					System.out.print("Enter your Admin ID: ");
+					userName = sc.next(); 
+					
+					System.out.print("Enter your Password: ");
+					
+					if(Container.DEBUG_MODE)
+						password = sc.next();
+					else
+					{
+						// For masking password.
+						char[] passMask = System.console().readPassword(); 
+						password = new String(passMask);
+					}
+					
+					password = AccountControl.encryptThisString(password);
+					
+					System.out.println();
+					if(AccountControl.accountLoginSuccess(userName, password, true))
+					{
+						// After login successful
+						System.out.println();
+						AdminControl.saveAdminInfo(userName);
+						AdminUI.adminLogin();
+					}
+					else
+					{
+						System.out.println("You have enter the wrong Username or Password");
+					}
+					
+					
 					break;
 				case 3: /* (3) Exit*/
 					System.out.println("Quit...");
