@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.StringTokenizer;
 
+import entity.*;
+
 public class Validation {
 	
 	public static boolean checkIfValidCourseID(String courseID) {
@@ -17,7 +19,6 @@ public class Validation {
 				break;
 			}
 		}
-		
 		return check;
 	}
 	
@@ -30,7 +31,6 @@ public class Validation {
 				break;
 			}
 		}
-		
 		return check;
 	}
 	
@@ -40,10 +40,8 @@ public class Validation {
 //		     System.out.println("Invalid time string: " + time);
 			check= false;
 		} 
-		
 		return check;
 	}
-	
 	
 	
 	public static boolean checkIfValidMatricNo(String matricNo) {
@@ -58,7 +56,7 @@ public class Validation {
 		return check;
 	}
 	
-public static boolean checkIfValidDate(String strAccessDate) {
+	public static boolean checkIfValidDate(String strAccessDate) {
 		
 		if(!strAccessDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
 			return false;
@@ -117,4 +115,59 @@ public static boolean checkIfValidDate(String strAccessDate) {
             return false;
 		}
 	}
+	
+	
+	public static boolean checkIfStudentTookThisIndex(int index) {
+		boolean check = false;
+		for(int i = 0; i < StudentControl.studentInfo.getCoursePlan().size(); i++) {
+			if(StudentControl.studentInfo.getCoursePlan().get(i).getIndex() == index) {
+				check = true;
+				break;
+			}
+		}
+		return check;
+	}
+	
+	
+	public static boolean checkIfCourseExempted(int index) {
+		boolean check = false;
+		outerloop:
+			for(int i = 0; i < StudentControl.studentInfo.getExemptedCourseList().size(); i++) {
+				for(int j = 0; j < Container.coursePlanList.size(); j++) {
+					//Check for same courseID of the Container Course Plan List
+					if(StudentControl.studentInfo.getExemptedCourseList().get(i).equals(Container.coursePlanList.get(j).getCourseID())) {
+						//Check if indexno same a not
+						if(Container.coursePlanList.get(j).getIndex() == index) {
+							check = true;
+							break outerloop;
+						}
+					}
+				}
+			}
+		return check;
+	}
+	
+	
+	public static boolean checkIfStudentInWaitingList(int index) {
+		boolean check = false; 
+		outerloop:
+			for (int i = 0; i < Container.courseSlotsList.size(); i++ ) {
+				//Specify index
+				if(Container.courseSlotsList.get(i).getCoursePlan().getIndex() == index) {
+					//Check if the waiting list got students a not
+					if(Container.courseSlotsList.get(i).getWaitingList().size() != 0) {
+						//Loop through the waiting list
+						for(int y = 0; y < Container.courseSlotsList.get(i).getWaitingList().size(); y++) {
+							//Check if student matric no matches with the ones in the waiting list
+							if(StudentControl.studentInfo.getMatricNo().equals(Container.courseSlotsList.get(i).getWaitingList().get(y))) {
+								check = true;
+								break outerloop; 
+							}
+						}
+					}
+				}
+			}
+		return check;
+	}
+
 }

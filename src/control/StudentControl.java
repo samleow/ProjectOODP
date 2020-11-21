@@ -31,41 +31,11 @@ public class StudentControl {
 	public static void addCourse(int indexno)
 	{
 		//validation of checking only integer 
-		
-		boolean checkCoursesTook = false;
-		boolean checkCoursesExempted = false;
-		boolean timetableClash = false;
-		boolean waitingList = false;
-		
-		//Check whether user got take the Course already a not
-		for(int i = 0; i < studentInfo.getCoursePlan().size(); i++) {
-			if(studentInfo.getCoursePlan().get(i).getIndex() == indexno) {
-				System.out.println("You have took this Course already.\n");
-				checkCoursesTook = true;
-				break;
-			}
-		}
-		
-		//Check whether user is exempted from the Course a not
-		outerloop:
-		for(int i = 0; i < studentInfo.getExemptedCourseList().size(); i++) {
-			for(int j = 0; j < Container.coursePlanList.size(); j++) {
-				//Check for same courseID of the Container Course Plan List
-				if(studentInfo.getExemptedCourseList().get(i).equals(Container.coursePlanList.get(j).getCourseID())) {
-					//Check if indexno same a not
-					if(Container.coursePlanList.get(j).getIndex() == indexno) {
-						System.out.println("You are exempted from this Course already.\n");
-						checkCoursesExempted = true;
-						break outerloop;
-					}
-				}
-			}
-		}
-		
 
-		if(!checkCoursesTook && !checkCoursesExempted) {
+		boolean waitingList = false;
+		CoursePlan tempcourseplan = null;
+	
 			//Get the user input of indexno information
-			CoursePlan tempcourseplan = null;
 			for(int i = 0; i < Container.coursePlanList.size(); i++) {
 				if(Container.coursePlanList.get(i).getIndex() == indexno) {
 					tempcourseplan = Container.coursePlanList.get(i);
@@ -74,74 +44,86 @@ public class StudentControl {
 			}
 
 			//Check for timetable clash
-			if(!timetableClash(studentInfo, null, tempcourseplan)) {
-			//Add Student Matric No into the CourseSlots slotList
-				for (int k=0;k < Container.courseSlotsList.size();k++)
-				{
-					if(Container.courseSlotsList.get(k).getCoursePlan().getIndex() == indexno) {
-						//If the Course got no vacancy, put the Student on Waiting List
-						if(Container.courseSlotsList.get(k).getSlotList().size()<Container.courseSlotsList.get(k).getTotalSlots()) {
-							Container.courseSlotsList.get(k).getSlotList().add(studentInfo.getMatricNo());
-							break;
-						}
-						else {
-							Container.courseSlotsList.get(k).getWaitingList().add(studentInfo.getMatricNo());
-							System.out.println("No Vacancy Available. You will be put on the Waiting List \n");
-							waitingList = true;
-							break;
+			if(!timetableClash(waitingListCourses(), null, tempcourseplan)) {
+				if(!timetableClash(studentInfo.getCoursePlan(), null, tempcourseplan)) {
+				//Add Student Matric No into the CourseSlots slotList
+					for (int k=0;k < Container.courseSlotsList.size();k++)
+					{
+						if(Container.courseSlotsList.get(k).getCoursePlan().getIndex() == indexno) {
+							//If the Course got no vacancy, put the Student on Waiting List
+							if(Container.courseSlotsList.get(k).getSlotList().size()<Container.courseSlotsList.get(k).getTotalSlots()) {
+								Container.courseSlotsList.get(k).getSlotList().add(studentInfo.getMatricNo());
+								break;
+							}
+							else {
+								Container.courseSlotsList.get(k).getWaitingList().add(studentInfo.getMatricNo());
+								System.out.println("No Vacancy Available. You will be put on the Waiting List \n");
+								waitingList = true;
+								break;
+							}
 						}
 					}
-				}
-				//Overwrite the latest data into the CourseSlots.txt
-				Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
-				
-
-				//If not in waitingList then add the Course in the Student Class CoursePlan List
-				if(!waitingList) {
+					//Overwrite the latest data into the CourseSlots.txt
+					Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
 					
-					//Adding the Index No
-		    		for (int k=0;k < Container.coursePlanList.size();k++)
-		    		{
-						if(Container.coursePlanList.get(k).getIndex() == indexno) {
-							//It is link and reference
-							studentInfo.getCoursePlan().add(Container.coursePlanList.get(k));
-							//Overwrite the latest data into the StudentAccount.txt
-							Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
-							break;
-						}
-		    		}
-		    		System.out.println("Successfully Added the Course \n");
+	
+					//If not in waitingList then add the Course in the Student Class CoursePlan List
+					if(!waitingList) {
+						
+						//Adding the Index No
+			    		for (int k=0;k < Container.coursePlanList.size();k++)
+			    		{
+							if(Container.coursePlanList.get(k).getIndex() == indexno) {
+								//It is link and reference
+								studentInfo.getCoursePlan().add(Container.coursePlanList.get(k));
+								//Overwrite the latest data into the StudentAccount.txt
+								Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
+								break;
+							}
+			    		}
+			    		System.out.println("Successfully Added the Course \n");
+					}
 				}
-			}
-			else {
-				System.out.println("TimeTable Clashes. Failed to add the Course.\n");
+				else {
+					System.out.println("Current TimeTable Clashes. Failed to add the Course.\n");
+				}
+			} else {
+				System.out.println("Current courses in the waiting list clashes. Failed to add the Course.\n");
 			}
 		}
-	}
+
+	
 	
 	public static void dropCourse(int indexno)
 	{
-		boolean checkCoursesTook = false;
 		CoursePlan tempCoursePlan = null;
 		boolean addStudents = true;
+		boolean removeMatricNoInWaitingList = false; 
 		
-
-		//Do a check
-		for(int i = 0; i < studentInfo.getCoursePlan().size(); i++) {
-			if(studentInfo.getCoursePlan().get(i).getIndex() == indexno) {
-				tempCoursePlan = studentInfo.getCoursePlan().get(i);
-				checkCoursesTook = true;
-				break;
+			for(int i = 0; i < StudentControl.studentInfo.getCoursePlan().size(); i++) {
+				if(StudentControl.studentInfo.getCoursePlan().get(i).getIndex() == indexno) {
+					tempCoursePlan = StudentControl.studentInfo.getCoursePlan().get(i);
+					break;
+				}
 			}
-		}
+			
+			if(waitingListCourses().size() != 0) {
+				for(int y = 0; y < Container.courseSlotsList.size(); y++) {
+					if(Container.courseSlotsList.get(y).getCoursePlan().getIndex() == indexno) {
+						Container.courseSlotsList.get(y).getWaitingList().remove(studentInfo.getMatricNo());
+						Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
+						removeMatricNoInWaitingList = true;		
+					}
+				}
+			}
+			
+			if(!removeMatricNoInWaitingList) {
 		
-		if(checkCoursesTook) {
 			//Remove CoursePlan from List<CoursePlan> in Student class
     		for (int k=0;k < Container.coursePlanList.size();k++)
     		{
 				if(Container.coursePlanList.get(k).getIndex() == indexno) {
 					studentInfo.getCoursePlan().remove(Container.coursePlanList.get(k));
-					//Hide first
 					Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
 					break;
 				}
@@ -152,7 +134,6 @@ public class StudentControl {
     		{
     			if(Container.courseSlotsList.get(k).getCoursePlan().getIndex() == indexno) {
 					Container.courseSlotsList.get(k).getSlotList().remove(studentInfo.getMatricNo());
-					//Hide first
 					Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
 					break;
     			}
@@ -182,10 +163,12 @@ public class StudentControl {
 										}
 									}
 
-									if(timetableClash(tempstudent, null, tempCoursePlan)) {
-										EmailNotification.getInstance().sendNotification(tempstudent, Notification.createMessage(tempstudent.getName(), tempCoursePlan.getCourseID(), false));
+									if(timetableClash(tempstudent.getCoursePlan(), null, tempCoursePlan)) {
 										Container.courseSlotsList.get(i).getWaitingList().remove(0);
 										Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
+										System.out.println("Sending email........");
+										EmailNotification.getInstance().sendNotification(tempstudent, Notification.createMessage(tempstudent.getName(), tempCoursePlan.getCourseID(), false));
+										System.out.println("Sent successfully");
 										System.out.println("Removed students from waiting list as his current timetable clashes.");
 									}
 									else {
@@ -206,8 +189,9 @@ public class StudentControl {
 											if(Container.coursePlanList.get(k).getIndex() == indexno) {
 												tempstudent.getCoursePlan().add(Container.coursePlanList.get(k));
 												Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
-												
+												System.out.println("Sending email........");
 												EmailNotification.getInstance().sendNotification(tempstudent, Notification.createMessage(tempstudent.getName(), tempCoursePlan.getCourseID(), true));
+												System.out.println("Sent successfully");
 												System.out.println("Successfully added student into the Course and send email to notify him/her.");
 												break;
 											}
@@ -221,14 +205,13 @@ public class StudentControl {
 						// break while loop if the slot list is full
 						else addStudents = false;
 					}
+    			}
 				
     			}
 			}
-    		System.out.println("Successfully Removed the Course \n");
-		} else {
-			System.out.println("You never take this Course \n");
+    		System.out.println("Successfully Removed the Course. \n");
 		}
-	}
+	
 
 	public static void displayCourse()
 	{
@@ -250,21 +233,21 @@ public class StudentControl {
 			}
 			System.out.println("CourseID: " + studentInfo.getCoursePlan().get(i).getCourseID() +  
 					" | AU: " + AU  + " | Course Type: " + courseType + 
-					" | Index No: " + studentInfo.getCoursePlan().get(i).getIndex());
+					" | Index No: " + studentInfo.getCoursePlan().get(i).getIndex() + "\n");
 		}
 	}
 	
-	public static boolean timetableClash(Student s, CoursePlan oldCP, CoursePlan newCP)
+	public static boolean timetableClash(List<CoursePlan> s, CoursePlan oldCP, CoursePlan newCP)
 	{
 		Lesson l1,l2;
-		for(int i=0;i<s.getCoursePlan().size();i++)
+		for(int i=0;i<s.size();i++)
 		{
-			if(s.getCoursePlan().get(i).equals(oldCP))
+			if(s.get(i).equals(oldCP))
 				continue;
 			
-			for(int j=0;j<s.getCoursePlan().get(i).getLessons().size();j++)
+			for(int j=0;j<s.get(i).getLessons().size();j++)
 			{
-				l1 = s.getCoursePlan().get(i).getLessons().get(j);
+				l1 = s.get(i).getLessons().get(j);
 				for(int k=0;k<newCP.getLessons().size();k++)
 				{
 					l2 = newCP.getLessons().get(k);
@@ -277,6 +260,73 @@ public class StudentControl {
 		}
 		return false;
 	}
+	
+//			//Get the user input of indexno information
+//	for(int i = 0; i < Container.coursePlanList.size(); i++) {
+//		if(Container.coursePlanList.get(i).getIndex() == indexno) {
+//			tempcourseplan = Container.coursePlanList.get(i);
+//			break;
+//		}
+//	}
+	
+	//Check if user is in waiting list courses
+//	outerloop:
+//	for (int i = 0; i < Container.courseSlotsList.size(); i++ ) {
+//		//Get specify index
+//		if(Container.courseSlotsList.get(i).getCoursePlan().getIndex() == indexno) {
+//			//Check if the waiting list got students a not
+//			if(Container.courseSlotsList.get(i).getWaitingList().size() != 0) {
+//				//Loop through the waiting list
+//				for(int y = 0; y < Container.courseSlotsList.get(i).getWaitingList().size(); y++) {
+//					//Check if student matric no matches with the ones in the waiting list
+//					if(studentInfo.getMatricNo().equals(Container.courseSlotsList.get(i).getWaitingList().get(y))) {
+//						System.out.println("You are already in the waiting list. \n");
+//						insideWaitingList = true;
+//						break outerloop; 
+//					}
+//				}
+//			}
+//		}
+//	}
+	
+	public static List<CoursePlan> waitingListCourses() {
+		List<CoursePlan> waitingList = new ArrayList<CoursePlan>();
+		
+		for (int i = 0; i < Container.courseSlotsList.size(); i++ ) {
+			if(Container.courseSlotsList.get(i).getWaitingList().size() != 0) {
+				for(int y = 0; y < Container.courseSlotsList.get(i).getWaitingList().size(); y++) {
+//					//Check if student matric no matches with the ones in the waiting list
+					if(studentInfo.getMatricNo().equals(Container.courseSlotsList.get(i).getWaitingList().get(y))) {
+						waitingList.add(Container.courseSlotsList.get(i).getCoursePlan());
+					}
+				}
+			}
+		}
+		return waitingList;
+	}
+	
+	public static void displayCurrentAndWaitingCourses() {
+		
+		System.out.println("Display Current Courses you have took");
+		for(int i = 0; i < studentInfo.getCoursePlan().size(); i++){
+			System.out.println("CourseID: " + studentInfo.getCoursePlan().get(i).getCourseID() + " | " + "IndexNo: " + studentInfo.getCoursePlan().get(i).getIndex());
+		}
+		System.out.println("");
+		
+		System.out.println("Display Waiting List Courses");
+		if (waitingListCourses().size() == 0) {
+			System.out.println("No courses in waiting list");
+		} else {
+			for(int i = 0; i < waitingListCourses().size(); i++){
+				System.out.println("CourseID: " + waitingListCourses().get(i).getCourseID() + " | " + "IndexNo: " + waitingListCourses().get(i).getIndex());
+			}
+		}
+		System.out.println("");
+	}
+	
+	
+	
+	
 	
 //	public static void sendEmail(String name, String CourseID, String email, boolean add) {
 //		String sendMessage = "";
