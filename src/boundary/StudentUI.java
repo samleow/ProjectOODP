@@ -2,7 +2,6 @@ package boundary;
 import java.util.Scanner;
 import control.*;
 import entity.*;
-import entity.AllEnums.WeekType;
 
 public class StudentUI {
 
@@ -88,6 +87,7 @@ public class StudentUI {
 					
 					
 				case 3: /* (3) Check/Print Courses Registered*/
+					System.out.println("Display Current Courses you have registered");
 					StudentControl.displayCourse();
 
 					break;
@@ -156,7 +156,6 @@ public class StudentUI {
 		}
 	}
 	
-	// TODO S: Menu going back to previous error input instead of back to start
 	private static void changeIndexNoMenu(Scanner sc)
 	{
 		int indexno, cIndex;
@@ -168,6 +167,7 @@ public class StudentUI {
 			cIndex = -1;
 			System.out.println();
 			System.out.println("(5) Change Index Number of Course");
+			StudentControl.displayCourse();
 			System.out.printf("Enter course index no. to change (%d to return): ",Container.BREAK_MENU);
 			if (sc.hasNextInt())
 			{
@@ -221,7 +221,11 @@ public class StudentUI {
 							System.out.println("Course index no. clashes with timetable!");
 							continue;
 						}
-						// TODO S: [NEED DO?] check if new course index clash with waiting list timetable
+						if(StudentControl.timetableClash(StudentControl.waitingListCourses(), currCP, newCS.getCoursePlan()))
+						{
+							System.out.println("Current courses in the waiting list clashes. Failed to add the Course.");
+							continue;
+						}
 						
 						// student update
 						StudentControl.studentInfo.getCoursePlan().remove(currCP);
@@ -229,12 +233,6 @@ public class StudentUI {
 						
 						// course slots update
 						newCS.getSlotList().add(StudentControl.studentInfo.getMatricNo());
-						// TODO S: [WIP] if user is in new course slot waiting list, remove from waiting list after add
-						// if student was already in waiting list for this course, remove from waiting list
-						// should search through entire courseSlots list to check for every index of same course,
-						// not just for that particular index
-//						if(newCS.getWaitingList().contains(StudentControl.studentInfo.getMatricNo()))
-//							newCS.getWaitingList().remove(StudentControl.studentInfo.getMatricNo());
 						
 						// reusing newCS to update old courseSlot
 						newCS = Container.getCourseSlotByIndex(cIndex);
@@ -245,12 +243,29 @@ public class StudentUI {
 							continue;
 						}
 						newCS.getSlotList().remove(StudentControl.studentInfo.getMatricNo());
-						// TODO S: [WIP HALTED] Update course slot waiting list -> move user into courseslot to fill vacancy
+						
+						// TODO S: [CHECK IF WORKING] Update course slot waiting list -> move user into courseslot to fill vacancy
+						if(newCS.getWaitingList().isEmpty() == false)
+						{
+							// add first student in waitingList to slotList
+							newCS.getSlotList().add(newCS.getWaitingList().get(0));
+							
+							// remove the first index of the waiting list
+							newCS.getWaitingList().remove(0);
+							
+							// TODO S: [CHECK IF WORKING] Email notification on vacancy change
+							System.out.println("Sending email........");
+							EmailNotification.getInstance().sendNotification(StudentControl.studentInfo, Notification.createMessage(StudentControl.studentInfo.getName(), newCS.getCoursePlan().getCourseID(), true));
+							System.out.println("Sent successfully");					
+
+							//update the student Account 
+							StudentControl.studentInfo.getCoursePlan().add(newCS.getCoursePlan());
+						}
 						
 						// saving changes to text file
 						Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
 						Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
-												
+						
 						System.out.printf("Index no. for Course %s successfully set to %d!\n",currCP.getCourseID(),indexno);
 						break outerloop;
 					}
@@ -270,198 +285,6 @@ public class StudentUI {
 		}
 	}
 	
-	// TODO S: clean up old code after replacement
-//	private static void swopIndexMenu(Scanner sc)
-//	{
-//		boolean op6 = true;
-//		String userName, password;
-//		Student st2;
-//		int indexno, cIndex;
-//		do {
-//			// TODO S: Menu going back to previous error input instead of back to start
-//			indexno = -1;
-//			cIndex = -1;
-//			st2 = null;
-//			System.out.println("(6) Swop Index Number with Another Student");
-//			System.out.printf("Enter course index no. to swop (%d to return): ", Container.BREAK_MENU);
-//			if (sc.hasNextInt())
-//			{
-//				cIndex = sc.nextInt();
-//				if(cIndex==Container.BREAK_MENU)
-//				{
-//					op6=false;
-//					break;
-//				}
-//
-//				CoursePlan currCP = null;
-//				for(int i=0;i<StudentControl.studentInfo.getCoursePlan().size();i++)
-//				{
-//					if(StudentControl.studentInfo.getCoursePlan().get(i).getIndex()==cIndex)
-//					{
-//						currCP = StudentControl.studentInfo.getCoursePlan().get(i);
-//						break;
-//					}
-//				}
-//
-//				if(currCP==null)
-//				{
-//					System.out.println("Course index no. not registered!");
-//					continue;
-//				}
-//
-//				System.out.println("\tFOR PEER (STUDENT 2):");
-//				System.out.printf("Please enter user name (%d to return): ", Container.BREAK_MENU);
-//				userName = sc.next();
-//				if(userName.equals(""+Container.BREAK_MENU))
-//				{
-//					op6=false;
-//					break;
-//				}
-//				else if(userName.equals(StudentControl.studentInfo.getUserName()))
-//				{
-//					System.out.println("You have entered the same username as the one currently logged in!");
-//					continue;
-//				}
-//				
-//				System.out.print("Enter your Password: ");
-//				
-//				if(Container.DEBUG_MODE)
-//					password = sc.next();
-//				else
-//				{
-//					// For masking password.
-//					char[] passMask = System.console().readPassword(); 
-//					password = new String(passMask);
-//				}
-//
-//				password = HashingPassword.encryptThisString(password);
-//				
-//				if(LoginAccount.getFileInfo(userName, password))
-//				{
-//					// After login successful
-//					for(int i=0;i<Container.studentList.size();i++)
-//					{
-//						if(Container.studentList.get(i).getUserName().equals(userName))
-//						{
-//							st2 = Container.studentList.get(i);
-//							break;
-//						}
-//					}
-//				}
-//				else
-//				{
-//					System.out.println("You have enter the wrong Username or Password");
-//					continue;
-//				}
-//				
-//				if(st2 == null)
-//				{
-//					System.out.println("Student account not found!");
-//					continue;
-//				}
-//
-//				System.out.printf("Enter student 2's course index no. to swop (%d to return): ", Container.BREAK_MENU);
-//				if (sc.hasNextInt())
-//				{
-//					indexno = sc.nextInt();
-//					if(indexno==Container.BREAK_MENU)
-//					{
-//						op6=false;
-//						break;
-//					}
-//					
-//					if(cIndex == indexno)
-//					{
-//						System.out.println("Same course index no. selected!");
-//						continue;
-//					}
-//					
-//					CoursePlan newCP = null;
-//					for(int i=0;i<st2.getCoursePlan().size();i++)
-//					{
-//						if(st2.getCoursePlan().get(i).getIndex()==indexno)
-//						{
-//							newCP = st2.getCoursePlan().get(i);
-//							break;
-//						}
-//					}
-//					
-//					if(newCP==null)
-//					{
-//						System.out.println("Course index no. not registered for student 2!");
-//						continue;
-//					}
-//					
-//					if(StudentControl.timetableClash(StudentControl.studentInfo, currCP, newCP))
-//					{
-//						System.out.println("Course index no. clashes with timetable for Student " + StudentControl.studentInfo.getUserName() + "!");
-//						continue;
-//					}
-//					else if(StudentControl.timetableClash(st2, newCP, currCP))
-//					{
-//						System.out.println("Course index no. clashes with timetable for Student " + st2.getUserName() + "!");
-//						continue;
-//					}
-//					
-//					System.out.println("Swopping ...");
-//					
-//					// student update
-//					StudentControl.studentInfo.getCoursePlan().remove(currCP);
-//					StudentControl.studentInfo.getCoursePlan().add(newCP);
-//					st2.getCoursePlan().remove(newCP);
-//					st2.getCoursePlan().add(currCP);
-//					
-//					// course slots update
-//					for(int i=0;i<Container.courseSlotsList.size();i++)
-//					{
-//						if(Container.courseSlotsList.get(i).getCoursePlan().equals(currCP))
-//						{
-//							Container.courseSlotsList.get(i).getSlotList().remove(StudentControl.studentInfo.getMatricNo());
-//							Container.courseSlotsList.get(i).getSlotList().add(st2.getMatricNo());
-//						}
-//						else if(Container.courseSlotsList.get(i).getCoursePlan().equals(newCP))
-//						{
-//							Container.courseSlotsList.get(i).getSlotList().remove(st2.getMatricNo());
-//							Container.courseSlotsList.get(i).getSlotList().add(StudentControl.studentInfo.getMatricNo());
-//						}
-//					}
-//					
-//					// saving changes to text file
-//					Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
-//					Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
-//					
-//					if(Container.DEBUG_MODE)
-//					{
-//						System.out.println(StudentControl.studentInfo.getCoursePlan());
-//						System.out.println(st2.getCoursePlan());
-//						for(int i=0;i<Container.courseSlotsList.size();i++)
-//						{
-//							System.out.println(Container.courseSlotsList.get(i).getCoursePlan().getCourseID() + ":\t"
-//									+ Container.courseSlotsList.get(i).getSlotList());
-//						}
-//					}
-//
-//					System.out.println("Successfully swopped indexes!");
-//					op6=false;
-//					break;
-//				}
-//				else
-//				{
-//					System.out.println("Invalid input for course index no.!");
-//					// Clear sc
-//					sc.next();
-//				}
-//			}
-//			else
-//			{
-//				System.out.println("Invalid input for course index no.!");
-//				// Clear sc
-//				sc.next();
-//			}
-//		}
-//		while(op6);
-//	}
-	
 	private static void swopIndexMenu(Scanner sc)
 	{
 		String userName, password;
@@ -477,13 +300,14 @@ public class StudentUI {
 			st2 = null;
 			System.out.println();
 			System.out.println("(6) Swop Index Number with Another Student");
+			StudentControl.displayCourse();
 			System.out.printf("Enter course index no. to swop (%d to return): ", Container.BREAK_MENU);
 			if (sc.hasNextInt())
 			{
 				cIndex = sc.nextInt();
 				if(cIndex==Container.BREAK_MENU)
 					break outerloop;
-
+				
 				currCP = Container.getCoursePlanByIndex(cIndex, StudentControl.studentInfo.getCoursePlan());
 				if(currCP==null)
 				{
@@ -537,6 +361,7 @@ public class StudentUI {
 					while(true)
 					{
 						System.out.println();
+						StudentControl.displayCourse(st2);
 						System.out.printf("Enter student 2's course index no. to swop (%d to return): ", Container.BREAK_MENU);
 						if (sc.hasNextInt())
 						{
@@ -563,13 +388,22 @@ public class StudentUI {
 								System.out.println("Course index no. clashes with timetable for Student " + StudentControl.studentInfo.getUserName() + "!");
 								continue;
 							}
+							else if(StudentControl.timetableClash(StudentControl.waitingListCourses(), currCP, newCP))
+							{
+								System.out.println("Current courses in the waiting list clashes for Student" + StudentControl.studentInfo.getUserName() + ". Failed to add the Course.");
+								continue;
+							}
 							// if timetable clash for student 2
 							else if(StudentControl.timetableClash(st2.getCoursePlan(), newCP, currCP))
 							{
 								System.out.println("Course index no. clashes with timetable for Student " + st2.getUserName() + "!");
 								continue;
 							}
-							// TODO S: [NEED DO?] check if new course index clash with waiting list timetable for both students
+							else if(StudentControl.timetableClash(StudentControl.waitingListCourses(st2), newCP, currCP))
+							{
+								System.out.println("Current courses in the waiting list clashes for Student" + st2.getUserName() + ". Failed to add the Course.");
+								continue;
+							}
 							
 							System.out.println("Swopping ...");
 							
@@ -578,9 +412,6 @@ public class StudentUI {
 							StudentControl.studentInfo.getCoursePlan().add(newCP);
 							st2.getCoursePlan().remove(newCP);
 							st2.getCoursePlan().add(currCP);
-							
-							// TODO S: [WIP] remove student(s) from waiting list if they are inside
-							// similar to case 5
 							
 							// course slots update
 							for(int i=0;i<Container.courseSlotsList.size();i++)
@@ -600,19 +431,7 @@ public class StudentUI {
 							// saving changes to text file
 							Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
 							Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
-							
-							// TODO S: do proper checks on courseslots after proper test cases population
-							if(Container.DEBUG_MODE)
-							{
-								System.out.println(StudentControl.studentInfo.getCoursePlan());
-								System.out.println(st2.getCoursePlan());
-								for(int i=0;i<Container.courseSlotsList.size();i++)
-								{
-									System.out.println(Container.courseSlotsList.get(i).getCoursePlan().getCourseID() + ":\t"
-											+ Container.courseSlotsList.get(i).getSlotList());
-								}
-							}
-							
+														
 							System.out.println("Successfully swopped indexes!");
 							break outerloop;
 						}

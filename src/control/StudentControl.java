@@ -211,13 +211,11 @@ public class StudentControl {
 			}
     		System.out.println("Successfully Removed the Course. \n");
 		}
-	
 
 	public static void displayCourse()
 	{
 		CourseType courseType = CourseType.DEFAULT;
 		int AU = -1;
-		System.out.println("Display Current Courses you have registered");
 		
 		//Need to do like this as studentInfo.getCoursePlan().get(i).getCourse() give me NULL
 		for(int i = 0; i < studentInfo.getCoursePlan().size(); i++) 
@@ -234,6 +232,30 @@ public class StudentControl {
 			System.out.println("CourseID: " + studentInfo.getCoursePlan().get(i).getCourseID() +  
 					" | AU: " + AU  + " | Course Type: " + courseType + 
 					" | Index No: " + studentInfo.getCoursePlan().get(i).getIndex() + "\n");
+		}
+	}
+	
+	//overload
+	public static void displayCourse(Student student)
+	{
+		CourseType courseType = CourseType.DEFAULT;
+		int AU = -1;
+		
+		//Need to do like this as studentInfo.getCoursePlan().get(i).getCourse() give me NULL
+		for(int i = 0; i < student.getCoursePlan().size(); i++) 
+		{
+			for(int j = 0; j < Container.courseList.size(); j++) 
+			{
+				if(student.getCoursePlan().get(i).getCourseID().equals(Container.courseList.get(i).getCourseID()))
+				{ 
+					AU = Container.courseList.get(i).getCourseAU();
+					courseType = Container.courseList.get(i).getCourseType();
+					break;
+				}
+			}
+			System.out.println("CourseID: " + student.getCoursePlan().get(i).getCourseID() +  
+					" | AU: " + AU  + " | Course Type: " + courseType + 
+					" | Index No: " + student.getCoursePlan().get(i).getIndex() + "\n");
 		}
 	}
 	
@@ -297,6 +319,23 @@ public class StudentControl {
 				for(int y = 0; y < Container.courseSlotsList.get(i).getWaitingList().size(); y++) {
 //					//Check if student matric no matches with the ones in the waiting list
 					if(studentInfo.getMatricNo().equals(Container.courseSlotsList.get(i).getWaitingList().get(y))) {
+						waitingList.add(Container.courseSlotsList.get(i).getCoursePlan());
+					}
+				}
+			}
+		}
+		return waitingList;
+	}
+	
+	// overload
+	public static List<CoursePlan> waitingListCourses(Student student) {
+		List<CoursePlan> waitingList = new ArrayList<CoursePlan>();
+		
+		for (int i = 0; i < Container.courseSlotsList.size(); i++ ) {
+			if(Container.courseSlotsList.get(i).getWaitingList().size() != 0) {
+				for(int y = 0; y < Container.courseSlotsList.get(i).getWaitingList().size(); y++) {
+//					//Check if student matric no matches with the ones in the waiting list
+					if(student.getMatricNo().equals(Container.courseSlotsList.get(i).getWaitingList().get(y))) {
 						waitingList.add(Container.courseSlotsList.get(i).getCoursePlan());
 					}
 				}

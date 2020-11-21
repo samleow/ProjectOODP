@@ -26,6 +26,7 @@ public class Container
 	public static final String COURSESLOT_FILE		= "CourseSlots.txt";
 	public static final String LESSON_FILE			= "Lesson.txt";
 	public static final String STUDENT_FILE			= "StudentAccount.txt";
+	public static final String SENDER_EMAIL_FILE	= "senderEmail.txt";
 	
 	// Reference List
 	public static ArrayList<Lesson> lessonList				= new ArrayList<Lesson>();
@@ -234,6 +235,18 @@ public class Container
 		for (int i = 0; i < studentList.size(); i++)
 		{
 			if (studentList.get(i).getUserName().equals(username))
+			{
+				return studentList.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public static Student getStudentByMatricNo(String matricno)
+	{
+		for (int i = 0; i < studentList.size(); i++)
+		{
+			if (studentList.get(i).getMatricNo().equals(matricno))
 			{
 				return studentList.get(i);
 			}
