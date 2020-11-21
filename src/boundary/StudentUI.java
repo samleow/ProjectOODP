@@ -40,13 +40,13 @@ public class StudentUI {
 								break;
 							}
 							if(Validation.checkIfValidIndex(index)) {
-								if(!Validation.checkIfStudentTookThisIndex(index)) {
+								if(!Validation.checkIfStudentTookThisCourse(index)) {
 									if(!Validation.checkIfCourseExempted(index)) {
 										if(!Validation.checkIfStudentInWaitingList(index)) {
 											StudentControl.addCourse(index);
 										break;
 										} else {
-											System.out.println("You are already in the waiting list. \n");
+											System.out.println("You have already take this course in the waiting list. \n");
 										}
 									} else {
 										System.out.println("You are exempted from this Course.");
@@ -74,7 +74,7 @@ public class StudentUI {
 								break;
 							}
 							if(Validation.checkIfValidIndex(index)) {
-								if(Validation.checkIfStudentTookThisIndex(index) || (Validation.checkIfStudentInWaitingList(index))) {
+								if(Validation.checkIfStudentTookThisCourse(index) || (Validation.checkIfStudentInWaitingList(index))) {
 									StudentControl.dropCourse(index);
 									break;
 								} else {

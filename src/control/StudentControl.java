@@ -81,7 +81,7 @@ public class StudentControl {
 								break;
 							}
 			    		}
-			    		System.out.println("Successfully Added the Course \n");
+			    		System.out.println("Successfully Added the Course. \n");
 					}
 				}
 				else {
