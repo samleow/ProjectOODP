@@ -3,6 +3,7 @@ package control;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,7 +40,6 @@ public class Container
 	{
 		// read String from text file
 		ArrayList stringArray = (ArrayList)read(fileName);
-		ArrayList alr = new ArrayList() ;// to store data
 
         for (int i = 0 ; i < stringArray.size() ; i++)
         {
@@ -57,7 +57,6 @@ public class Container
 	{
 		// read String from text file
 		ArrayList stringArray = (ArrayList)read(fileName);
-		ArrayList alr = new ArrayList() ;// to store data
 
         for (int i = 0 ; i < stringArray.size() ; i++)
         {
@@ -77,7 +76,6 @@ public class Container
 	{
 		// read String from text file
 		ArrayList stringArray = (ArrayList)read(fileName);
-		ArrayList alr = new ArrayList() ;// to store data
 
         for (int i = 0 ; i < stringArray.size() ; i++)
         {
@@ -97,7 +95,6 @@ public class Container
 	{
 		// read String from text file
 		ArrayList stringArray = (ArrayList)read(fileName);
-		ArrayList alr = new ArrayList() ;// to store data
 
         for (int i = 0 ; i < stringArray.size() ; i++)
         {
@@ -116,7 +113,6 @@ public class Container
 	{
 		// read String from text file
 		ArrayList stringArray = (ArrayList)read(fileName);
-		ArrayList alr = new ArrayList() ;// to store data
 
         for (int i = 0 ; i < stringArray.size() ; i++)
         {
@@ -135,7 +131,6 @@ public class Container
 	{
 		// read String from text file
 		ArrayList stringArray = (ArrayList)read(fileName);
-		ArrayList alr = new ArrayList() ;// to store data
 
         for (int i = 0 ; i < stringArray.size() ; i++)
         {
@@ -149,24 +144,23 @@ public class Container
         
         return true;
     }
-//	
-//	public static <T> boolean readFile(String fileName, ArrayList<IOData> list) throws IOException
+
+	// TODO S: combine all read from File methods into one dynamic method [possible wildcard <?> usage]
+//	public static <T extends IOData> boolean readFile(String fileName, ArrayList<? extends IOData> list) throws IOException
 //	{
 //		// read String from text file
-//		ArrayList stringArray = (ArrayList)read(fileName);
-//		ArrayList alr = new ArrayList() ;// to store Professors data
+//		ArrayList<String> stringArray = (ArrayList<String>)read(fileName);
 //
 //        for (int i = 0 ; i < stringArray.size() ; i++)
 //        {
-//    		IOData iodata;
+//    		IOData<T> iodata;
 //    		iodata.readDataFile((String)stringArray.get(i));
-//    		list.add(iodata);
+//    		list.add(iodata); // cannot add data into wildcard list ... need find alternative
 //        }
 //        
 //        return true;
 //    }
 
-	// FIXME S: [CHECK IF WORKING!] Currently got problem polymorphing List<Child_class> to List<IOData>
 	public static boolean overwriteFileWithData(String fileName, ArrayList<? extends IOData> l)
 	{
 
@@ -182,17 +176,68 @@ public class Container
 	}
 	
 	/** Read the contents of the given file. */
-	  public static List read(String fileName) throws IOException {
-	    List data = new ArrayList() ;
-	    Scanner scanner = new Scanner(new FileInputStream(fileName));
-	    try {
-	      while (scanner.hasNextLine()){
-	        data.add(scanner.nextLine());
-	      }
-	    }
-	    finally{
-	      scanner.close();
-	    }
-	    return data;
-	  }
+	public static List read(String fileName) throws IOException
+	{
+		List data = new ArrayList();
+		Scanner scanner = new Scanner(new FileInputStream(fileName));
+		try
+		{
+			while (scanner.hasNextLine())
+			{
+				data.add(scanner.nextLine());
+			}
+		} finally
+		{
+			scanner.close();
+		}
+		return data;
+	}
+	
+	public static CourseSlots getCourseSlotByIndex(int index)
+	{
+		for (int i = 0; i < courseSlotsList.size(); i++)
+		{
+			if (courseSlotsList.get(i).getCoursePlan().getIndex() == index)
+			{
+				return courseSlotsList.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public static CoursePlan getCoursePlanByIndex(int index)
+	{
+		for (int i = 0; i < coursePlanList.size(); i++)
+		{
+			if (coursePlanList.get(i).getIndex() == index)
+			{
+				return coursePlanList.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public static CoursePlan getCoursePlanByIndex(int index, List<CoursePlan> l)
+	{
+		for (int i = 0; i < l.size(); i++)
+		{
+			if (l.get(i).getIndex() == index)
+			{
+				return l.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public static Student getStudentByUsername(String username)
+	{
+		for (int i = 0; i < studentList.size(); i++)
+		{
+			if (studentList.get(i).getUserName() == username)
+			{
+				return studentList.get(i);
+			}
+		}
+		return null;
+	}
 }

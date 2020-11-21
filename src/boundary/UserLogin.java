@@ -50,6 +50,7 @@ public class UserLogin {
 			// validate the choice input
 			if (sc.hasNextInt()) {
 				choice = sc.nextInt();
+				System.out.println();
 				switch (choice) {
 				case 1: /* (1) Student Login*/
 					
@@ -68,7 +69,8 @@ public class UserLogin {
 					}
 
 					password = HashingPassword.encryptThisString(password);
-					
+
+					System.out.println();
 					if(LoginAccount.getFileInfo(userName, password))
 					{
 						// After login successful
@@ -94,11 +96,14 @@ public class UserLogin {
 
 				default:
 					System.out.println("Please Enter Choice from 1 to 3");
+					System.out.println();
 				}
 			} else {
+				System.out.println();
 				System.out.println("Please Enter Choice from 1 to 3");
 				// Clear sc
 				sc.next();
+				System.out.println();
 			}
 		} while (run);
 
