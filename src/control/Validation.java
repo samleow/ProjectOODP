@@ -130,9 +130,6 @@ public class Validation {
 		}
 	}
 	
-	
-
-
 	//Validate GroupID e.g SSP1
 	public static boolean checkIfValidGroupID(String groupIDInput) {
 		boolean check = false;
@@ -272,12 +269,16 @@ public class Validation {
 	}
 	
 	// Validate Student took this index
-	public static boolean checkIfStudentTookThisIndex(int index) {
+	public static boolean checkIfStudentTookThisCourse(int index) {
 		boolean check = false;
 		for(int i = 0; i < StudentControl.studentInfo.getCoursePlan().size(); i++) {
-			if(StudentControl.studentInfo.getCoursePlan().get(i).getIndex() == index) {
-				check = true;
-				break;
+			for(int j = 0; j < Container.coursePlanList.size(); j++) {
+				if(StudentControl.studentInfo.getCoursePlan().get(i).getCourseID().equals(Container.coursePlanList.get(j).getCourseID())) {
+					if(Container.coursePlanList.get(j).getIndex() == index) {
+						check = true;
+						break;
+					}
+				}
 			}
 		}
 		return check;
@@ -307,22 +308,26 @@ public class Validation {
 	public static boolean checkIfStudentInWaitingList(int index) {
 		boolean check = false; 
 		outerloop:
-			for (int i = 0; i < Container.courseSlotsList.size(); i++ ) {
-				//Specify index
-				if(Container.courseSlotsList.get(i).getCoursePlan().getIndex() == index) {
-					//Check if the waiting list got students a not
-					if(Container.courseSlotsList.get(i).getWaitingList().size() != 0) {
-						//Loop through the waiting list
-						for(int y = 0; y < Container.courseSlotsList.get(i).getWaitingList().size(); y++) {
-							//Check if student matric no matches with the ones in the waiting list
-							if(StudentControl.studentInfo.getMatricNo().equals(Container.courseSlotsList.get(i).getWaitingList().get(y))) {
-								check = true;
-								break outerloop; 
+		for (int i = 0; i < Container.coursePlanList.size(); i++ ) {
+			if(Container.coursePlanList.get(i).getIndex() == index) {
+				for(int y = 0; y < Container.courseSlotsList.size(); y++) {
+					if(Container.coursePlanList.get(i).getCourseID().equals(Container.courseSlotsList.get(y).getCoursePlan().getCourseID())) {
+						System.out.println(Container.coursePlanList.get(i));
+						System.out.println(Container.courseSlotsList.get(y).getCoursePlan());
+						if(Container.courseSlotsList.get(y).getWaitingList().size() != 0) {
+							//Loop through the waiting list
+							for(int z = 0; z < Container.courseSlotsList.get(y).getWaitingList().size(); z++) {
+								//Check if student matric no matches with the ones in the waiting list
+								if(StudentControl.studentInfo.getMatricNo().equals(Container.courseSlotsList.get(y).getWaitingList().get(z))) {
+									check = true;
+									break outerloop; 
+								}
 							}
 						}
 					}
 				}
 			}
+		}
 		return check;
 	}
 

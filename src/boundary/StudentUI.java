@@ -35,13 +35,13 @@ public class StudentUI {
 								break;
 							}
 							if(Validation.checkIfValidIndex(index)) {
-								if(!Validation.checkIfStudentTookThisIndex(index)) {
+								if(!Validation.checkIfStudentTookThisCourse(index)) {
 									if(!Validation.checkIfCourseExempted(index)) {
 										if(!Validation.checkIfStudentInWaitingList(index)) {
 											StudentControl.addCourse(index);
 										break;
 										} else {
-											System.out.println("You are already in the waiting list. \n");
+											System.out.println("You have already take this course in the waiting list. \n");
 										}
 									} else {
 										System.out.println("You are exempted from this Course.");
@@ -69,7 +69,7 @@ public class StudentUI {
 								break;
 							}
 							if(Validation.checkIfValidIndex(index)) {
-								if(Validation.checkIfStudentTookThisIndex(index) || (Validation.checkIfStudentInWaitingList(index))) {
+								if(Validation.checkIfStudentTookThisCourse(index) || (Validation.checkIfStudentInWaitingList(index))) {
 									StudentControl.dropCourse(index);
 									break;
 								} else {
@@ -88,7 +88,7 @@ public class StudentUI {
 					
 				case 3: /* (3) Check/Print Courses Registered*/
 					System.out.println("Display Current Courses you have registered");
-					StudentControl.displayCourse();
+					StudentControl.displayCourse(StudentControl.studentInfo);
 
 					break;
 				case 4: /* (4) Check Vacancies Available*/
@@ -167,7 +167,7 @@ public class StudentUI {
 			cIndex = -1;
 			System.out.println();
 			System.out.println("(5) Change Index Number of Course");
-			StudentControl.displayCourse();
+			StudentControl.displayCourse(StudentControl.studentInfo);
 			System.out.printf("Enter course index no. to change (%d to return): ",Container.BREAK_MENU);
 			if (sc.hasNextInt())
 			{
@@ -221,7 +221,7 @@ public class StudentUI {
 							System.out.println("Course index no. clashes with timetable!");
 							continue;
 						}
-						if(StudentControl.timetableClash(StudentControl.waitingListCourses(), currCP, newCS.getCoursePlan()))
+						if(StudentControl.timetableClash(StudentControl.waitingListCourses(StudentControl.studentInfo), currCP, newCS.getCoursePlan()))
 						{
 							System.out.println("Current courses in the waiting list clashes. Failed to add the Course.");
 							continue;
@@ -300,7 +300,7 @@ public class StudentUI {
 			st2 = null;
 			System.out.println();
 			System.out.println("(6) Swop Index Number with Another Student");
-			StudentControl.displayCourse();
+			StudentControl.displayCourse(StudentControl.studentInfo);
 			System.out.printf("Enter course index no. to swop (%d to return): ", Container.BREAK_MENU);
 			if (sc.hasNextInt())
 			{
@@ -388,7 +388,7 @@ public class StudentUI {
 								System.out.println("Course index no. clashes with timetable for Student " + StudentControl.studentInfo.getUserName() + "!");
 								continue;
 							}
-							else if(StudentControl.timetableClash(StudentControl.waitingListCourses(), currCP, newCP))
+							else if(StudentControl.timetableClash(StudentControl.waitingListCourses(StudentControl.studentInfo), currCP, newCP))
 							{
 								System.out.println("Current courses in the waiting list clashes for Student" + StudentControl.studentInfo.getUserName() + ". Failed to add the Course.");
 								continue;
