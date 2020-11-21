@@ -11,27 +11,29 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.*;
 
-import entity.Date;
-
-import entity.Course;
-import entity.CoursePlan;
-import entity.CourseSlots;
-import entity.Date;
-import entity.Lesson;
-import entity.Location;
-
-import entity.Period;
-import entity.Student;
+import entity.*;
 
 import entity.AllEnums.AccountType;
 import entity.AllEnums.CourseType;
 import entity.AllEnums.Gender;
 import entity.AllEnums.LessonType;
 import entity.AllEnums.WeekType;
-
+import entity.Date;
 import control.Container;
 
 public class AdminControl {
+	
+	public static Admin adminInfo;
+	
+	public static void saveAdminInfo(String userName)
+	{
+		for(int i = 0; i < Container.adminList.size(); i++) {
+			if(Container.adminList.get(i).getUserName().equals(userName)) {
+				adminInfo = Container.adminList.get(i);
+			}
+		}
+	}
+	
 //	, Period period, Date date
 //	10:30,14:30,DEFAULT
 //	2020,7,25

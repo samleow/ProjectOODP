@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import entity.LoginAccount;
+import control.AdminControl;
 import control.Container;
 import control.HashingPassword;
 import control.StudentControl;
@@ -69,7 +70,7 @@ public class UserLogin {
 
 					password = HashingPassword.encryptThisString(password);
 					
-					if(LoginAccount.getFileInfo(userName, password))
+					if(LoginAccount.getStudentFileInfo(userName, password))
 					{
 						// After login successful
 						StudentControl.saveStudentInfo(userName);
@@ -80,12 +81,40 @@ public class UserLogin {
 						System.out.println("You have enter the wrong Username or Password");
 					}
 					break;
+					
 				case 2: /* (2) Admin Login*/
 
 					sc.nextLine(); // Consume newline left-over
 					
-					// After login successful
-					AdminUI.adminLogin();
+					
+					System.out.print("Enter your Admin ID: ");
+					userName = sc.next(); 
+					
+					System.out.print("Enter your Password: ");
+					
+					if(Container.DEBUG_MODE)
+						password = sc.next();
+					else
+					{
+						// For masking password.
+						char[] passMask = System.console().readPassword(); 
+						password = new String(passMask);
+					}
+
+					password = HashingPassword.encryptThisString(password);
+					
+					if(LoginAccount.getAdminFileInfo(userName, password))
+					{
+						// After login successful
+						AdminControl.saveAdminInfo(userName);
+						AdminUI.adminLogin();
+					}
+					else
+					{
+						System.out.println("You have enter the wrong Username or Password");
+					}
+					
+					
 					break;
 				case 3: /* (3) Exit*/
 					System.out.println("Quit...");

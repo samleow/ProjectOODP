@@ -337,7 +337,7 @@ public class StudentUI {
 
 							password = HashingPassword.encryptThisString(password);
 							
-							if(LoginAccount.getFileInfo(userName, password))
+							if(LoginAccount.getStudentFileInfo(userName, password))
 							{
 								// After login successful
 								for(int i=0;i<Container.studentList.size();i++)
