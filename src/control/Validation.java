@@ -131,10 +131,10 @@ public class Validation {
 	}
 	
 	//Validate GroupID e.g SSP1
-	public static boolean checkIfValidGroupID(String groupIDInput) {
+	public static boolean checkIfValidGroupID(String courseID, String groupIDInput) {
 		boolean check = false;
 		for(int i = 0; i < Container.coursePlanList.size(); i++) {
-			if(Container.coursePlanList.get(i).getGroupID().equals(groupIDInput)) {
+			if(Container.coursePlanList.get(i).getGroupID().equals(groupIDInput) && Container.coursePlanList.get(i).equals(courseID)) {
 				check = true;
 				break;
 			}
@@ -143,7 +143,18 @@ public class Validation {
 		return check;
 	}
 	
+	//Validate student exist in course slot of that index 
+	public static boolean checkIfValidIsCourseSlotEmpty(int index) {
+		boolean check = false;
+		for(int i = 0; i < Container.courseSlotsList.size(); i++) {
+			if(Container.courseSlotsList.get(i).getSlotList().isEmpty()) {
+				check = true;
+				break;
+			}
+		}
 		
+		return check;
+	}	
 
 	
 	//Validate Course Type
@@ -165,7 +176,7 @@ public class Validation {
 			
 			
 		}
-		else if (courseTypeInput.equals(CourseType.UNRESTRICTED_ELECTIVE.toString()) || courseTypeInput.equals("UE"))
+		else if (courseTypeInput.equals(CourseType.UNRESTRICTED_ELECTIVE.toString()) || courseTypeInput.equals("UE") || courseTypeInput.equals("UNRESTRICTED ELECTIVE") )
 		{
 			courseType = CourseType.UNRESTRICTED_ELECTIVE;
 			

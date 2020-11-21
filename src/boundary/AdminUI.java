@@ -426,7 +426,7 @@ public class AdminUI {
 						}
 						else if(newTotalSlots < numCurrentStud)
 						{
-							System.out.println("Total vacancy should not be less than the number of student currently registered.");
+							System.out.println("Total vacancy should not be less than the number of students currently registered.");
 						}
 						else
 						{
@@ -444,7 +444,7 @@ public class AdminUI {
 				
 				AdminControl.setCourseSlots(index, newTotalSlots);
 				
-				System.out.println("Sucessfully updated total vacancy");
+				System.out.println("Successfully updated total vacancy");
 
 	}
 
@@ -741,7 +741,7 @@ public class AdminUI {
 								break breakSwitch;
 							}
 							
-							System.out.print("Enter the Location shortform Name (E.g HWLAB 2): (-1 to return): ");
+							System.out.print("Enter the Location short form name (E.g HWLAB 2): (-1 to return): ");
 							locationName = sc.nextLine();
 							
 							//exit
@@ -1294,7 +1294,7 @@ public class AdminUI {
 								break breakSwitch;
 							}
 							
-							System.out.print("Enter the Location shortform Name (E.g HWLAB 2): (-1 to return): ");
+							System.out.print("Enter the Location short form name (E.g HWLAB 2): (-1 to return): ");
 							locationName = sc.nextLine();
 							
 							//exit
@@ -1414,7 +1414,7 @@ public class AdminUI {
 			}
 			else
 			{
-				System.out.println("Please enter numaric value");
+				System.out.println("Please enter numeric value");
 			}
 
 		}
@@ -1481,7 +1481,7 @@ public class AdminUI {
 //								isGroupID = false;
 //							}
 //						}
-						else if (Validation.checkIfValidGroupID(newGroupID)) 
+						else if (Validation.checkIfValidGroupID(splitCouseInfoString[0], newGroupID)) 
 						{
 							System.out.printf("Course Group: %s is used.\n", newGroupID);
 
@@ -1535,20 +1535,28 @@ public class AdminUI {
 //									isNewIndex = false;
 //								}
 //							}
-							else if (Validation.checkIfValidIndex(newIndex)) 
+							
+							if(String.valueOf(index).length() == 5)
 							{
-								System.out.printf("Course Index: %d is used.\n", index);
-
-							} 
-							else 
+								if (Validation.checkIfValidIndex(newIndex)) 
+								{
+									System.out.printf("Course Index: %d is used.\n", index);
+	
+								} 
+								else 
+								{
+									break;
+								}
+							}
+							else
 							{
-								break;
+								System.out.println("Please enter 5 digits");
 							}
 
 						} 
 						else 
 						{
-							System.out.println("Please enter numaric value");
+							System.out.println("Please enter numeric value");
 						}
 					}
 					sc.nextLine(); // Consume newline left-over
@@ -1566,6 +1574,10 @@ public class AdminUI {
 
 				case 3: // (3) Re-enter Lesson List
 
+					// check is there student in the course Slots
+					if(Validation.checkIfValidIsCourseSlotEmpty(index))
+					{
+					
 					System.out.println("Re-enter Lesson List to Index: " + splitCouseInfoString[2]);
 					System.out.println("Here are the Lesson you can add to Index: " + splitCouseInfoString[2]);
 					System.out.println("---------------------------------");
@@ -1628,25 +1640,34 @@ public class AdminUI {
 
 										System.out.println(count + " lesson added.");
 									}
+									else
+									{
+										System.out.println("Invalid lesson ID");
+									}
 								}
 
 							} 
 							else 
 							{
-								System.out.println("Please enter numaric value");
+								System.out.println("Please enter numeric value");
 							}
 						}
 
 					} 
 					else 
 					{
-						System.out.println("Please enter numaric value");
+						System.out.println("Please enter numeric value");
 					}
 
 					// update txt file
 					AdminControl.setCoursePlanLesson(index, addCoursePlanList.getLessons());
 
-					System.out.println("Successfully overwitten lesson in course plan.");
+					System.out.println("Successfully overwritten lesson in course plan.");
+					}
+					else
+					{
+						System.out.println("There is student registered in this index. No overwriting is allowed.");
+					}
 					
 					break;
 
@@ -1719,6 +1740,10 @@ public class AdminUI {
 													addCoursePlanList_1.getLessons().add(Container.coursePlanList.get(j).getLessons().get(k));
 												}
 											}
+											else
+											{
+												System.out.println("Invalid lesson ID");
+											}
 										}
 
 										// add the lesson ID to CoursePlan.txt
@@ -1734,14 +1759,14 @@ public class AdminUI {
 							} 
 							else 
 							{
-								System.out.println("Please enter numaric value");
+								System.out.println("Please enter numeric value");
 							}
 						}
 
 					} 
 					else 
 					{
-						System.out.println("Enter a number");
+						System.out.println("Please enter numeric value");
 					}
 
 					// update txt file
@@ -1755,6 +1780,10 @@ public class AdminUI {
 
 					sc.nextLine(); // Consume newline left-over
 
+					// check is there student in the course Slots
+					if(Validation.checkIfValidIsCourseSlotEmpty(index))
+					{
+					
 					CoursePlan deleteLesson = new CoursePlan();
 
 					System.out.println("Delete Lesson index " + splitCouseInfoString[2]);
@@ -1777,11 +1806,12 @@ public class AdminUI {
 							// send default value of the lesson Array list
 							// update txt file
 							AdminControl.setCoursePlanLesson(index, deleteLesson.getLessons());
-
+							System.out.println("Lesson deleted in course plan.");
 							break;
 						} 
 						else if (answer.equals("N")) 
 						{
+							System.out.println("No lesson is deleted in course plan.");
 							break;
 						} 
 						else 
@@ -1789,8 +1819,13 @@ public class AdminUI {
 							System.out.println("Please enter Y/N");
 						}
 					}
+					}
+					else
+					{
+						System.out.println("There is student registered in this index. No deleting is allowed.");
+					}
 					
-					System.out.println("Lesson deleted in course plan.");
+					
 
 					break;
 
@@ -1877,7 +1912,7 @@ public class AdminUI {
 		{
 
 			System.out.println("Which Selection you want to modify?");
-			System.out.println("(1) Course name: " + splitString[0]);
+			System.out.println("(1) Course Name: " + splitString[0]);
 			System.out.println("(2) School Name: " + splitString[1]);
 			System.out.println("(3) Course ID: " + splitString[2]);
 			System.out.println("(4) Course AU: " + splitString[3]);
@@ -1908,6 +1943,8 @@ public class AdminUI {
 					AdminControl.setCourseName(courseID, newCourseName);
 
 					splitString[0] = newCourseName; // update the listing
+					
+					System.out.println("Update course name successful.");
 
 					break;
 
@@ -1931,6 +1968,8 @@ public class AdminUI {
 					AdminControl.setSchoolName(courseID, newSchoolName);
 
 					splitString[1] = newSchoolName; // update the listing
+					
+					System.out.println("Update school name successful.");
 
 					break;
 
@@ -1983,6 +2022,8 @@ public class AdminUI {
 					splitString[2] = newCourseID; // update the listing
 					courseID = newCourseID; // update the listing
 
+					System.out.println("Update course ID successful.");
+					
 					break;
 
 				case 4: // (4) Update Course AU:
@@ -2021,6 +2062,8 @@ public class AdminUI {
 
 					splitString[3] = Integer.toString(newAU); // update the listing
 
+					System.out.println("Update AU successful.");
+					
 					break;
 
 				case 5: // (5) Update Course Type:
@@ -2085,6 +2128,8 @@ public class AdminUI {
 
 					splitString[3] = newCourseType.toString(); // update the listing
 
+					System.out.println("Update course type successful.");
+					
 					break;
 
 				case 6:
@@ -2431,7 +2476,7 @@ public class AdminUI {
 				return;
 			}
 			
-			System.out.print("Enter the Location shortform Name (E.g HWLAB 2): (-1 to return): ");
+			System.out.print("Enter the Location short form name (E.g HWLAB 2): (-1 to return): ");
 			locationName = sc.nextLine();
 			//exit
 			if(locationName.equals(Integer.toString(Container.BREAK_MENU)))
@@ -2543,7 +2588,7 @@ public class AdminUI {
 //			}
 //			else
 //			{
-//				System.out.println("Please enter numbers");
+//				System.out.println("Please enter numeric value ");
 //			}
 //		}
 //		
@@ -2560,7 +2605,7 @@ public class AdminUI {
 //			}
 //			else
 //			{
-//				System.out.println("Please enter numbers");
+//				System.out.println("Please enter numeric value ");
 //			}
 //		}
 //		
@@ -2652,7 +2697,7 @@ public class AdminUI {
 //					isGroupID = false;
 //				}
 //			}
-			if (Validation.checkIfValidGroupID(groupID)) {
+			if (Validation.checkIfValidGroupID(courseID ,groupID)) {
 				System.out.printf("Course Group: %s is used.\n", groupID);
 				
 			} 
@@ -2713,7 +2758,7 @@ public class AdminUI {
 			}
 			else
 			{
-				System.out.println("Please enter numbers");
+				System.out.println("Please enter numeric value ");
 			}
 		}
 
@@ -2736,7 +2781,7 @@ public class AdminUI {
 			}
 			else
 			{
-				System.out.println("Please enter numaric value");
+				System.out.println("Please enter numeric value");
 			}
 		}
 		
@@ -2849,7 +2894,7 @@ public class AdminUI {
 			}
 			else
 			{
-				System.out.println("Please enter numaric value ");
+				System.out.println("Please enter numeric value ");
 			}
 			
 		}
@@ -2944,11 +2989,11 @@ public class AdminUI {
 			return;
 		}
 		
-		// Validate User Name
+		// Validate Username
 //		boolean isUserName = false;
 		while(true)
 		{
-			System.out.print("Enter new student user name: (-1 to return): ");
+			System.out.print("Enter new student username: (-1 to return): ");
 			userName = sc.nextLine().toLowerCase();
 			
 			// exit
@@ -2975,7 +3020,7 @@ public class AdminUI {
 //			}
 			else if(Validation.checkIfValidStudentUserName(userName))
 			{
-				System.out.printf("User Name: %s is used.\n", userName);
+				System.out.printf("Username: %s is used.\n", userName);
 			}
 			else
 			{
@@ -3151,7 +3196,7 @@ public class AdminUI {
 		// Add student Email
 		//System.out.print("Enter new student email: ");
 		//email = sc.nextLine();
-		email = "testing@gmail.com";
+		email = "ntu20.cz2002@gmail.com";
 		System.out.printf("Auto Genternated Email: %s\n ",email);
 		
 		
@@ -3271,7 +3316,7 @@ public class AdminUI {
 				}
 				else
 				{
-					System.out.println("Please enter numaric value");
+					System.out.println("Please enter numeric value");
 				}
 
 			}
