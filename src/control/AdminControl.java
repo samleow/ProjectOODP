@@ -12,10 +12,20 @@ import entity.AllEnums.LessonType;
 import entity.AllEnums.WeekType;
 import entity.Date;
 
+/**
+ * Methods used for admin features.  
+ */
 public class AdminControl {
 	
+	/**
+	 * The admin information.
+	 */
 	public static Admin adminInfo;
 	
+	/**
+	 * Store the student information.
+	 * @param userName Username of the admin.
+	 */
 	public static void saveAdminInfo(String userName)
 	{
 		for(int i = 0; i < Container.adminList.size(); i++) {
@@ -80,6 +90,21 @@ public class AdminControl {
 	}
 	
 	//Admin Feature: 2
+	/**
+	 * Create student Account
+	 * @param name The name of the student
+	 * @param userName The username of the student
+	 * @param password The password of the student
+	 * @param type The account type STUDENT
+	 * @param matricNo The matriculation number student
+	 * @param gender The gender of the student
+	 * @param nationality The nationality of the student
+	 * @param maxAU The maximum AU of the student
+	 * @param accessPeriod The access period of the student
+	 * @param accessDate The access date of the student
+	 * @param email The email of the student
+	 * @param exemptedList The exempted list of the student
+	 */
 	public static void createStudAcc(String name, String userName,
 			String password, AccountType type,
 			String matricNo, Gender gender,
@@ -102,53 +127,18 @@ public class AdminControl {
 		catch (IOException e) {
 		}
 		
-		for (int i = 0; i < Container.studentList.size(); i++) {
-			// System.out.println(Container.studentList.get(i).toString());
-
-		}
 		
 	}
-		
-//    	CreateStudentAccount studDB = new CreateStudentAccount();
-//    	String filename = "StudentAccount.txt" ;
-//
-//		try {
-//			// read file containing Student records and store into a list
-//			ArrayList studList = studDB.readStudents(filename);
-//			
-//			//Displaying the current data in the StudentAccount.txt
-//			/*
-//			 * for (int i = 0 ; i < studList.size() ; i++) { Student student =
-//			 * (Student)studList.get(i); System.out.println("Matric No " +
-//			 * student.getMatricNo()); System.out.println("Name " + student.getName());
-//			 * System.out.println("Gender " + student.getGender());
-//			 * System.out.println("Nationality " + student.getNationality());
-//			 * System.out.println("Max AU " + student.getMaxAU()); }
-//			 */
-//			
-//			
-//			//create student obj to add into the studList
-
-//			Student addStud = new Student(name, userName,
-//					password, type,
-//					matricNo, gender,
-//					nationality, maxAU);
-//			
-//			studList.add(addStud);
-//			
-//			// resave the whole studList to the txt file
-//			studDB.saveStudent(filename, studList);
-
-
-//			
-//		}
-//		catch (IOException e) {
-//			System.out.println("IOException > " + e.getMessage());
-//		}
-		
-	
 	
 	// Admin Feature: 3 Add course
+	/**
+	 * Add a course
+	 * @param name The name of the course e.g Object Oriented Design and Programming
+	 * @param school The name of the school e.g SCSE
+	 * @param courseID The course ID e.g CZ2002
+	 * @param courseAU The course total AU
+	 * @param courseType The type of the course e.g CORE
+	 */
 	public static void addCourse(String name, String school, String courseID, int courseAU, CourseType courseType)
 	{
 		//System.out.println(name);
@@ -158,15 +148,15 @@ public class AdminControl {
 		
 		Container.courseList.add(add_Course);
 		
-
-		for (int i=0 ;i<Container.courseList.size(); i++)
-		{
-			System.out.println(Container.courseList.get(i).toString());
-			
-		}
 	}
 	
 	// Admin Feature: 3 Add index
+	/**
+	 * Add a index for a course
+	 * @param courseID The course ID e.g CZ2002
+	 * @param groupID The course group ID e.g SSP1
+	 * @param index The course index e.g 10001
+	 */
 	public static void addIndex(String courseID, String groupID, int index)
 	{
 		
@@ -177,16 +167,14 @@ public class AdminControl {
 		// update the list
 		Container.coursePlanList.add(add_index);
 		
-
-		for (int i=0 ;i<Container.coursePlanList.size(); i++)
-		{
-			System.out.println(Container.coursePlanList.get(i).toString());
-
-			
-		}
 	}
 	
 	// Admin Feature: 3 Add Slots
+	/**
+	 * Add slots for the index
+	 * @param totalSlots The total slots of that course's index
+	 * @param courseIndex The course index e.g 10001
+	 */
 	public static void addSlots(int totalSlots, CoursePlan courseIndex)
 	{
 		
@@ -197,16 +185,21 @@ public class AdminControl {
 		// update the list
 		Container.courseSlotsList.add(add_Slots);
 
-//		for (int i=0 ;i<Container.courseSlotsList.size(); i++)
-//		{
-//			System.out.println(Container.courseSlotsList.get(i).toString());
-//			
-//		}
 	}
 	
 	
 	
 	// Admin Feature: 3 Add Lesson
+	/**
+	 * Add lesson 
+	 * @param lessonID The incremental lesson'ID
+	 * @param courseID The course ID e.g CZ2002
+	 * @param type The type of the lesson e.g LECTURE, TUTORIAL, LAB
+	 * @param weekly The week type e.g ODD, EVEN, WEEKLY
+	 * @param lessonPeriod The period of the lesson e.g 10:00 to 11:30
+	 * @param isOnline The lesson if it is online
+	 * @param location The location of the lesson e.g Hardware Lab 2, HWLAB2, N4-01-05
+	 */
 	public static void addLessonLocation(int lessonID, String courseID, LessonType type, WeekType weekly,
 			Period lessonPeriod, boolean isOnline, Location location)
 	{
@@ -219,15 +212,15 @@ public class AdminControl {
 		// update the list
 		Container.lessonList.add(add_LessonLocation);
 
-		for (int i=0 ;i<Container.lessonList.size(); i++)
-		{
-			System.out.println(Container.lessonList.get(i).toString());
-			
-		}
 	}
 	
 	
 	// Admin Feature: 3 Update Course Name
+	/**
+	 * Update the course name
+	 * @param courseID The course ID e.g CZ2002
+	 * @param courseName The name of the course e.g Object Oriented Design and Programming
+	 */
 	public static void setCourseName(String courseID, String courseName) {
 		
 		for(int i = 0; i < Container.courseList.size(); i++) {
@@ -247,6 +240,11 @@ public class AdminControl {
 	
 	
 	// Admin Feature: 3 Update School Name
+	/**
+	 * Update the course school name
+	 * @param courseID The course ID e.g CZ2002
+	 * @param schoolName The name of the school e.g SCSE
+	 */
 	public static void setSchoolName(String courseID, String schoolName) {
 		
 		for(int i = 0; i < Container.courseList.size(); i++) {
@@ -265,6 +263,11 @@ public class AdminControl {
 	
 	
 	// Admin Feature: 3 Update CourseID 
+	/**
+	 * Update course ID in the course.txt, coursePlan.txt and lesson.txt
+	 * @param courseID The old course ID e.g CZ2002
+	 * @param newCourseID The new course ID replacing the old course ID e.g CZ2001
+	 */
 	public static void setCourseID(String courseID, String newCourseID) {
 		
 		// update Course.txt
@@ -311,6 +314,11 @@ public class AdminControl {
 	}
 	
 	// Admin Feature: 3 Update Course AU
+	/**
+	 * Update the course AU
+	 * @param courseID The course ID e.g CZ2002
+	 * @param newAU The course total AU
+	 */
 	public static void setCourseAU(String courseID, int newAU) {
 		
 		for(int i = 0; i < Container.courseList.size(); i++) {
@@ -328,6 +336,11 @@ public class AdminControl {
 	}
 	
 	// Admin Feature: 3 Update Course type
+	/**
+	 * Update the course type
+	 * @param courseID The course ID e.g CZ2002
+	 * @param newCourseType The type of the course e.g CORE
+	 */
 	public static void setCourseType(String courseID, CourseType newCourseType) {
 		
 		for(int i = 0; i < Container.courseList.size(); i++) {
@@ -346,6 +359,11 @@ public class AdminControl {
 	
 	
 	// Admin Feature: 3 Update CoursePlan GroupID
+	/**
+	 * Update course plan's group ID
+	 * @param index
+	 * @param newGroupID
+	 */
 	public static void setCoursePlanGroupID(int index, String newGroupID) {
 		
 		for(int i = 0; i < Container.coursePlanList.size(); i++) {
@@ -364,6 +382,11 @@ public class AdminControl {
 	
 	
 	// Admin Feature: 3 Update CoursePlan Index
+	/**
+	 * Update course plan's index in courseplan.txt and courseSlots.txt
+	 * @param index The course old index e.g 10001
+	 * @param newIndex The new course index replacing the old index
+	 */
 	public static void setCoursePlanIndex(int index, int newIndex) {
 		
 		for(int i = 0; i < Container.coursePlanList.size(); i++) {
@@ -395,6 +418,11 @@ public class AdminControl {
 	}
 	
 	// Admin Feature: 3 Update CoursePlan Lesson List
+	/**
+	 * Update the course plan's lesson
+	 * @param index The course index e.g 10001
+	 * @param newLesson the lesson ID from the lesson.txt
+	 */
 	public static void setCoursePlanLesson(int index, List<Lesson> newLesson) {
 		
 		for(int i = 0; i < Container.coursePlanList.size(); i++) {
@@ -412,6 +440,11 @@ public class AdminControl {
 	}
 	
 	//Admin Feature: 3 Update Lesson CourseID
+	/**
+	 * Update lesson course ID
+	 * @param lessonID The ID of the lesson in lesson.txt
+	 * @param courseID The course ID e.g CZ2002
+	 */
 	public static void setLessonCourseID(int lessonID, String courseID) {
 		
 		for(int i = 0; i < Container.lessonList.size(); i++) {
@@ -429,6 +462,11 @@ public class AdminControl {
 	}
 	
 	//Admin Feature: 3 Update Lesson LessonType
+	/**
+	 * Update lesson the lesson type
+	 * @param lessonID The ID of the lesson in lesson.txt
+	 * @param type The type of the lesson e.g LECTURE, TUTORIAL, LAB
+	 */
 	public static void setLessonLessonType(int lessonID, LessonType type) {
 		
 		for(int i = 0; i < Container.lessonList.size(); i++) {
@@ -445,7 +483,12 @@ public class AdminControl {
 		}
 	}
 	
-	//Admin Feature: 3 Update Lesson weeklyType
+	//Admin Feature: 3
+	/**
+	 * Update lesson weekly type
+	 * @param lessonID lessonID The ID of the lesson in lesson.txt
+	 * @param weekly weekly The week type e.g ODD, EVEN, WEEKLY
+	 */
 	public static void setLessonWeeklyType(int lessonID, WeekType weekly) {
 		
 		for(int i = 0; i < Container.lessonList.size(); i++) {
@@ -462,7 +505,12 @@ public class AdminControl {
 		}
 	}
 	
-	//Admin Feature: 3 Update Lesson Period
+	//Admin Feature: 3
+	/**
+	 * Update lesson period
+	 * @param lessonID The ID of the lesson in lesson.txt
+	 * @param lessonPeriod lessonPeriod The period of the lesson e.g 10:00 to 11:30
+	 */
 	public static void setLessonPeriod(int lessonID, Period lessonPeriod) {
 		
 		for(int i = 0; i < Container.lessonList.size(); i++) {
@@ -479,7 +527,12 @@ public class AdminControl {
 		}
 	}
 	
-	//Admin Feature: 3 Update Lesson isOnline
+	//Admin Feature: 3
+	/**
+	 * Update the lesson is it online
+	 * @param lessonID The ID of the lesson in lesson.txt
+	 * @param isOnline The lesson if it is online
+	 */
 	public static void setLessonIsOnline(int lessonID, boolean isOnline) {
 		
 		for(int i = 0; i < Container.lessonList.size(); i++) {
@@ -507,7 +560,12 @@ public class AdminControl {
 		}
 	}
 	
-	//Admin Feature: 3 Update Lesson Location
+	//Admin Feature: 3
+	/**
+	 * Update lesson location
+	 * @param lessonID The ID of the lesson in lesson.txt
+	 * @param location The location of the lesson e.g Hardware Lab 2, HWLAB2, N4-01-05
+	 */
 	public static void setLessonLocation(int lessonID, Location location) {
 		
 		for(int i = 0; i < Container.lessonList.size(); i++) {
@@ -524,7 +582,12 @@ public class AdminControl {
 		}
 	}
 	
-	//Admin Feature: 3 Update Course Slots
+	//Admin Feature: 3 
+	/**
+	 * Update course slots
+	 * @param index The course index e.g 10001
+	 * @param totalSlots The total slots of that course's index
+	 */
 	public static void setCourseSlots(int index, int totalSlots) {
 		String matricNo;
 		Student student;
@@ -565,7 +628,12 @@ public class AdminControl {
 		}
 	}
 	
-	//Admin Feature: 3 Update StudentAccount registered index
+	//Admin Feature: 3
+	/**
+	 * Update the student account's registered index
+	 * @param matricNo The matriculation number student
+	 * @param courseIndex The course index that the student is registered
+	 */
 	public static void setStudentAccountRegisteredIndex(String matricNo, int courseIndex)
 	{
 		for (int i = 0; i < Container.studentList.size(); i++)

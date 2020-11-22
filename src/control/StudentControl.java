@@ -430,12 +430,12 @@ public class StudentControl {
 						}
 						if(timetableClash(studentInfo.getCoursePlan(), currCP, tempCS.getCoursePlan()))
 						{
-							System.out.println("Course index no. clashes with timetable!");
+							System.out.println("Current Course: " + currentTimeTableClashes.getCourseID() + " | Index No: " + currentTimeTableClashes.getIndex() + " Clashes. Failed to add the Course.\n");
 							continue;
 						}
 						if(timetableClash(waitingListCourses(studentInfo), currCP, tempCS.getCoursePlan()))
 						{
-							System.out.println("Current courses in the waiting list clashes. Failed to add the Course.");
+							System.out.println("Current Course in the waiting list clashes: "  + currentTimeTableClashes.getCourseID() + " | Index No: " + currentTimeTableClashes.getIndex() + ". Failed to add the Course.\n");
 							continue;
 						}
 						
@@ -469,11 +469,7 @@ public class StudentControl {
 							{
 								// remove student from waiting list
 								tempCS.getWaitingList().remove(0);
-								
-								// Sends email notification
-								System.out.println("Sending email...");
 								EmailNotification.getInstance().sendNotification(s, Notification.createMessage(s.getName(), tempCS.getCoursePlan().getCourseID(), false));
-								System.out.println("Sent successfully");
 							}
 							else
 							{
@@ -484,9 +480,7 @@ public class StudentControl {
 								tempCS.getWaitingList().remove(0);
 								
 								// Sends email notification
-								System.out.println("Sending email........");
 								EmailNotification.getInstance().sendNotification(s, Notification.createMessage(s.getName(), tempCS.getCoursePlan().getCourseID(), true));
-								System.out.println("Sent successfully");
 								
 								//update the student Account
 								s.getCoursePlan().add(tempCS.getCoursePlan());
@@ -626,23 +620,23 @@ public class StudentControl {
 							// if timetable clash for student 1
 							if(timetableClash(studentInfo.getCoursePlan(), currCP, newCP))
 							{
-								System.out.println("Course index no. clashes with timetable for Student " + studentInfo.getUserName() + "!");
+								System.out.println("Current Course for Student " + studentInfo.getUserName() + ": " + currentTimeTableClashes.getCourseID() + " | Index No: " + currentTimeTableClashes.getIndex() + " Clashes. Failed to add the Course.\n");
 								continue;
 							}
 							else if(timetableClash(waitingListCourses(studentInfo), currCP, newCP))
 							{
-								System.out.println("Current courses in the waiting list clashes for Student" + studentInfo.getUserName() + ". Failed to add the Course.");
+								System.out.println("Current Course in the waiting list clashes for Student " + studentInfo.getUserName() + ": "  + currentTimeTableClashes.getCourseID() + " | Index No: " + currentTimeTableClashes.getIndex() + ". Failed to add the Course.\n");
 								continue;
 							}
 							// if timetable clash for student 2
 							else if(timetableClash(st2.getCoursePlan(), newCP, currCP))
 							{
-								System.out.println("Course index no. clashes with timetable for Student " + st2.getUserName() + "!");
+								System.out.println("Current Course for Student " + st2.getUserName() + ": " + currentTimeTableClashes.getCourseID() + " | Index No: " + currentTimeTableClashes.getIndex() + " Clashes. Failed to add the Course.\n");
 								continue;
 							}
 							else if(timetableClash(waitingListCourses(st2), newCP, currCP))
 							{
-								System.out.println("Current courses in the waiting list clashes for Student" + st2.getUserName() + ". Failed to add the Course.");
+								System.out.println("Current Course in the waiting list clashes for Student " + st2.getUserName() + ": "  + currentTimeTableClashes.getCourseID() + " | Index No: " + currentTimeTableClashes.getIndex() + ". Failed to add the Course.\n");
 								continue;
 							}
 							

@@ -11,7 +11,6 @@ import entity.*;
 import entity.Date;
 import entity.AllEnums.*;
 
-import org.apache.commons.lang3.*;
 import org.apache.commons.lang3.text.*;
 
 
@@ -25,15 +24,8 @@ public class AdminUI {
 		
 
 		String matricNo;
-		String name;
-		//Gender gender;
-		String nationality;
-		int maxAU;
-		//List<Course> courses;
 		Period accessPeriod;
 		Date accessDate;
-		String password = "pass";
-		String hashPassword;
 		int index;
 		String courseID;
 		
@@ -329,9 +321,10 @@ public class AdminUI {
 		
 	}
 
-
-	// TODO: validation class and exit -1
-	// update CourseSlots
+	/**
+	 * Update course slots based on user inputs.
+	 * @param sc The scanner object to handle inputs.
+	 */
 	private static void updateCourseSlots(Scanner sc) {
 		
 		sc.nextLine(); // Consume newline left-over
@@ -340,7 +333,7 @@ public class AdminUI {
 		int index;
 		
 		// validate Index
-				boolean isIndex = false;
+				
 				
 				while (true) {
 					
@@ -438,8 +431,10 @@ public class AdminUI {
 
 	}
 
-	// TODO: validation class and exit -1
-	// update lesson
+	/**
+	 * Update lesson based on user inputs.
+	 * @param sc The scanner object to handle inputs.
+	 */
 	private static void updateLesson(Scanner sc) {
 		
 		sc.nextLine(); // Consume newline left-over
@@ -527,18 +522,12 @@ public class AdminUI {
 		}
 		
 		sc.nextLine(); // Consume newline left-over
-		
-		
+
 		splitLessonIDInfoString = storeSelectedLessonID.split("\\|");
 		
-		boolean isthereStudent = false;
-		
 		int choice = -1;
-		
-		
+
 		String[] splitTimeDay = splitLessonIDInfoString[4].split("\\,");
-		String startTimeValue = splitTimeDay[0];
-		String endTimeValue = splitTimeDay[1];
 		String dayValue = splitTimeDay[2];
 		
 		String isOnlineValue;
@@ -591,9 +580,6 @@ public class AdminUI {
 					
 					case 1: //(1) Is the lesson online: 
 						sc.nextLine(); // Consume newline left-over
-						
-						// this is to clear location if the lesson is online
-						Location lessonLocationClean = new Location();
 						
 						// validate isonline input
 						String isOnlineInput; // temp storage for user input gender
@@ -760,8 +746,6 @@ public class AdminUI {
 						
 						//String newCourseID;
 						String existingCourseID;
-						
-						boolean isNewCode = false;
 						
 						// validate the CourseID
 						while(true)
@@ -1008,9 +992,6 @@ public class AdminUI {
 						
 						sc.nextLine(); // Consume newline left-over
 						
-						// this is to clear location if the lesson is online
-						Location lessonLocationClean = new Location();
-						
 						// validate isonline input
 						String isOnlineInput; // temp storage for user input gender
 						boolean isOnline = false;
@@ -1152,9 +1133,10 @@ public class AdminUI {
 		}
 	}
 
-
-	// TODO validate Class and exit -1
-	// Update Course Plan
+	/**
+	 * Update course plan based on user inputs.
+	 * @param sc The scanner object to handle inputs.
+	 */
 	private static void updateCoursePlan(Scanner sc) {
 		
 		sc.nextLine(); // Consume newline left-over
@@ -1252,7 +1234,6 @@ public class AdminUI {
 					String newGroupID;
 
 					// validate Group ID
-					boolean isGroupID = false;
 					while (true) 
 					{
 						System.out.print("\nModify Group ID " + splitCourseInfoString[1] + " to: (-1 to return): ");
@@ -1290,7 +1271,6 @@ public class AdminUI {
 					int newIndex;
 
 					// validate Index
-					boolean isNewIndex = false;
 					while (true) 
 					{
 						System.out.print("\nModify Index " + splitCourseInfoString[2] + " to: (-1 to return): ");
@@ -1676,8 +1656,11 @@ public class AdminUI {
 
 
 
-	// TODO validate Class and exit -1
-	// Update Course Information
+
+	/**
+	 * Update course information based on user inputs.
+	 * @param sc The scanner object to handle inputs.
+	 */
 	private static void updateCourseInfo(Scanner sc) {
 		
 		sc.nextLine(); // Consume newline left-over
@@ -1946,8 +1929,10 @@ public class AdminUI {
 	}
 
 
-	// TODO validate Class and exit -1
-	// Add Lesson
+	/**
+	 * Add lesson based on user inputs.
+	 * @param sc The scanner object to handle inputs.
+	 */
 	private static void addLesson(Scanner sc) {
 
 		sc.nextLine(); // Consume newline left-over
@@ -2200,8 +2185,11 @@ public class AdminUI {
 
 	}
 
-	// TODO validate Class and exit -1
-	// Add Course Index and Index Vacancy
+
+	/**
+	 * Add course index based on user inputs.
+	 * @param sc The scanner object to handle inputs.
+	 */
 	private static void addCourseIndex(Scanner sc) {
 		
 		sc.nextLine(); // Consume newline left-over
@@ -2341,8 +2329,11 @@ public class AdminUI {
 
 
 
-	// TODO validate Class and exit -1
-	// Add Course
+	
+	/**
+	 * Add course based on user inputs.
+	 * @param sc The scanner object to handle inputs.
+	 */
 	private static void addCourse(Scanner sc) {
 		
 		sc.nextLine(); // Consume newline left-over
@@ -2469,7 +2460,11 @@ public class AdminUI {
 	}
 
 
-	//TODO: add student Acc
+	
+	/**
+	 * Add student account based on user inputs.
+	 * @param sc The scanner object to handle inputs.
+	 */
 	private static void addStudentAcc(Scanner sc)
 	{
 		sc.nextLine(); // Consume newline left-over
