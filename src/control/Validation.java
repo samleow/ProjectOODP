@@ -144,7 +144,7 @@ public class Validation {
 	public static boolean checkIfValidGroupID(String courseID, String groupIDInput) {
 		boolean check = false;
 		for(int i = 0; i < Container.coursePlanList.size(); i++) {
-			if(Container.coursePlanList.get(i).getGroupID().equals(groupIDInput) && Container.coursePlanList.get(i).equals(courseID)) {
+			if(Container.coursePlanList.get(i).getGroupID().equals(groupIDInput) && Container.coursePlanList.get(i).getCourseID().equals(courseID)) {
 				check = true;
 				break;
 			}
@@ -165,7 +165,89 @@ public class Validation {
 		
 		return check;
 	}	
+	
+	//Validate if Lesson ID exist in course plan using index (update course plan)
+	public static boolean checkIfExistLessonID(int lessonID, int index) {
+		boolean check = false;
+		for(int i = 0; i < Container.coursePlanList.size(); i++) {
+			if(Container.coursePlanList.get(i).getIndex() == index )
+			{
+			for(int j = 0; j < Container.coursePlanList.get(i).getLessons().size(); j++) {
+				if(Container.coursePlanList.get(i).getLessons().get(j).getLessonID() == lessonID) {
+					check = true;
+					break;
+			}
+			}
+			}
+		}
+		
+		return check;
+	}	
+	
+	//Validate if there are lesson ID in course Plan (update lesson)
+	public static boolean checkIfThereAreLessonIDInCousePlan(String courseID, int lessonID) {
+		boolean check = false;
+		for(int i = 0; i < Container.coursePlanList.size(); i++) {
+			if(Container.coursePlanList.get(i).getCourseID().equals(courseID))
+			{
+			for(int j = 0; j < Container.coursePlanList.get(i).getLessons().size(); j++) {
+				if(Container.coursePlanList.get(i).getLessons().get(j).getLessonID() == lessonID) {
+					check = true;
+					break;
+			}
+			}
+			}
+		}
+		
+		return check;
+	}	
 
+	
+	//Validate student exist in course plan using courseID (update lesson)
+	public static boolean checkIfIsThereStudent(String courseID, int lessonID ) {
+		
+		boolean check = false;
+		for (int i=0 ;i<Container.coursePlanList.size(); i++)
+		{
+			
+			for(int j= 0; j<Container.coursePlanList.get(i).getLessons().size(); j++)
+			{
+				
+				// if the lesson ID exist in coursePlanList
+				if(courseID.equals(Container.coursePlanList.get(i).getCourseID()) && lessonID == Container.coursePlanList.get(i).getLessons().get(j).getLessonID())
+				{
+					
+					int getCoursePlanIndex = Container.coursePlanList.get(i).getIndex();
+					
+					
+					//check courseSlotsList if there are student in the waiting list or registered list
+					for(int k = 0; k<Container.courseSlotsList.size(); k++ )
+					{
+						// check for matching index
+						if(getCoursePlanIndex == Container.courseSlotsList.get(k).getCoursePlan().getIndex())
+						{
+							
+							// if there is a student in the courseSlotsList
+							if(Container.courseSlotsList.get(k).getSlotList().isEmpty() == false || Container.courseSlotsList.get(k).getWaitingList().isEmpty() == false )
+							{
+								check = true;
+								
+							}
+							// once found the CoursePlanIndex, end the loop
+							break;
+							
+						}
+
+					}
+					
+				}
+				
+			}
+		}
+		return check;
+		
+	}
+	
 	
 	//Validate Course Type
 	public static CourseType checkIfValidCourseType(String courseTypeInput)

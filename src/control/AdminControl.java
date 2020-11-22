@@ -62,6 +62,9 @@ public class AdminControl {
 
 
 		createStudAcc.writeDataToFile(Container.STUDENT_FILE, false);
+		
+		// update the list
+		Container.studentList.add(createStudAcc);
 
 		try {
 			Container.readStudentFile(Container.STUDENT_FILE, Container.studentList);
@@ -123,6 +126,8 @@ public class AdminControl {
 		Course add_Course = new Course(name, school, courseID, courseAU, courseType);
 		add_Course.writeDataToFile(Container.COURSE_FILE, false);
 		
+		Container.courseList.add(add_Course);
+		
 
 		for (int i=0 ;i<Container.courseList.size(); i++)
 		{
@@ -138,6 +143,9 @@ public class AdminControl {
 		
 		CoursePlan add_index = new CoursePlan(courseID, groupID, index);
 		add_index.writeDataToFile(Container.COURSEPLAN_FILE, false);
+		
+		// update the list
+		Container.coursePlanList.add(add_index);
 		
 
 		for (int i=0 ;i<Container.coursePlanList.size(); i++)
@@ -156,6 +164,8 @@ public class AdminControl {
 		CourseSlots add_Slots = new CourseSlots(totalSlots, courseIndex);
 		add_Slots.writeDataToFile(Container.COURSESLOT_FILE, false);
 		
+		// update the list
+		Container.courseSlotsList.add(add_Slots);
 
 //		for (int i=0 ;i<Container.courseSlotsList.size(); i++)
 //		{
@@ -176,6 +186,8 @@ public class AdminControl {
 			lessonPeriod, isOnline, location);
 		add_LessonLocation.writeDataToFile(Container.LESSON_FILE, false);
 		
+		// update the list
+		Container.lessonList.add(add_LessonLocation);
 
 		for (int i=0 ;i<Container.lessonList.size(); i++)
 		{
@@ -494,7 +506,7 @@ public class AdminControl {
 				
 				// TODO S: [CHECK IF WORKING] clear course slot vacancy loop
 				//need to shift waiting list student to the register slots
-				while (Container.courseSlotsList.get(i).getSlotList().size() <= totalSlots && Container.courseSlotsList.get(i).getWaitingList().isEmpty() == false)
+				while (Container.courseSlotsList.get(i).getSlotList().size() < totalSlots && Container.courseSlotsList.get(i).getWaitingList().isEmpty() == false)
 				{
 					// get the first person in the waiting list
 					matricNo = Container.courseSlotsList.get(i).getWaitingList().get(0);
