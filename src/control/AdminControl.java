@@ -24,6 +24,36 @@ public class AdminControl {
 			}
 		}
 	}
+	
+	public static int getLessonList(String courseIDInput) {
+		int count = 0;
+		
+		for (int i=0 ;i<Container.lessonList.size(); i++)
+        {
+            if(courseIDInput.equals(Container.lessonList.get(i).getCourseID()))
+            {
+            	count++;
+                String location;
+                List<String> list = new ArrayList<String>(Arrays.asList(Container.lessonList.get(i).getLocation().toString().split("~")));
+                if (!list.get(0).equals("null")) 
+                {
+                    location = Container.lessonList.get(i).getLocation().toString().replace('~',',');
+                    
+                } 
+                else 
+                {
+                    location = "No address";
+                    
+                }
+                System.out.println("Lesson ID: " + Container.lessonList.get(i).getLessonID() + 
+                         " | Course ID: "+ Container.lessonList.get(i).getCourseID() + 
+                         " | Lecture Type: "+ Container.lessonList.get(i).getLessonPeriod() + 
+                         " | Online Lesson: "+ Container.lessonList.get(i).getIsOnline() +
+                         " | Location: "+ location);
+            }
+        }
+		return count;
+	}
 
 	// Admin feature: 1
 	/**

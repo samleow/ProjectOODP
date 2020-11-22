@@ -180,6 +180,24 @@ public class Lesson implements IOData<Lesson>
 	}
 
 	/**
+     * Sets the location where the lesson will take place.
+     * @param location The location of where the lesson took place.
+     */
+    public Location getLocation()
+    {
+        return this.location;
+    }
+    
+    
+    /**
+     * Get whether the lesson is online or physical.
+     * @param isOnline Whether this lesson is online lesson or physical lesson.
+     */
+    public boolean getIsOnline()
+    {
+        return this.isOnline;
+    }
+	/**
 	 * Sets the location where the lesson will take place.
 	 * @param location The location of where the lesson took place.
 	 */

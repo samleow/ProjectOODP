@@ -27,7 +27,7 @@ public class StudentUI {
 				switch (choice) {
 				case 1: /* (1) *Add Course */
 					do {
-						System.out.println("\n(1) *Add Course");
+						System.out.println("\n=== *Add Course ===");
 						System.out.printf("Enter the Index Number of the Course to add (%d to return): ", Container.BREAK_MENU);
 						if(sc.hasNextInt()) { 
 							index = sc.nextInt();
@@ -41,19 +41,19 @@ public class StudentUI {
 											StudentControl.addCourse(index);
 										break;
 										} else {
-											System.out.println("You have already take this course in the waiting list. \n");
+											System.out.println("\nYou have already taken this course in the waiting list.");
 										}
 									} else {
-										System.out.println("You are exempted from this Course.");
+										System.out.println("\nYou are exempted from this course.");
 									}
 								} else {
-									System.out.println("You have take this course. Please enter other course Index No.");
+									System.out.println("\nYou have taken this course. Please enter another course index no.");
 								}
 							} else {
-								System.out.println("Index does not exist.");
+								System.out.println("\nIndex does not exist.");
 							}
 						} else {
-							System.out.println("'" + sc.next() + "' is not a valid index. Please enter only Integers.");
+							System.out.println("\n'" + sc.next() + "' is not a valid index. Please enter only integers.");
 						}
 					} while (true);
 					break;
@@ -61,7 +61,7 @@ public class StudentUI {
 					
 				case 2: /* (2) *Drop Course */
 					do {
-						System.out.println("\n(2) Drop Course/Waiting List");
+						System.out.println("\n=== Drop Course/Waiting List ===");
 						StudentControl.displayCurrentAndWaitingCourses();
 						System.out.printf("Enter the Index Number of the Course to drop (%d to return): ", Container.BREAK_MENU);
 						if(sc.hasNextInt()) { 
@@ -74,21 +74,21 @@ public class StudentUI {
 									StudentControl.dropCourse(index);
 									break;
 								} else {
-									System.out.println("Index not found. Please enter Index No. above.\n");
+									System.out.println("\nIndex not found. Please select the index no. from above.");
 								}
 							}
 							else {
-								System.out.println("Index does not exist.\n");
+								System.out.println("\nIndex does not exist.");
 							}
 						} else {
-							System.out.println("'" + sc.next() + "' is not a valid index. Please enter only Integers.\n");
+							System.out.println("\n'" + sc.next() + "' is not a valid index. Please enter only Integers.");
 						}
 					} while (true);
 					break;
 					
 					
 				case 3: /* (3) Check/Print Courses Registered*/
-					System.out.println("\n(3) Check/Print Courses Registered");
+					System.out.println("\n=== Check/Print Courses Registered ===");
 					StudentControl.displayCourse(StudentControl.studentInfo);
 
 					break;
@@ -106,18 +106,16 @@ public class StudentUI {
 					
 				case 7: /* (7) Log Out*/
 					StudentControl.studentInfo = null;
-					System.out.println("Log Out Student...");
+					System.out.println("\nLog Out Student...");
 					run = false;
 					break;
-
 				default:
-					System.out.println("Please Enter Choice from 1 to 7");
+					System.out.println("\nPlease Enter Choice from 1 to 7");
 				}
 			} else {
-				System.out.println("Please Enter Choice from 1 to 7");
+				System.out.println("\nPlease Enter Choice from 1 to 7");
 				sc.next();
 			}
-			System.out.println();
 		} while (run);
 	}
 	
