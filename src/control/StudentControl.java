@@ -473,9 +473,7 @@ public class StudentControl {
 								tempCS.getWaitingList().remove(0);
 								
 								// Sends email notification
-								System.out.println("Sending email........");
 								EmailNotification.getInstance().sendNotification(s, Notification.createMessage(s.getName(), tempCS.getCoursePlan().getCourseID(), false));
-								System.out.println("Sent successfully");
 							}
 							else
 							{
@@ -486,9 +484,7 @@ public class StudentControl {
 								tempCS.getWaitingList().remove(0);
 								
 								// Sends email notification
-								System.out.println("Sending email........");
 								EmailNotification.getInstance().sendNotification(s, Notification.createMessage(s.getName(), tempCS.getCoursePlan().getCourseID(), true));
-								System.out.println("Sent successfully");
 								
 								//update the student Account
 								s.getCoursePlan().add(tempCS.getCoursePlan());
