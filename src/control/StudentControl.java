@@ -18,6 +18,7 @@ import javax.mail.internet.MimeMessage;
 public class StudentControl {
 
 	public static Student studentInfo;
+	public static CoursePlan currentTimeTableClashes;
 
 	public static void saveStudentInfo(String userName) {
 		for (int i = 0; i < Container.studentList.size(); i++) {
@@ -54,7 +55,7 @@ public class StudentControl {
 							break;
 						} else {
 							Container.courseSlotsList.get(k).getWaitingList().add(studentInfo.getMatricNo());
-							System.out.println("No Vacancy Available. You will be put on the Waiting List \n");
+							System.out.println("No Vacancy Available. You will be put on the Course: " + tempcourseplan.getCourseID() + " | Index No: " + tempcourseplan.getIndex() + " Waiting List. \n");
 							waitingList = true;
 							break;
 						}
@@ -77,13 +78,13 @@ public class StudentControl {
 							break;
 						}
 					}
-					System.out.println("Successfully Added the Course. \n");
+					System.out.println("Successfully Added the Course: " + tempcourseplan.getCourseID() + " | Index No: " + tempcourseplan.getIndex() + ". \n");
 				}
 			} else {
-				System.out.println("Current TimeTable Clashes. Failed to add the Course.\n");
+				System.out.println("Current Course: " + currentTimeTableClashes.getCourseID() + " | Index No: " + currentTimeTableClashes.getIndex() + " Clashes. Failed to add the Course.\n");
 			}
 		} else {
-			System.out.println("Current courses in the waiting list clashes. Failed to add the Course.\n");
+			System.out.println("Current Course in the waiting list clashes: "  + currentTimeTableClashes.getCourseID() + " | Index No: " + currentTimeTableClashes.getIndex() + ". Failed to add the Course.\n");
 		}
 	}
 
@@ -102,14 +103,21 @@ public class StudentControl {
 		}
 
 		if (waitingListCourses(studentInfo).size() != 0) {
-			for (int y = 0; y < Container.courseSlotsList.size(); y++) {
-				if (Container.courseSlotsList.get(y).getCoursePlan().getIndex() == indexno) {
-					Container.courseSlotsList.get(y).getWaitingList().remove(studentInfo.getMatricNo());
-					Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
-					removeMatricNoInWaitingList = true;
+			for (int i = 0; i < waitingListCourses(studentInfo).size(); i++) {
+				if(waitingListCourses(studentInfo).get(i).getIndex() == indexno) {
+					for (int y = 0; y < Container.courseSlotsList.size(); y++) {
+						if (Container.courseSlotsList.get(y).getCoursePlan().getIndex() == indexno) {
+							Container.courseSlotsList.get(y).getWaitingList().remove(studentInfo.getMatricNo());
+							Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
+							removeMatricNoInWaitingList = true;
+							System.out.println("Successfully removed the Course: " + Container.courseSlotsList.get(y).getCoursePlan().getCourseID() + " | Index No: " + Container.courseSlotsList.get(y).getCoursePlan().getIndex() + " from the waiting list. \n");
+							break;
+						}
+					}
 				}
 			}
 		}
+		
 
 		if (!removeMatricNoInWaitingList) {
 
@@ -157,20 +165,18 @@ public class StudentControl {
 									Container.courseSlotsList.get(i).getWaitingList().remove(0);
 									Container.overwriteFileWithData(Container.COURSESLOT_FILE,
 											Container.courseSlotsList);
-									System.out.println("Sending email........");
-									EmailNotification.getInstance().sendNotification(tempstudent, Notification
-											.createMessage(tempstudent.getName(), tempCoursePlan.getCourseID(), false));
-									System.out.println("Sent successfully");
+									System.out.println("Sending email to notify student failure to add the " + tempCoursePlan.getCourseID() + " ........");
+									EmailNotification.getInstance().sendNotification(tempstudent, Notification.createMessage(tempstudent.getName(), tempCoursePlan.getCourseID(), false));
+									System.out.println("Sent successfully.");
 									System.out.println(
-											"Removed students from waiting list as his current timetable clashes.");
+											"Removed students from waiting list as his current timetable clashes. \n");
 								} else {
 									// remove student from the waiting list and add them
 									for (int k = 0; k < Container.courseSlotsList.size(); k++) {
 										if (Container.courseSlotsList.get(k).getCoursePlan().getIndex() == indexno) {
 											Container.courseSlotsList.get(k).getSlotList().add(student);
 											Container.courseSlotsList.get(k).getWaitingList().remove(0);
-											Container.overwriteFileWithData(Container.COURSESLOT_FILE,
-													Container.courseSlotsList);
+											Container.overwriteFileWithData(Container.COURSESLOT_FILE,Container.courseSlotsList);
 											break;
 										}
 									}
@@ -181,13 +187,13 @@ public class StudentControl {
 											tempstudent.getCoursePlan().add(Container.coursePlanList.get(k));
 											Container.overwriteFileWithData(Container.STUDENT_FILE,
 													Container.studentList);
-											System.out.println("Sending email........");
+											System.out.println("Sending email to notify student successfuly in adding the course " + tempCoursePlan.getCourseID() + " ........");
 											EmailNotification.getInstance().sendNotification(tempstudent,
 													Notification.createMessage(tempstudent.getName(),
 															tempCoursePlan.getCourseID(), true));
-											System.out.println("Sent successfully");
+											System.out.println("Sent successfully.");
 											System.out.println(
-													"Successfully added student into the Course and send email to notify him/her.");
+													"Successfully added student into the Course and sent email to notify him/her. \n");
 											break;
 										}
 									}
@@ -203,21 +209,20 @@ public class StudentControl {
 					}
 				}
 			}
+			System.out.println("Successfully removed the Course. " + tempCoursePlan.getCourseID() + " | Index No: " + tempCoursePlan.getIndex() + " \n");
 		}
-		System.out.println("Successfully Removed the Course. \n");
 	}
 
 	public static void displayCourse(Student student) {
 		CourseType courseType = CourseType.DEFAULT;
 		int AU = -1;
 
-		// Need to do like this as studentInfo.getCoursePlan().get(i).getCourse() give
-		// me NULL
+		// Need to do like this as studentInfo.getCoursePlan().get(i).getCourse() give me NULL
 		for (int i = 0; i < student.getCoursePlan().size(); i++) {
 			for (int j = 0; j < Container.courseList.size(); j++) {
-				if (student.getCoursePlan().get(i).getCourseID().equals(Container.courseList.get(i).getCourseID())) {
-					AU = Container.courseList.get(i).getCourseAU();
-					courseType = Container.courseList.get(i).getCourseType();
+				if (student.getCoursePlan().get(i).getCourseID().equals(Container.courseList.get(j).getCourseID())) {
+					AU = Container.courseList.get(j).getCourseAU();
+					courseType = Container.courseList.get(j).getCourseType();
 					break;
 				}
 			}
@@ -227,6 +232,7 @@ public class StudentControl {
 	}
 
 	public static boolean timetableClash(List<CoursePlan> s, CoursePlan oldCP, CoursePlan newCP) {
+		currentTimeTableClashes = null;
 		Lesson l1, l2;
 		for (int i = 0; i < s.size(); i++) {
 			if (s.get(i).equals(oldCP))
@@ -237,6 +243,7 @@ public class StudentControl {
 				for (int k = 0; k < newCP.getLessons().size(); k++) {
 					l2 = newCP.getLessons().get(k);
 					if (l1.clashWith(l2)) {
+						currentTimeTableClashes = s.get(i);
 						return true;
 					}
 				}
@@ -263,7 +270,7 @@ public class StudentControl {
 
 	public static void displayCurrentAndWaitingCourses() {
 
-		System.out.println("Display Current Courses you have took");
+		System.out.println("Display Current Courses you have registered");
 		for (int i = 0; i < studentInfo.getCoursePlan().size(); i++) {
 			System.out.println("CourseID: " + studentInfo.getCoursePlan().get(i).getCourseID() + " | " + "IndexNo: "
 					+ studentInfo.getCoursePlan().get(i).getIndex());
