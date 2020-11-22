@@ -575,7 +575,7 @@ public class AdminUI {
 		// check through if the lesson ID exist in the CoursePlan
 		
 		// 2 different menu will appear according to whether is there student register in that index
-		if(Validation.checkIfIsThereStudent(courseIDInput, lessonID) || Validation.checkIfThereAreLessonIDInCousePlan(courseIDInput, lessonID)  )
+		if(Validation.checkIfIsThereStudent(courseIDInput, lessonID) || Validation.checkIfThereAreLessonIDInCoursePlan(courseIDInput, lessonID)  )
 		{
 			do 
 			{

@@ -9,6 +9,9 @@ import java.util.StringTokenizer;
 import entity.AllEnums.*;
 
 
+/**
+ * Validation methods used for checking.
+ */
 public class Validation {
 	
 	/**
@@ -174,6 +177,12 @@ public class Validation {
 	}	
 	
 	//Validate if Lesson ID exist in course plan using index (update course plan)
+	/**
+	 * Check if the lesson id currently exist. 
+	 * @param lessonID The lesson id. 
+	 * @param index The course index. 
+	 * @return Boolean value on whether the lesson id currently exist.
+	 */
 	public static boolean checkIfExistLessonID(int lessonID, int index) {
 		boolean check = false;
 		for(int i = 0; i < Container.coursePlanList.size(); i++) {
@@ -192,7 +201,13 @@ public class Validation {
 	}	
 	
 	//Validate if there are lesson ID in course Plan (update lesson)
-	public static boolean checkIfThereAreLessonIDInCousePlan(String courseID, int lessonID) {
+	/**
+	 * Check if there are lesson id in the course plan.
+	 * @param courseID The course id.
+	 * @param lessonID The lesson id. 
+	 * @return Boolean value on whether there are there are lesson id in the course plan.
+	 */
+	public static boolean checkIfThereAreLessonIDInCoursePlan(String courseID, int lessonID) {
 		boolean check = false;
 		for(int i = 0; i < Container.coursePlanList.size(); i++) {
 			if(Container.coursePlanList.get(i).getCourseID().equals(courseID))
@@ -210,7 +225,12 @@ public class Validation {
 	}	
 
 	
-	//Validate student exist in course plan using courseID (update lesson)
+	/**
+	 * Check if there is registered student in the course. 
+	 * @param courseID The course id. 
+	 * @param lessonID The lesson id. 
+	 * @return Boolean value on whether there is registered student in the course. 
+	 */
 	public static boolean checkIfIsThereStudent(String courseID, int lessonID ) {
 		
 		boolean check = false;
