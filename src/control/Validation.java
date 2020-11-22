@@ -9,11 +9,6 @@ import java.util.StringTokenizer;
 import entity.AllEnums.*;
 
 
-
-/**
- * 
- *
- */
 public class Validation {
 	
 	/**
@@ -65,9 +60,9 @@ public class Validation {
 	}
 	
 	/**
-	 * Checks if the matriculation number exist currently.
-	 * @param matricNo
-	 * @return
+	 * Checks if the matriculation number currently exist.
+	 * @param matricNo The matriculation number value.
+	 * @return Boolean value on whether the matriculation number currently exist.
 	 */
 	public static boolean checkIfValidMatricNo(String matricNo) {
 		boolean check = false;
@@ -143,6 +138,12 @@ public class Validation {
 	}
 	
 	//Validate GroupID e.g SSP1
+	/**
+	 * Checks if the group id is valid. 
+	 * @param courseID The course id value. 
+	 * @param groupIDInput The group id value.
+	 * @return Boolean value on whether the group id is valid.
+	 */
 	public static boolean checkIfValidGroupID(String courseID, String groupIDInput) {
 		boolean check = false;
 		for(int i = 0; i < Container.coursePlanList.size(); i++) {
@@ -155,7 +156,11 @@ public class Validation {
 		return check;
 	}
 	
-	//Validate student exist in course slot of that index 
+	/**
+	 * Checks if the course slot is empty. 
+	 * @param index The course index.
+	 * @return Boolean value on whether the course slot is empty.
+	 */
 	public static boolean checkIfValidIsCourseSlotEmpty(int index) {
 		boolean check = false;
 		for(int i = 0; i < Container.courseSlotsList.size(); i++) {
@@ -169,7 +174,12 @@ public class Validation {
 	}	
 
 	
-	//Validate Course Type
+
+	/**
+	 * Checks if course type is valid. 
+	 * @param courseTypeInput The course type value.
+	 * @return The value of the course type.
+	 */
 	public static CourseType checkIfValidCourseType(String courseTypeInput)
 	{
 		CourseType courseType = CourseType.DEFAULT;
@@ -198,7 +208,11 @@ public class Validation {
 		
 	}
 	
-	//Validate Lesson Type
+	/**
+	 * Checks if lesson type is valid. 
+	 * @param lessonTypeInput The lesson type value.
+	 * @return The value of the lesson type. 
+	 */
 	public static LessonType checkIfValidLessonType(String lessonTypeInput)
 	{
 		LessonType lessonType = LessonType.DEFAULT;
@@ -219,8 +233,12 @@ public class Validation {
 		
 		return lessonType;
 	}
-	
-	//Validate Week Type
+
+	/**
+	 * Check if the week type is valid.
+	 * @param weekTypeInput The week type value. 
+	 * @return The value of the week type. 
+	 */
 	public static WeekType checkIfValidWeekType(String weekTypeInput)
 	{
 		WeekType weekType = WeekType.DEFAULT;
@@ -240,7 +258,12 @@ public class Validation {
 		
 	}
 	
-	//Validate Day
+
+	/**
+	 * Check if the day is valid.
+	 * @param dayInput The lesson day value.
+	 * @return The value of the lesson day. 
+	 */
 	public static Day checkIfValidDay(String dayInput)
 	{
 		Day lessonDay = Day.DEFAULT;
@@ -277,8 +300,12 @@ public class Validation {
 		
 	}
 	
-	
-	//Validate UserName
+
+	/**
+	 * Checks whether the student username currently exist.
+	 * @param userName The student username.
+	 * @return Boolean value on whether the student username is valid. 
+	 */
 	public static boolean checkIfValidStudentUserName(String userName) {
 		boolean check = false;
 		for(int i = 0; i < Container.studentList.size(); i++) {
@@ -291,7 +318,12 @@ public class Validation {
 		return check;
 	}
 	
-	// Validate Student took this index
+
+	/**
+	 * Checks if the student got take this course.
+	 * @param index The course index.
+	 * @return Boolean value on whether the student got take this course.
+	 */
 	public static boolean checkIfStudentTookThisCourse(int index) {
 		boolean check = false;
 		for(int i = 0; i < StudentControl.studentInfo.getCoursePlan().size(); i++) {
@@ -307,6 +339,12 @@ public class Validation {
 		return check;
 	}
 	
+	
+	/**
+	 * Checks if the student got take this course index.
+	 * @param index The course index.
+	 * @return Boolean value on whether the student got take this course index.
+	 */
 	public static boolean checkIfStudentTookThisIndex(int index) {
 		boolean check = false;
 		for(int i = 0; i < StudentControl.studentInfo.getCoursePlan().size(); i++) {
@@ -319,7 +357,11 @@ public class Validation {
 	}
 				
 	
-	// Validate Course Exempted
+	/**
+	 * Checks if the student exempted from the course.
+	 * @param index The course index.
+	 * @return Boolean value on whether the student exempted from the course.
+	 */
 	public static boolean checkIfCourseExempted(int index) {
 		boolean check = false;
 		outerloop:
@@ -338,7 +380,11 @@ public class Validation {
 		return check;
 	}
 	
-	// Validate Student In Waiting List
+	/**
+	 * Checks if the student courses exist in the waiting list.
+	 * @param index The course index.
+	 * @return Boolean value on whether the student courses exist in the waiting list.
+	 */
 	public static boolean checkIfStudentInCourseWaitingList(int index) {
 		boolean check = false; 
 		outerloop:
@@ -363,6 +409,12 @@ public class Validation {
 		return check;
 	}
 	
+
+	/**
+	 * Checks if the student courses index exist in the waiting list.
+	 * @param index The course index.
+	 * @return Boolean value on whether the student courses index exist in the waiting list.
+	 */
 	public static boolean checkIfStudentinIndexWaitingList(int index) {
 		boolean check = false; 
 		outerloop:

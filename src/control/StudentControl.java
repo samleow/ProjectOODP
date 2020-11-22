@@ -3,8 +3,9 @@ import java.util.*;
 import entity.AllEnums.*;
 import entity.*;
 
+
 /**
- * Represents the method for the student features.
+ * Methods used for student features.  
  */
 public class StudentControl {
 
