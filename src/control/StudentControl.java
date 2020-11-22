@@ -3,11 +3,25 @@ import java.util.*;
 import entity.AllEnums.*;
 import entity.*;
 
+/**
+ * Represents the method for the student features.
+ */
 public class StudentControl {
 
+	/**
+	 * The student information.
+	 */
 	public static Student studentInfo;
+	
+	/**
+	 * The current time table clashes information.
+	 */
 	public static CoursePlan currentTimeTableClashes;
 
+	/**
+	 * Store the student information.
+	 * @param userName Username of the student.
+	 */
 	public static void saveStudentInfo(String userName) {
 		for (int i = 0; i < Container.studentList.size(); i++) {
 			if (Container.studentList.get(i).getUserName().equals(userName)) {
@@ -16,9 +30,11 @@ public class StudentControl {
 		}
 	}
 
+	/**
+	 * Add the course based on the user input.
+	 * @param indexno Index number of the course.
+	 */
 	public static void addCourse(int indexno) {
-		// validation of checking only integer
-
 		boolean waitingList = false;
 		CoursePlan tempcourseplan = null;
 
@@ -53,13 +69,10 @@ public class StudentControl {
 				Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
 
 				// If not in waitingList then add the Course in the Student Class CoursePlan
-				// List
 				if (!waitingList) {
-
 					// Adding the Index No
 					for (int k = 0; k < Container.coursePlanList.size(); k++) {
 						if (Container.coursePlanList.get(k).getIndex() == indexno) {
-							// It is link and reference
 							studentInfo.getCoursePlan().add(Container.coursePlanList.get(k));
 							// Overwrite the latest data into the StudentAccount.txt
 							Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
@@ -76,6 +89,10 @@ public class StudentControl {
 		}
 	}
 
+	/**
+	 * Drop the course based on the user input.
+	 * @param indexno Index number of the course.
+	 */
 	public static void dropCourse(int indexno) {
 		CoursePlan tempCoursePlan = null;
 		boolean addStudents = true;
@@ -193,6 +210,10 @@ public class StudentControl {
 		}
 	}
 
+	/**
+	 * Display current student registered courses. 
+	 * @param student Details of the student. 
+	 */
 	public static void displayCourse(Student student) {
 		CourseType courseType = CourseType.DEFAULT;
 		int AU = -1;
@@ -230,19 +251,26 @@ public class StudentControl {
 		System.out.println("");
 	}
 
-	public static boolean timetableClash(List<CoursePlan> s, CoursePlan oldCP, CoursePlan newCP) {
+	/**
+	 * Check whether the timetable of old course plan clashes with the new course plan. 
+	 * @param timetable List of the course plan. 
+	 * @param oldCP Old Course Plan to be replaced.
+	 * @param newCP New Course Plan will be used to compare with timetable.
+	 * @return Boolean value of whether time table clashes. 
+	 */
+	public static boolean timetableClash(List<CoursePlan> timetable, CoursePlan oldCP, CoursePlan newCP) {
 		currentTimeTableClashes = null;
 		Lesson l1, l2;
-		for (int i = 0; i < s.size(); i++) {
-			if (s.get(i).equals(oldCP))
+		for (int i = 0; i < timetable.size(); i++) {
+			if (timetable.get(i).equals(oldCP))
 				continue;
 
-			for (int j = 0; j < s.get(i).getLessons().size(); j++) {
-				l1 = s.get(i).getLessons().get(j);
+			for (int j = 0; j < timetable.get(i).getLessons().size(); j++) {
+				l1 = timetable.get(i).getLessons().get(j);
 				for (int k = 0; k < newCP.getLessons().size(); k++) {
 					l2 = newCP.getLessons().get(k);
 					if (l1.clashWith(l2)) {
-						currentTimeTableClashes = s.get(i);
+						currentTimeTableClashes = timetable.get(i);
 						return true;
 					}
 				}
@@ -251,6 +279,11 @@ public class StudentControl {
 		return false;
 	}
 
+	/**
+	 * Get all the Student courses in the waiting list.
+	 * @param student Details of the student.
+	 * @return List of the courses in the waiting list.
+	 */
 	public static List<CoursePlan> waitingListCourses(Student student) {
 		List<CoursePlan> waitingList = new ArrayList<CoursePlan>();
 
@@ -267,6 +300,9 @@ public class StudentControl {
 		return waitingList;
 	}
 
+	/**
+	 * Displays student current courses and courses in the waiting list.
+	 */
 	public static void displayCurrentAndWaitingCourses() {
 
 		System.out.println("Display Current Courses you have registered");

@@ -5,16 +5,13 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.StringTokenizer;
-
-import entity.*;
-
-import entity.AllEnums;
-import entity.AllEnums.CourseType;
-import entity.AllEnums.Day;
-import entity.AllEnums.LessonType;
-import entity.AllEnums.WeekType;
+import entity.AllEnums.*;
 
 
+/**
+ * 
+ *
+ */
 public class Validation {
 	
 	// Validate CoursID
