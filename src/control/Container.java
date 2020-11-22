@@ -11,13 +11,13 @@ import entity.*;
 /**
  * Container class to store constant variables and data.
  */
-public class Container
-{
+public class Container {
 	/**
 	 * Private constructor to make class static.
 	 */
-	private Container() {}
-	
+	private Container() {
+	}
+
 	/**
 	 * Set to true if running on IDE, else set to false if running on console.
 	 */
@@ -88,15 +88,12 @@ public class Container
 	 * @return Returns true if read from file is successful.
 	 * @throws IOException Throws an exception when the read from file failed.
 	 */
-	public static boolean readLessonFile(String fileName, ArrayList<Lesson> list) throws IOException
-	{
+	public static boolean readLessonFile(String fileName, ArrayList<Lesson> list) throws IOException {
 		// read String from text file
 		ArrayList stringArray = (ArrayList) read(fileName);
 
-		for (int i = 0; i < stringArray.size(); i++)
-		{
-			if (!stringArray.get(i).toString().isBlank())
-			{
+		for (int i = 0; i < stringArray.size(); i++) {
+			if (!stringArray.get(i).toString().isBlank()) {
 				Lesson l = new Lesson();
 				l.readDataFile((String) stringArray.get(i));
 				list.add(l);
@@ -113,15 +110,12 @@ public class Container
 	 * @return Returns true if read from file is successful.
 	 * @throws IOException Throws an exception when the read from file failed.
 	 */
-	public static boolean readCourseFile(String fileName, ArrayList<Course> list) throws IOException
-	{
+	public static boolean readCourseFile(String fileName, ArrayList<Course> list) throws IOException {
 		// read String from text file
 		ArrayList stringArray = (ArrayList) read(fileName);
 
-		for (int i = 0; i < stringArray.size(); i++)
-		{
-			if (!stringArray.get(i).toString().isBlank())
-			{
+		for (int i = 0; i < stringArray.size(); i++) {
+			if (!stringArray.get(i).toString().isBlank()) {
 				Course l = new Course();
 				l.readDataFile((String) stringArray.get(i));
 				list.add(l);
@@ -139,15 +133,12 @@ public class Container
 	 * @return Returns true if read from file is successful.
 	 * @throws IOException Throws an exception when the read from file failed.
 	 */
-	public static boolean readCoursePlanFile(String fileName, ArrayList<CoursePlan> list) throws IOException
-	{
+	public static boolean readCoursePlanFile(String fileName, ArrayList<CoursePlan> list) throws IOException {
 		// read String from text file
 		ArrayList stringArray = (ArrayList) read(fileName);
 
-		for (int i = 0; i < stringArray.size(); i++)
-		{
-			if (!stringArray.get(i).toString().isBlank())
-			{
+		for (int i = 0; i < stringArray.size(); i++) {
+			if (!stringArray.get(i).toString().isBlank()) {
 				CoursePlan l = new CoursePlan();
 				l.readDataFile((String) stringArray.get(i));
 				list.add(l);
@@ -164,15 +155,12 @@ public class Container
 	 * @return Returns true if read from file is successful.
 	 * @throws IOException Throws an exception when the read from file failed.
 	 */
-	public static boolean readCourseSlotsFile(String fileName, ArrayList<CourseSlots> list) throws IOException
-	{
+	public static boolean readCourseSlotsFile(String fileName, ArrayList<CourseSlots> list) throws IOException {
 		// read String from text file
 		ArrayList stringArray = (ArrayList) read(fileName);
 
-		for (int i = 0; i < stringArray.size(); i++)
-		{
-			if (!stringArray.get(i).toString().isBlank())
-			{
+		for (int i = 0; i < stringArray.size(); i++) {
+			if (!stringArray.get(i).toString().isBlank()) {
 				CourseSlots l = new CourseSlots();
 				l.readDataFile((String) stringArray.get(i));
 				list.add(l);
@@ -189,15 +177,12 @@ public class Container
 	 * @return Returns true if read from file is successful.
 	 * @throws IOException Throws an exception when the read from file failed.
 	 */
-	public static boolean readStudentFile(String fileName, ArrayList<Student> list) throws IOException
-	{
+	public static boolean readStudentFile(String fileName, ArrayList<Student> list) throws IOException {
 		// read String from text file
 		ArrayList stringArray = (ArrayList) read(fileName);
 
-		for (int i = 0; i < stringArray.size(); i++)
-		{
-			if (!stringArray.get(i).toString().isBlank())
-			{
+		for (int i = 0; i < stringArray.size(); i++) {
+			if (!stringArray.get(i).toString().isBlank()) {
 				Student l = new Student();
 				l.readDataFile((String) stringArray.get(i));
 				list.add(l);
@@ -214,15 +199,12 @@ public class Container
 	 * @return Returns true if read from file is successful.
 	 * @throws IOException Throws an exception when the read from file failed.
 	 */
-	public static boolean readAdminFile(String fileName, ArrayList<Admin> list) throws IOException
-	{
+	public static boolean readAdminFile(String fileName, ArrayList<Admin> list) throws IOException {
 		// read String from text file
 		ArrayList stringArray = (ArrayList) read(fileName);
 
-		for (int i = 0; i < stringArray.size(); i++)
-		{
-			if (!stringArray.get(i).toString().isBlank())
-			{
+		for (int i = 0; i < stringArray.size(); i++) {
+			if (!stringArray.get(i).toString().isBlank()) {
 				Admin a = new Admin();
 				a.readDataFile((String) stringArray.get(i));
 				list.add(a);
@@ -239,17 +221,12 @@ public class Container
 	 * @param l        The list of the data to be stored.
 	 * @return Returns true if overwrite is successful.
 	 */
-	public static boolean overwriteFileWithData(String fileName, ArrayList<? extends IOData> l)
-	{
+	public static boolean overwriteFileWithData(String fileName, ArrayList<? extends IOData> l) {
 
-		for (int i = 0; i < l.size(); i++)
-		{
-			if (i == 0)
-			{
+		for (int i = 0; i < l.size(); i++) {
+			if (i == 0) {
 				l.get(i).writeDataToFile(fileName, true);
-			}
-			else
-			{
+			} else {
 				l.get(i).writeDataToFile(fileName, false);
 			}
 		}
@@ -263,18 +240,14 @@ public class Container
 	 * @return Returns a list of String of data from file.
 	 * @throws IOException Throws an exception when the read from file failed.
 	 */
-	public static List read(String fileName) throws IOException
-	{
+	public static List read(String fileName) throws IOException {
 		List data = new ArrayList();
 		Scanner scanner = new Scanner(new FileInputStream(fileName));
-		try
-		{
-			while (scanner.hasNextLine())
-			{
+		try {
+			while (scanner.hasNextLine()) {
 				data.add(scanner.nextLine());
 			}
-		} finally
-		{
+		} finally {
 			scanner.close();
 		}
 		return data;
@@ -286,12 +259,9 @@ public class Container
 	 * @param index The index of the Course.
 	 * @return Returns the CourseSlots found, else returns null.
 	 */
-	public static CourseSlots getCourseSlotByIndex(int index)
-	{
-		for (int i = 0; i < courseSlotsList.size(); i++)
-		{
-			if (courseSlotsList.get(i).getCoursePlan().getIndex() == index)
-			{
+	public static CourseSlots getCourseSlotByIndex(int index) {
+		for (int i = 0; i < courseSlotsList.size(); i++) {
+			if (courseSlotsList.get(i).getCoursePlan().getIndex() == index) {
 				return courseSlotsList.get(i);
 			}
 		}
@@ -304,12 +274,9 @@ public class Container
 	 * @param index The index of the Course.
 	 * @return Returns the CoursePlan found, else returns null.
 	 */
-	public static CoursePlan getCoursePlanByIndex(int index)
-	{
-		for (int i = 0; i < coursePlanList.size(); i++)
-		{
-			if (coursePlanList.get(i).getIndex() == index)
-			{
+	public static CoursePlan getCoursePlanByIndex(int index) {
+		for (int i = 0; i < coursePlanList.size(); i++) {
+			if (coursePlanList.get(i).getIndex() == index) {
 				return coursePlanList.get(i);
 			}
 		}
@@ -323,12 +290,9 @@ public class Container
 	 * @param l     The list of CoursePlan to be searched.
 	 * @return Returns the CoursePlan found, else returns null.
 	 */
-	public static CoursePlan getCoursePlanByIndex(int index, List<CoursePlan> l)
-	{
-		for (int i = 0; i < l.size(); i++)
-		{
-			if (l.get(i).getIndex() == index)
-			{
+	public static CoursePlan getCoursePlanByIndex(int index, List<CoursePlan> l) {
+		for (int i = 0; i < l.size(); i++) {
+			if (l.get(i).getIndex() == index) {
 				return l.get(i);
 			}
 		}
@@ -341,12 +305,9 @@ public class Container
 	 * @param username The username of the Student.
 	 * @return Returns the Student found, else return null.
 	 */
-	public static Student getStudentByUsername(String username)
-	{
-		for (int i = 0; i < studentList.size(); i++)
-		{
-			if (studentList.get(i).getUserName().equals(username))
-			{
+	public static Student getStudentByUsername(String username) {
+		for (int i = 0; i < studentList.size(); i++) {
+			if (studentList.get(i).getUserName().equals(username)) {
 				return studentList.get(i);
 			}
 		}
@@ -359,12 +320,9 @@ public class Container
 	 * @param matricno The matric number of the Student.
 	 * @return Returns the Student found, else return null.
 	 */
-	public static Student getStudentByMatricNo(String matricno)
-	{
-		for (int i = 0; i < studentList.size(); i++)
-		{
-			if (studentList.get(i).getMatricNo().equals(matricno))
-			{
+	public static Student getStudentByMatricNo(String matricno) {
+		for (int i = 0; i < studentList.size(); i++) {
+			if (studentList.get(i).getMatricNo().equals(matricno)) {
 				return studentList.get(i);
 			}
 		}
@@ -377,12 +335,9 @@ public class Container
 	 * @param username The username of the Admin.
 	 * @return Returns the Admin found, else return null.
 	 */
-	public static Admin getAdminByUsername(String username)
-	{
-		for (int i = 0; i < adminList.size(); i++)
-		{
-			if (adminList.get(i).getUserName().equals(username))
-			{
+	public static Admin getAdminByUsername(String username) {
+		for (int i = 0; i < adminList.size(); i++) {
+			if (adminList.get(i).getUserName().equals(username)) {
 				return adminList.get(i);
 			}
 		}

@@ -1,71 +1,49 @@
 package entity;
 
-
 /**
  * Class to contain all enum values.
  */
 public class AllEnums {
-	
+
 	/**
-	 *	Account types that can be used.
+	 * Account types that can be used.
 	 */
-	public enum AccountType{
-		DEFAULT,
-		STUDENT,
-		ADMIN
+	public enum AccountType {
+		DEFAULT, STUDENT, ADMIN
 	}
-	
+
 	/**
-	 *	Day of the week that can be used.
+	 * Day of the week that can be used.
 	 */
 	public enum Day {
-		DEFAULT,
-		MONDAY,
-		TUESDAY,
-		WEDNESDAY,
-		THURSDAY,
-		FRIDAY,
-		SATURDAY,
-		SUNDAY
+		DEFAULT, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
 	}
-	
+
 	/**
-	 *	Genders that can be used.
+	 * Genders that can be used.
 	 */
 	public enum Gender {
-		DEFAULT,
-		MALE,
-		FEMALE
+		DEFAULT, MALE, FEMALE
 	}
-	
+
 	/**
-	 *	Lesson types that can be used.
+	 * Lesson types that can be used.
 	 */
 	public enum LessonType {
-		DEFAULT,
-		LECTURE,
-		TUTORIAL,
-		LAB
+		DEFAULT, LECTURE, TUTORIAL, LAB
 	}
-	
+
 	/**
-	 *	Week types that can be used.
+	 * Week types that can be used.
 	 */
 	public enum WeekType {
-		DEFAULT,
-		ODD,
-		EVEN,
-		WEEKLY
+		DEFAULT, ODD, EVEN, WEEKLY
 	}
-	
+
 	/**
-	 *	Course types that can be used.
+	 * Course types that can be used.
 	 */
 	public enum CourseType {
-		DEFAULT,
-		CORE,
-		UNRESTRICTED_ELECTIVE,
-		GER,
-		PRESCRIBED,
+		DEFAULT, CORE, UNRESTRICTED_ELECTIVE, GER, PRESCRIBED,
 	}
 }

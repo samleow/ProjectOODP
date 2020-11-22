@@ -1,12 +1,12 @@
 package control;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import entity.LoginAccount;
 
-public class AccountControl
-{
+public class AccountControl {
 	public static String encryptThisString(String input) {
 		try {
 			// getInstance() method is called with algorithm SHA-512
@@ -37,14 +37,13 @@ public class AccountControl
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	// check if login credentials are valid
-	public static boolean accountLoginSuccess(String userName, String passwordHashed, boolean isAdmin)
-	{
+	public static boolean accountLoginSuccess(String userName, String passwordHashed, boolean isAdmin) {
 		System.out.println("Loading...");
 
 		LoginAccount accnt = null;
-		if(isAdmin)
+		if (isAdmin)
 			accnt = Container.getAdminByUsername(userName);
 		else
 			accnt = Container.getStudentByUsername(userName);

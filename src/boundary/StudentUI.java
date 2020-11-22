@@ -1,4 +1,5 @@
 package boundary;
+
 import java.util.Scanner;
 import control.*;
 
@@ -28,83 +29,87 @@ public class StudentUI {
 				case 1: /* (1) *Add Course */
 					do {
 						System.out.println("\n=== *Add Course ===");
-						System.out.printf("Enter the Index Number of the Course to add (%d to return): ", Container.BREAK_MENU);
-						if(sc.hasNextInt()) { 
+						System.out.printf("Enter the Index Number of the Course to add (%d to return): ",
+								Container.BREAK_MENU);
+						if (sc.hasNextInt()) {
 							index = sc.nextInt();
-							if(index == Container.BREAK_MENU) {
+							if (index == Container.BREAK_MENU) {
 								break;
 							}
-							if(Validation.checkIfValidIndex(index)) {
-								if(!Validation.checkIfStudentTookThisCourse(index)) {
-									if(!Validation.checkIfCourseExempted(index)) {
-										if(!Validation.checkIfStudentInCourseWaitingList(index)) {
+							if (Validation.checkIfValidIndex(index)) {
+								if (!Validation.checkIfStudentTookThisCourse(index)) {
+									if (!Validation.checkIfCourseExempted(index)) {
+										if (!Validation.checkIfStudentInCourseWaitingList(index)) {
 											StudentControl.addCourse(index);
-										break;
+											break;
 										} else {
-											System.out.println("\nYou have already taken this course in the waiting list.");
+											System.out.println(
+													"\nYou have already taken this course in the waiting list.");
 										}
 									} else {
 										System.out.println("\nYou are exempted from this course.");
 									}
 								} else {
-									System.out.println("\nYou have taken this course. Please enter another course index no.");
+									System.out.println(
+											"\nYou have taken this course. Please enter another course index no.");
 								}
 							} else {
 								System.out.println("\nIndex does not exist.");
 							}
 						} else {
-							System.out.println("\n'" + sc.next() + "' is not a valid index. Please enter only integers.");
+							System.out
+									.println("\n'" + sc.next() + "' is not a valid index. Please enter only integers.");
 						}
 					} while (true);
 					break;
 
-					
 				case 2: /* (2) *Drop Course */
 					do {
 						System.out.println("\n=== Drop Course/Waiting List ===");
 						StudentControl.displayCurrentAndWaitingCourses();
-						System.out.printf("Enter the Index Number of the Course to drop (%d to return): ", Container.BREAK_MENU);
-						if(sc.hasNextInt()) { 
+						System.out.printf("Enter the Index Number of the Course to drop (%d to return): ",
+								Container.BREAK_MENU);
+						if (sc.hasNextInt()) {
 							index = sc.nextInt();
-							if(index == Container.BREAK_MENU) {
+							if (index == Container.BREAK_MENU) {
 								break;
 							}
-							if(Validation.checkIfValidIndex(index)) {
-								if(Validation.checkIfStudentTookThisIndex(index) || (Validation.checkIfStudentinIndexWaitingList(index))) {
+							if (Validation.checkIfValidIndex(index)) {
+								if (Validation.checkIfStudentTookThisIndex(index)
+										|| (Validation.checkIfStudentinIndexWaitingList(index))) {
 									StudentControl.dropCourse(index);
 									break;
 								} else {
 									System.out.println("\nIndex not found. Please select the index no. from above.");
 								}
-							}
-							else {
+							} else {
 								System.out.println("\nIndex does not exist.");
 							}
 						} else {
-							System.out.println("\n'" + sc.next() + "' is not a valid index. Please enter only Integers.");
+							System.out
+									.println("\n'" + sc.next() + "' is not a valid index. Please enter only Integers.");
 						}
 					} while (true);
 					break;
-					
-					
-				case 3: /* (3) Check/Print Courses Registered*/
+
+				case 3: /* (3) Check/Print Courses Registered */
 					System.out.println("\n=== Check/Print Courses Registered ===");
 					StudentControl.displayCourse(StudentControl.studentInfo);
 
 					break;
-				case 4: /* (4) Check Vacancies Available*/
+				case 4: /* (4) Check Vacancies Available */
 					StudentControl.checkVacanciesAvailableMenu(sc);
 					break;
-					
-				case 5: /* (5) Change Index Number of Course*/
+
+				case 5: /* (5) Change Index Number of Course */
 					StudentControl.changeIndexNoMenu(sc);
 					break;
-					
-				case 6: /* (6) Swap Index Number with Another Student*/
+
+				case 6: /* (6) Swap Index Number with Another Student */
 					StudentControl.swapIndexMenu(sc);
 					break;
-					
-				case 7: /* (7) Log Out*/
+
+				case 7: /* (7) Log Out */
 					StudentControl.studentInfo = null;
 					System.out.println("\nLog Out Student...");
 					run = false;
@@ -118,5 +123,5 @@ public class StudentUI {
 			}
 		} while (run);
 	}
-	
+
 }

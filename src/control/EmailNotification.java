@@ -14,10 +14,10 @@ import javax.mail.internet.MimeMessage;
 import entity.Student;
 
 /**
- * An E-mail notification class that handles the sending of e-mail notifications.
+ * An E-mail notification class that handles the sending of e-mail
+ * notifications.
  */
-public class EmailNotification extends Notification
-{
+public class EmailNotification extends Notification {
 	/**
 	 * Private instance of the EmailNotification class.
 	 */
@@ -26,34 +26,30 @@ public class EmailNotification extends Notification
 	/**
 	 * Private constructor of the EmailNotification class.
 	 */
-	private EmailNotification()
-	{
+	private EmailNotification() {
 		type = "EMAIL";
 	}
 
 	/**
 	 * Returns the instance of the EmailNotification class.
+	 * 
 	 * @return Returns the instance of the EmailNotification class.
 	 */
-	public static EmailNotification getInstance()
-	{
+	public static EmailNotification getInstance() {
 		if (_instance == null)
 			_instance = new EmailNotification();
 
 		return _instance;
 	}
-	
+
 	/**
 	 * Sends an e-mail notification to the student with the given message.
 	 */
-	public boolean sendNotification(Student student, String sendMessage)
-	{
+	public boolean sendNotification(Student student, String sendMessage) {
 		ArrayList stringArray;
-		try
-		{
+		try {
 			stringArray = (ArrayList) Container.read(Container.SENDER_EMAIL_FILE);
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			return false;
 		}
 
@@ -66,16 +62,13 @@ public class EmailNotification extends Notification
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "587");
 
-		Session session = Session.getInstance(props, new javax.mail.Authenticator()
-		{
-			protected PasswordAuthentication getPasswordAuthentication()
-			{
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, password);
 			}
 		});
 
-		try
-		{
+		try {
 			Message message = new MimeMessage(session);
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(student.getEmail())); // to be added
 																										// an email
@@ -85,8 +78,7 @@ public class EmailNotification extends Notification
 
 			Transport.send(message);
 
-		} catch (MessagingException e)
-		{
+		} catch (MessagingException e) {
 			return false;
 		}
 
