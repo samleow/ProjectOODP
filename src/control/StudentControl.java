@@ -290,7 +290,7 @@ public class StudentControl {
 
 	/**
 	 * Checks and displays the vacancy of an index number based on user input.
-	 * @param sc The scanner object to handle inputs
+	 * @param sc The scanner object to handle inputs.
 	 */
 	public static void checkVacanciesAvailableMenu(Scanner sc)
 	{
@@ -330,7 +330,7 @@ public class StudentControl {
 	
 	/**
 	 * Changes an index number of the student based on user inputs.
-	 * @param sc The scanner object to handle inputs
+	 * @param sc The scanner object to handle inputs.
 	 */
 	public static void changeIndexNoMenu(Scanner sc)
 	{
@@ -483,7 +483,7 @@ public class StudentControl {
 	
 	/**
 	 * Swaps the index number of two students based on user inputs.
-	 * @param sc The scanner object to handle inputs
+	 * @param sc The scanner object to handle inputs.
 	 */
 	public static void swapIndexMenu(Scanner sc)
 	{

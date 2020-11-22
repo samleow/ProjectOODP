@@ -501,7 +501,6 @@ public class AdminControl {
 
 				Container.courseSlotsList.get(i).setTotalSlots(totalSlots);
 				
-				// TODO S: [CHECK IF WORKING] clear course slot vacancy loop
 				//need to shift waiting list student to the register slots
 				while (Container.courseSlotsList.get(i).getSlotList().size() <= totalSlots && Container.courseSlotsList.get(i).getWaitingList().isEmpty() == false)
 				{
@@ -515,7 +514,6 @@ public class AdminControl {
 					// remove the first index of the waiting list
 					Container.courseSlotsList.get(i).getWaitingList().remove(0);
 					
-					// TODO S: [CHECK IF WORKING] Email notification on vacancy change
 					System.out.println("Sending email........");
 					EmailNotification.getInstance().sendNotification(student, Notification.createMessage(student.getName(), Container.courseSlotsList.get(i).getCoursePlan().getCourseID(), true));
 					System.out.println("Sent successfully");					
