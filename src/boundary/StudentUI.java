@@ -14,20 +14,21 @@ public class StudentUI {
 		Scanner sc = new Scanner(System.in);
 		do {
 			System.out.println("(1) *Add Course");
-			System.out.println("(2) Drop Course");
+			System.out.println("(2) Drop Course/Waiting List");
 			System.out.println("(3) Check/Print Courses Registered");
 			System.out.println("(4) Check Vacancies Available");
 			System.out.println("(5) Change Index Number of Course");
 			System.out.println("(6) Swap Index Number with Another Student");
 			System.out.println("(7) Log Out");
-			System.out.print("Enter the your choice: ");
+			System.out.print("Enter choice: ");
 			// validate the choice input
 			if (sc.hasNextInt()) {
 				choice = sc.nextInt();
 				switch (choice) {
 				case 1: /* (1) *Add Course */
 					do {
-						System.out.printf("\nEnter the Index Number of the Course to add (%d to return): ", Container.BREAK_MENU);
+						System.out.println("\n(1) *Add Course");
+						System.out.printf("Enter the Index Number of the Course to add (%d to return): ", Container.BREAK_MENU);
 						if(sc.hasNextInt()) { 
 							index = sc.nextInt();
 							if(index == Container.BREAK_MENU) {
@@ -36,7 +37,7 @@ public class StudentUI {
 							if(Validation.checkIfValidIndex(index)) {
 								if(!Validation.checkIfStudentTookThisCourse(index)) {
 									if(!Validation.checkIfCourseExempted(index)) {
-										if(!Validation.checkIfStudentInWaitingList(index)) {
+										if(!Validation.checkIfStudentInCourseWaitingList(index)) {
 											StudentControl.addCourse(index);
 										break;
 										} else {
@@ -60,6 +61,7 @@ public class StudentUI {
 					
 				case 2: /* (2) *Drop Course */
 					do {
+						System.out.println("\n(2) Drop Course/Waiting List");
 						StudentControl.displayCurrentAndWaitingCourses();
 						System.out.printf("Enter the Index Number of the Course to drop (%d to return): ", Container.BREAK_MENU);
 						if(sc.hasNextInt()) { 
@@ -68,7 +70,7 @@ public class StudentUI {
 								break;
 							}
 							if(Validation.checkIfValidIndex(index)) {
-								if(Validation.checkIfStudentTookThisCourse(index) || (Validation.checkIfStudentInWaitingList(index))) {
+								if(Validation.checkIfStudentTookThisIndex(index) || (Validation.checkIfStudentinIndexWaitingList(index))) {
 									StudentControl.dropCourse(index);
 									break;
 								} else {
@@ -86,6 +88,7 @@ public class StudentUI {
 					
 					
 				case 3: /* (3) Check/Print Courses Registered*/
+					System.out.println("\n(3) Check/Print Courses Registered");
 					System.out.println("Display Current Courses you have registered");
 					StudentControl.displayCourse(StudentControl.studentInfo);
 
