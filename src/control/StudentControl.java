@@ -153,12 +153,8 @@ public class StudentControl {
 									Container.courseSlotsList.get(i).getWaitingList().remove(0);
 									Container.overwriteFileWithData(Container.COURSESLOT_FILE,
 											Container.courseSlotsList);
-									System.out.println("Sending email to notify student failure to add the " + tempCoursePlan.getCourseID() + " ........");
 									EmailNotification.getInstance().sendNotification(tempstudent, Notification.createMessage(tempstudent.getName(), tempCoursePlan.getCourseID(), false));
-									System.out.println("Sent successfully.");
-									System.out.println(
-											"Removed students from waiting list as his current timetable clashes. \n");
-								} else {
+									} else {
 									// remove student from the waiting list and add them
 									for (int k = 0; k < Container.courseSlotsList.size(); k++) {
 										if (Container.courseSlotsList.get(k).getCoursePlan().getIndex() == indexno) {
@@ -175,13 +171,9 @@ public class StudentControl {
 											tempstudent.getCoursePlan().add(Container.coursePlanList.get(k));
 											Container.overwriteFileWithData(Container.STUDENT_FILE,
 													Container.studentList);
-											System.out.println("Sending email to notify student successfuly in adding the course " + tempCoursePlan.getCourseID() + " ........");
 											EmailNotification.getInstance().sendNotification(tempstudent,
 													Notification.createMessage(tempstudent.getName(),
 															tempCoursePlan.getCourseID(), true));
-											System.out.println("Sent successfully.");
-											System.out.println(
-													"Successfully added student into the Course and sent email to notify him/her. \n");
 											break;
 										}
 									}
@@ -205,7 +197,7 @@ public class StudentControl {
 		CourseType courseType = CourseType.DEFAULT;
 		int AU = -1;
 
-		// Need to do like this as studentInfo.getCoursePlan().get(i).getCourse() give me NULL
+		System.out.println("Display Current Courses you have registered");
 		for (int i = 0; i < student.getCoursePlan().size(); i++) {
 			for (int j = 0; j < Container.courseList.size(); j++) {
 				if (student.getCoursePlan().get(i).getCourseID().equals(Container.courseList.get(j).getCourseID())) {
@@ -217,6 +209,25 @@ public class StudentControl {
 			System.out.println("CourseID: " + student.getCoursePlan().get(i).getCourseID() + " | AU: " + AU
 					+ " | Course Type: " + courseType + " | Index No: " + student.getCoursePlan().get(i).getIndex());
 		}
+		
+
+		System.out.println("\nDisplay Waiting List Courses");
+		if (waitingListCourses(student).size() == 0) {
+			System.out.println("No courses in waiting list");
+		} else {
+			for (int i = 0; i < waitingListCourses(student).size(); i++) {
+				for (int j = 0; j < Container.courseList.size(); j++) {
+					if (waitingListCourses(student).get(i).getCourseID().equals(Container.courseList.get(j).getCourseID())) {
+						AU = Container.courseList.get(j).getCourseAU();
+						courseType = Container.courseList.get(j).getCourseType();
+						break;
+					}
+				}
+				System.out.println("CourseID: " + waitingListCourses(student).get(i).getCourseID() + " | AU: " + AU
+						+ " | Course Type: " + courseType + " | Index No: " + waitingListCourses(student).get(i).getIndex());
+			}
+		}
+		System.out.println("");
 	}
 
 	public static boolean timetableClash(List<CoursePlan> s, CoursePlan oldCP, CoursePlan newCP) {

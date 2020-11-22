@@ -89,7 +89,6 @@ public class StudentUI {
 					
 				case 3: /* (3) Check/Print Courses Registered*/
 					System.out.println("\n(3) Check/Print Courses Registered");
-					System.out.println("Display Current Courses you have registered");
 					StudentControl.displayCourse(StudentControl.studentInfo);
 
 					break;
