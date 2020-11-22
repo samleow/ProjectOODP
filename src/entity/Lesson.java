@@ -1,28 +1,52 @@
 package entity;
 
 import java.io.*;
+
 import java.util.StringTokenizer;
 
 import entity.AllEnums.*;
 
-// Details of a particular lesson block
+/**
+ * Details of a particular lesson
+ */
 public class Lesson implements IOData<Lesson>
 {
-	// Lesson ID - Eg. 1
+	/**
+	 * The ID of the lesson.
+	 * E.g. 2
+	 */
 	private int lessonID;
-	// Course ID - Eg. "CZ2001"
+	/**
+	 * The ID of the course.
+	 * E.g. "CZ2001"
+	 */
 	private String courseID;
-	// Type - Eg. LessonType.LAB
+	/**
+	 * The type of lesson.
+	 * E.g. LAB
+	 */
 	private LessonType type;
-	// Weekly - Eg. WeekType.EVEN
+	/**
+	 * The type of weekly basis (Weekly, even or odd).
+	 * E.G. EVEN
+	 */
 	private WeekType weekly;
-	// Lesson Period - Details of the lesson time and duration
+	/**
+	 * The start time, end time and the day of the week that this lesson took place on. 
+	 */
 	private Period lessonPeriod;
-	// Is Online - Is the lesson an online lesson or a physical lesson
+	/**
+	 * Whether this lesson is online lesson or physical lesson.
+	 */
 	private boolean isOnline;
-	// Location - Details of the lesson location
+	/**
+	 * The location of where the lesson took place.
+	 */
 	private Location location;
 	
+	/**
+	 * Class constructor that specifies the default values for each variable.
+	 */
 	public Lesson()
 	{
 		this.lessonID = -1;
@@ -34,7 +58,16 @@ public class Lesson implements IOData<Lesson>
 		this.location = null;
 	}
 	
-	// To preload the data to create the text file, can be removed later on
+	/**
+	 * Class constructor that specifies the course objects to create.
+	 * @param lessonID The ID of the lesson.
+	 * @param courseID The ID of the course.
+	 * @param type The type of lesson.
+	 * @param weekly The type of weekly basis.
+	 * @param lessonPeriod The start time, end time and the day of the week that this lesson took place on. 
+	 * @param isOnline Whether this lesson is online lesson or physical lesson.
+	 * @param location The location of where the lesson took place.
+	 */
 	public Lesson(int lessonID, String courseID, LessonType type, WeekType weekly,
 			Period lessonPeriod, boolean isOnline, Location location)
 	{
@@ -47,6 +80,11 @@ public class Lesson implements IOData<Lesson>
 		this.location = location;
 	}
 	
+	/**
+	 * Checks if this lesson clashes with any other lesson.
+	 * @param l The Lesson that we want to check.
+	 * @return Boolean value on whether it clashes.
+	 */
 	public boolean clashWith(Lesson l)
 	{
 		// check if weekly type have clashes
@@ -61,70 +99,98 @@ public class Lesson implements IOData<Lesson>
 		return false;
 	}
 	
+	/**
+	 * Gets the ID of the lesson.
+	 * @return This lesson's ID.
+	 */
 	public int getLessonID() {
 		return this.lessonID;
 	}
 
+	/**
+	 * Gets the ID of the course.
+	 * @return This lesson's course ID
+	 */
 	public String getCourseID()
 	{
 		return this.courseID;
 	}
 
+	/**
+	 * Sets the course ID for the lesson
+	 * @param courseID The ID of the course.
+	 */
 	public void setCourseID(String courseID)
 	{
 		this.courseID = courseID;
 	}
-
-	public LessonType getType()
-	{
-		return this.type;
-	}
-
+	
+	/**
+	 * Sets the type for this lesson.
+	 * @param type The type of lesson.
+	 */
 	public void setType(LessonType type)
 	{
 		this.type = type;
 	}
-
+	
+	/**
+	 * Gets the type of weekly basis (EVEN, ODD or WEEKLY).
+	 * @return The type of weekly basis.
+	 */
 	public WeekType getWeekly()
 	{
 		return this.weekly;
 	}
-
+	
+	/**
+	 * Sets the type of weekly basis (EVEN, ODD or WEEKLY).
+	 * @param weekly The type of weekly basis.
+	 */
 	public void setWeekly(WeekType weekly)
 	{
 		this.weekly = weekly;
 	}
-
+	
+	/**
+	 * Gets the start time, end time and the day of the week that this lesson took place on.
+	 * @return This lesson's period
+	 */
 	public Period getLessonPeriod()
 	{
 		return this.lessonPeriod;
 	}
-
+	
+	/**
+	 * Sets when this lesson will take place.
+	 * @param lessonPeriod The start time, end time and the day of the week that this lesson took place on.
+	 */
 	public void setLessonPeriod(Period lessonPeriod)
 	{
 		this.lessonPeriod = lessonPeriod;
 	}
 
-	public boolean getIsOnline()
-	{
-		return this.isOnline;
-	}
-
+	/**
+	 * Sets whether the lesson is online or physical.
+	 * @param isOnline Whether this lesson is online lesson or physical lesson.
+	 */
 	public void setIsOnline(boolean isOnline)
 	{
 		this.isOnline = isOnline;
 	}
 
-	public Location getLocation()
-	{
-		return this.location;
-	}
-
+	/**
+	 * Sets the location where the lesson will take place.
+	 * @param location The location of where the lesson took place.
+	 */
 	public void setLocation(Location location)
 	{
 		this.location = location;
 	}
 	
+	/**
+	 * Gets all information on the lesson in String format.
+	 */
 	@Override
 	public String toString()
 	{
@@ -132,6 +198,12 @@ public class Lesson implements IOData<Lesson>
 				+ lessonPeriod + "|" + isOnline + "|" + location;
 	}
 	
+	/**
+	 * For writing/overwriting into the text file.
+	 * @param fileName The name of the file to write to.
+	 * @param overwrite To indicate whether to overwrite the file or to simply append at the bottom of the text file.
+	 * @return Boolean value to confirm if writing is successful.
+	 */
 	@Override
 	public boolean writeDataToFile(String fileName, boolean overwrite)
 	{
@@ -148,6 +220,11 @@ public class Lesson implements IOData<Lesson>
 		}
 	}
 
+	/**
+	 * To read each line of data from the text file.
+	 * @param fileLine To indicate which line of code to read from.
+	 * @return The lesson information.
+	 */
 	@Override
 	public Lesson readDataFile(String fileLine)
 	{
@@ -181,44 +258,4 @@ public class Lesson implements IOData<Lesson>
 		
 		return this;
 	}
-	
-	@Override
-	public boolean updateLineInFile(String fileName, String[] keys)
-	{
-		// copy ori into temp
-		// modify temp
-		// save into ori
-		
-		// for now lessons don't need update
-		
-		return false;
-	}
-	
-	// don't need for now
-	public static void replaceLines(String fileName, String newLine) {
-	    try {
-	        // input the (modified) file content to the StringBuffer "input"
-	        BufferedReader file = new BufferedReader(new FileReader(fileName));
-	        StringBuffer inputBuffer = new StringBuffer();
-	        String line;
-	        
-	        // if line == the line to check
-	        // if keys == keys from line
-	        while ((line = file.readLine()) != null) {
-	            line = newLine; // replace the line here
-	            inputBuffer.append(line);
-	            inputBuffer.append('\n');
-	        }
-	        file.close();
-
-	        // write the new string with the replaced line OVER the same file
-	        FileOutputStream fileOut = new FileOutputStream(fileName);
-	        fileOut.write(inputBuffer.toString().getBytes());
-	        fileOut.close();
-
-	    } catch (Exception e) {
-	        System.out.println("Problem reading file.");
-	    }
-	}
-
 }

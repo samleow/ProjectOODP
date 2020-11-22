@@ -5,20 +5,41 @@ import java.util.*;
 import control.Container;
 import entity.AllEnums.*;
 
-// Course along with CoursePlan assigned to Student
+ /**
+ * Details of Course, along with Course Plan, assigned to Student.
+ */
 public class Course implements IOData<Course>
 {
-	// Course name - Eg. "Algorithms"
-	private String name;
-	// School - Eg. "SCSE"
+	/**
+	 * The name of the Course.
+	 * E.g. "Algorithms"
+	 */
+	private String name;	
+	/**
+	 * The name of the school for the course.
+	 * E.g. "SCSE"
+	 */
 	private String school;
-	// Course ID - Eg. "CZ2001"
+	/**
+	 * The ID of the course or the course code.
+	 * E.g. "CZ2001"
+	 */
 	private String courseID;
-	// Course AU - Eg. 3
+	/**
+	 * The AU for the course.
+	 * E.g. 21
+	 */
 	private int courseAU;
-	
+	/**
+	 * The type of course.
+	 * E.g. "CORE"
+	 */
 	private CourseType courseType;
 
+	
+	/**
+	 * Class constructor that specifies the default values for each variable.
+	 */
 	public Course()
 	{
 		this.name = "";
@@ -28,7 +49,14 @@ public class Course implements IOData<Course>
 		this.courseType = CourseType.DEFAULT;
 	}
 
-	// To preload the data to create the text file, can be removed later on
+	/**
+	 * Class constructor that specifies the course objects to create.
+	 * @param name The name of the course.
+	 * @param school The name of the school for the course.
+	 * @param courseID The ID of the course or the course code.
+	 * @param courseAU The AU for the course.
+	 * @param courseType The type of course.
+	 */
 	public Course(String name, String school, String courseID, int courseAU, CourseType courseType)
 	{
 		this.name = name;
@@ -38,61 +66,93 @@ public class Course implements IOData<Course>
 		this.courseType = courseType;
 	}
 
-	public String getName()
-	{
-		return this.name;
-	}
-
+	/**
+	 * Sets the name for the course.
+	 * @param name The name of the course.
+	 */
 	public void setName(String name)
 	{
 		this.name = name;
 	}
 
-	public String getSchool()
-	{
-		return this.school;
-	}
-
+	/**
+	 * Sets the name of the school for the course.
+	 * @param school The name of the course's school name.
+	 */
 	public void setSchool(String school)
 	{
 		this.school = school;
 	}
 
+	/**
+	 * Gets the ID of the course.
+	 * @return This course's ID.
+	 */
 	public String getCourseID()
 	{
 		return this.courseID;
 	}
 
+	/**
+	 * Sets the ID for the course.
+	 * @param courseID This course's ID
+	 */
 	public void setCourseID(String courseID)
 	{
 		this.courseID = courseID;
 	}
 
+	/**
+	 * Gets the AU of the course.
+	 * @return This course's AU.
+	 */
 	public int getCourseAU()
 	{
 		return this.courseAU;
 	}
 
+	/**
+	 * Sets the AU for the course
+	 * @param courseAU The AU for the course.
+	 */
 	public void setCourseAU(int courseAU)
 	{
 		this.courseAU = courseAU;
 	}
 	
+	/**
+	 * Gets the type of the course.
+	 * @return The course's type.
+	 */
 	public CourseType getCourseType()
 	{
 		return this.courseType;
 	}
 
+	/**
+	 * Sets the type for the course.
+	 * @param courseType The type of course.
+	 */
 	public void setCourseType(CourseType courseType)
 	{
 		this.courseType = courseType;
 	}
 	
+	
+	/**
+	 * Gets all information on the course in String format.
+	 */
 	public String toString()
 	{
 		return name + "|" + school + "|" + courseID + "|" + courseAU + "|" + courseType;
 	}
 	
+	/**
+	 * For writing/overwriting into the text file.
+	 * @param fileName The name of the file to write to.
+	 * @param overwrite To indicate whether to overwrite the file or to simply append at the bottom of the text file.
+	 * @return Boolean value to confirm if writing is successful.
+	 */
 	@Override
 	public boolean writeDataToFile(String fileName, boolean overwrite)
 	{
@@ -109,6 +169,11 @@ public class Course implements IOData<Course>
 		}
 	}
 
+	/**
+	 * To read each line of data from the text file.
+	 * @param fileLine To indicate which line of code to read from.
+	 * @return The course information.
+	 */
 	@Override
 	public Course readDataFile(String fileLine)
 	{
@@ -123,45 +188,4 @@ public class Course implements IOData<Course>
 		this.courseType = CourseType.valueOf(star.nextToken().trim());
 		return this;
 	}
-	
-	
-	@Override
-	public boolean updateLineInFile(String fileName, String[] keys)
-	{
-		// copy ori into temp
-		// modify temp
-		// save into ori
-		
-		// for now lessons don't need update
-		
-		return false;
-	}
-	
-	// don't need for now
-	public static void replaceLines(String fileName, String newLine) {
-	    try {
-	        // input the (modified) file content to the StringBuffer "input"
-	        BufferedReader file = new BufferedReader(new FileReader(fileName));
-	        StringBuffer inputBuffer = new StringBuffer();
-	        String line;
-	        
-	        // if line == the line to check
-	        // if keys == keys from line
-	        while ((line = file.readLine()) != null) {
-	            line = newLine; // replace the line here
-	            inputBuffer.append(line);
-	            inputBuffer.append('\n');
-	        }
-	        file.close();
-
-	        // write the new string with the replaced line OVER the same file
-	        FileOutputStream fileOut = new FileOutputStream(fileName);
-	        fileOut.write(inputBuffer.toString().getBytes());
-	        fileOut.close();
-
-	    } catch (Exception e) {
-	        System.out.println("Problem reading file.");
-	    }
-	}
-
 }
