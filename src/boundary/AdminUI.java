@@ -48,7 +48,7 @@ public class AdminUI {
 				case 1: /* (1) Edit student access period */
 					do {
 						System.out.println("\n=== Edit student access period ===");
-						System.out.printf("Enter student matric number: (%d to return): ", Container.BREAK_MENU);
+						System.out.printf("Enter student matric number (%d to return): ", Container.BREAK_MENU);
 
 						matricNo = sc.next();
 
