@@ -145,23 +145,7 @@ public class Container
         
         return true;
     }
-
-	// TODO S: combine all read from File methods into one dynamic method [possible wildcard <?> usage]
-//	public static <T extends IOData> boolean readFile(String fileName, ArrayList<? extends IOData> list) throws IOException
-//	{
-//		// read String from text file
-//		ArrayList<String> stringArray = (ArrayList<String>)read(fileName);
-//
-//        for (int i = 0 ; i < stringArray.size() ; i++)
-//        {
-//    		IOData<T> iodata;
-//    		iodata.readDataFile((String)stringArray.get(i));
-//    		list.add(iodata); // cannot add data into wildcard list ... need find alternative
-//        }
-//        
-//        return true;
-//    }
-
+	
 	public static boolean overwriteFileWithData(String fileName, ArrayList<? extends IOData> l)
 	{
 

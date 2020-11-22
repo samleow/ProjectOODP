@@ -37,7 +37,7 @@ public class EmailNotification extends Notification {
 		catch(Exception e) {
 			return false;
 		}
-		// TODO S: [CHECK IF WORKING] email credentials from file
+		
 		final String username = stringArray.get(0).toString(); // need to be added
 		final String password = stringArray.get(1).toString(); // need to be added
 		

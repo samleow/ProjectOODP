@@ -66,6 +66,19 @@ public class Date
 		}
 	}
 	
+	
+	/**
+	 * Compares integer inputs to this date.
+	 * @param year year to compare with in int.
+	 * @param month month to compare with in int.
+	 * @param day day to compare with in int.
+	 * @return true if same date, false if different.
+	 */
+	public boolean sameDate(int year, int month, int day)
+	{
+		return this.year==year && this.month==month && this.day==day;
+	}
+	
 	@Override
 	public String toString()
 	{

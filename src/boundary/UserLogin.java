@@ -1,11 +1,20 @@
 package boundary;
 import java.io.IOException;
 import java.util.Scanner;
+import java.time.LocalDateTime;
 
 import control.*;
+import entity.*;
 
+/**
+ * The class handling the user login display menu.
+ */
 public class UserLogin {
 
+	/**
+	 * The main program.
+	 * @param args An array of arguments.
+	 */
 	public static void main(String[] args) {
 
 		try
@@ -41,7 +50,6 @@ public class UserLogin {
 				System.out.println();
 				switch (choice) {
 				case 1: /* (1) Student Login*/
-					
 					System.out.print("Enter your StudentID: ");
 					userName = sc.next(); 
 					
@@ -63,13 +71,26 @@ public class UserLogin {
 					{
 						// After login successful
 						System.out.println();
+						
 						StudentControl.saveStudentInfo(userName);
+						
+						// check access period with current time
+						Date accDate = StudentControl.studentInfo.getAccessDate();
+						Period accPeriod = StudentControl.studentInfo.getAccessPeriod();
+						LocalDateTime now = LocalDateTime.now();
+						Time currTime = new Time(now.getHour(),now.getMinute());
+						if(!accDate.sameDate(now.getYear(), now.getMonthValue(), now.getDayOfMonth()) || !accPeriod.withinPeriod(currTime))
+						{
+							System.out.println("Not accessible now!");
+							System.out.println("Please come back during your access period!\n");
+							continue;
+						}
 						StudentUI.studentLogin();
 					}
 					else
 					{
 						System.out.println();
-						System.out.println("You have enter the wrong Username or Password");
+						System.out.println("You have enter the wrong Username or Password\n");
 					}
 					break;
 					
@@ -104,16 +125,16 @@ public class UserLogin {
 					}
 					else
 					{
-						System.out.println("You have enter the wrong Username or Password");
+						System.out.println();
+						System.out.println("You have enter the wrong Username or Password\n");
 					}
-					
 					
 					break;
 				case 3: /* (3) Exit*/
 					System.out.println("Quit...");
 					run = false;
 					break;
-
+					
 				default:
 					System.out.println("Please Enter Choice from 1 to 3");
 					System.out.println();
@@ -128,7 +149,5 @@ public class UserLogin {
 		} while (run);
 
 	}
-
-
-
+	
 }
