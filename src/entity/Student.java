@@ -169,6 +169,23 @@ public class Student extends LoginAccount implements IOData<Student>
 		this.accessDate = accessDate;
 	}
 	
+	/**
+	 * Gets the access period for the student.
+	 * @return The student's access period.
+	 */
+	public Period getAccessPeriod()
+    {
+        return this.accessPeriod;
+    }
+	
+	/**
+	 * Gets the access date for the student.
+	 * @return The student's access date.
+	 */
+	public Date getAccessDate()
+    {
+        return this.accessDate;
+    }
 	
 	/**
 	 * Gets the list of courses which the student is exempted from.

@@ -62,6 +62,19 @@ public class Period
 	}
 	
 	/**
+	 * Checks if time is within start time and end time.
+	 * @param time The Time input value.
+	 * @return Boolean value whether time input is within start and end time.
+	 */
+	public boolean withinPeriod(Time time)
+    {
+        if(time.compareWith(this.startTime) == -1
+                || time.compareWith(this.endTime) == 1)
+            return false;
+        else return true;
+    }
+	
+	/**
 	 * Gets all information on the period in String format.
 	 */
 	@Override

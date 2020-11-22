@@ -11,6 +11,9 @@ import entity.*;
 import entity.Date;
 import entity.AllEnums.*;
 
+import org.apache.commons.lang3.*;
+import org.apache.commons.lang3.text.*;
+
 
 public class AdminUI {
 
@@ -374,6 +377,8 @@ public class AdminUI {
 					else
 					{
 						System.out.println("Enter a numeric value ");
+						// Clear sc
+						sc.next();
 					}
 
 				}
@@ -434,6 +439,8 @@ public class AdminUI {
 					else
 					{
 						System.out.println("Enter a numeric value ");
+						// Clear sc
+						sc.next();
 					}
 				}
 				
@@ -550,6 +557,8 @@ public class AdminUI {
 			else
 			{
 				System.out.println("Please enter numeric value.");
+				// Clear sc
+				sc.next();
 			}
 		
 		}
@@ -1412,6 +1421,8 @@ public class AdminUI {
 			else
 			{
 				System.out.println("Please enter numeric value");
+				// Clear sc
+				sc.next();
 			}
 
 		}
@@ -1548,12 +1559,16 @@ public class AdminUI {
 							else
 							{
 								System.out.println("Please enter 5 digits");
+								// Clear sc
+								sc.next();
 							}
 
 						} 
 						else 
 						{
 							System.out.println("Please enter numeric value");
+							// Clear sc
+							sc.next();
 						}
 					}
 					sc.nextLine(); // Consume newline left-over
@@ -1647,6 +1662,8 @@ public class AdminUI {
 							else 
 							{
 								System.out.println("Please enter numeric value");
+								// Clear sc
+								sc.next();
 							}
 						}
 
@@ -1654,6 +1671,8 @@ public class AdminUI {
 					else 
 					{
 						System.out.println("Please enter numeric value");
+						// Clear sc
+						sc.next();
 					}
 
 					// update txt file
@@ -1757,6 +1776,8 @@ public class AdminUI {
 							else 
 							{
 								System.out.println("Please enter numeric value");
+								// Clear sc
+								sc.next();
 							}
 						}
 
@@ -1764,6 +1785,8 @@ public class AdminUI {
 					else 
 					{
 						System.out.println("Please enter numeric value");
+						// Clear sc
+						sc.next();
 					}
 
 					// update txt file
@@ -1935,6 +1958,9 @@ public class AdminUI {
 					{
 						break breakSwitch;
 					}
+					
+					//TODO: auto caps letter
+					newCourseName = WordUtils.capitalizeFully(newCourseName);
 
 					// update txt file
 					AdminControl.setCourseName(courseID, newCourseName);
@@ -2586,6 +2612,8 @@ public class AdminUI {
 //			else
 //			{
 //				System.out.println("Please enter numeric value ");
+				// Clear sc
+				//sc.next();
 //			}
 //		}
 //		
@@ -2751,11 +2779,15 @@ public class AdminUI {
 				else
 				{
 					System.out.println("Please enter 5 digit number");
+					// Clear sc
+					sc.next();
 				}
 			}
 			else
 			{
 				System.out.println("Please enter numeric value ");
+				// Clear sc
+				sc.next();
 			}
 		}
 
@@ -2779,6 +2811,8 @@ public class AdminUI {
 			else
 			{
 				System.out.println("Please enter numeric value");
+				// Clear sc
+				sc.next();
 			}
 		}
 		
@@ -2826,6 +2860,9 @@ public class AdminUI {
 		{
 			return;
 		}
+		
+		//TODO: auto caps letter
+		courseName = WordUtils.capitalizeFully(courseName);
 		
 		System.out.print("Enter the Course School: (-1 to return): ");
 		school = sc.nextLine().toUpperCase();
@@ -2892,6 +2929,8 @@ public class AdminUI {
 			else
 			{
 				System.out.println("Please enter numeric value ");
+				// Clear sc
+				sc.next();
 			}
 			
 		}
@@ -2954,7 +2993,7 @@ public class AdminUI {
 	}
 
 
-
+	//TODO: add student Acc
 	private static void addStudentAcc(Scanner sc)
 	{
 		sc.nextLine(); // Consume newline left-over
@@ -2985,6 +3024,10 @@ public class AdminUI {
 		{
 			return;
 		}
+		
+		//TODO: auto caps letter
+		name = WordUtils.capitalizeFully(name);
+		//System.out.println(name);
 		
 		// Validate Username
 //		boolean isUserName = false;
@@ -3108,6 +3151,9 @@ public class AdminUI {
 			return;
 		}
 		
+		//TODO: auto caps letter
+		nationality = WordUtils.capitalizeFully(nationality);
+		
 		System.out.println("Student default Max AU: 21 ");
 		maxAU = 21;
 
@@ -3194,7 +3240,7 @@ public class AdminUI {
 		//System.out.print("Enter new student email: ");
 		//email = sc.nextLine();
 		email = "ntu20.cz2002@gmail.com";
-		System.out.printf("Auto Genternated Email: %s\n ",email);
+		System.out.printf("Auto Genternated Email: %s\n",email);
 		
 		
 		
@@ -3314,6 +3360,8 @@ public class AdminUI {
 				else
 				{
 					System.out.println("Please enter numeric value");
+					// Clear sc
+					sc.next();
 				}
 
 			}
