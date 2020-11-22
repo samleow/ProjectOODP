@@ -2,10 +2,8 @@ package boundary;
 
 import java.util.*;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 import control.*;
 import entity.*;
@@ -15,7 +13,6 @@ import entity.AllEnums.*;
 
 import org.apache.commons.lang3.*;
 import org.apache.commons.lang3.text.*;
-
 
 
 public class AdminUI {
@@ -234,10 +231,10 @@ public class AdminUI {
 					break;
 
 				default:
-					System.out.println("Please Enter Choice from 1 to 7");
+					System.out.println("Invalid choice. Please Enter Choice from 1 to 7");
 				}
 			} else {
-				System.out.println("Please Enter Choice from 1 to 7");
+				System.out.println("Invalid choice. Please Enter Choice from 1 to 7");
 				// Clear sc
 				sc.next();
 			}
@@ -249,7 +246,7 @@ public class AdminUI {
 	private static void add_update_course(Scanner sc) 
 	{
 		int choice = -1;
-		boolean run = true;
+		
 		
 		do
 		{
@@ -278,12 +275,7 @@ public class AdminUI {
 				
 					addCourseIndex(sc);
 					break;
-				
-//				case 3: // (3) Set Vacancy for a course.
-//					
-//					addVacancy(sc);
-//					break;
-					
+
 				case 3: // (3) Add Lesson for a course.
 					
 					addLesson(sc);
@@ -314,13 +306,13 @@ public class AdminUI {
 					break;
 					
 				default:
-					System.out.println("Please Enter Choice from 1 to 8");
+					System.out.println("Invalid choice. Please Enter Choice from 1 to 8");
 				
 				}
 			} 
 			else 
 			{
-				System.out.println("Please Enter Choice from 1 to 8");
+				System.out.println("Invalid choice. Please Enter Choice from 1 to 8");
 				// Clear sc
 				sc.next();
 			}
@@ -354,20 +346,7 @@ public class AdminUI {
 						{
 							return;
 						}
-
-//						// check if there exist a index in the coursPlanList
-//						for (int i = 0; i < Container.coursePlanList.size(); i++) 
-//						{
-//							if (index == Container.coursePlanList.get(i).getIndex()) 
-//							{
-//								isIndex = true;
-//								break;
-//							} 
-//							else 
-//							{
-//								isIndex = false;
-//							}
-//						}
+						// check if there exist a index in the coursPlanList
 						else if (Validation.checkIfValidIndex(index)) 
 						{
 							break;
@@ -468,7 +447,7 @@ public class AdminUI {
 		
 		
 		// validate courseCode
-		boolean isCourseID = false;
+		
 		while (true) 
 		{
 			System.out.print("Enter the Course ID: (-1 to return): ");
@@ -479,21 +458,8 @@ public class AdminUI {
 			{
 				return;
 			}
-
-//			// check if the courseID exist in the courseList
-//			for (int i = 0; i < Container.courseList.size(); i++) 
-//			{
-//				if (courseIDInput.equals(Container.courseList.get(i).getCourseID())) 
-//				{
-//					//courseIDInput = Container.courseList.get(i).toString();
-//					isCourseID = true;
-//					break;
-//				} 
-//				else 
-//				{
-//					isCourseID = false;
-//				}
-//			}
+			
+			// check if the courseID exist in the courseList
 			if (Validation.checkIfValidCourseID(courseIDInput)) {
 				break;
 			} 
@@ -575,7 +541,7 @@ public class AdminUI {
 		
 		int choice = -1;
 		
-		boolean run = true;
+		
 		String[] splitTimeDay = splitLessonIDInfoString[4].split("\\,");
 		String startTimeValue = splitTimeDay[0];
 		String endTimeValue = splitTimeDay[1];
@@ -607,56 +573,18 @@ public class AdminUI {
 		
 		// validate if there is student in the that ID
 		// check through if the lesson ID exist in the CoursePlan
-		for (int i=0 ;i<Container.coursePlanList.size(); i++)
-		{
-			
-			for(int j= 0; j<Container.coursePlanList.get(i).getLessons().size(); j++)
-			{
-				
-				// if the lesson ID exist in coursePlanList
-				if(courseIDInput.equals(Container.coursePlanList.get(i).getCourseID()) && lessonID == Container.coursePlanList.get(i).getLessons().get(j).getLessonID())
-				{
-					
-					int getCoursePlanIndex = Container.coursePlanList.get(i).getIndex();
-					
-					
-					//check courseSlotsList if there are student in the waiting list or registered list
-					for(int k = 0; k<Container.courseSlotsList.size(); k++ )
-					{
-						// check for matching index
-						if(getCoursePlanIndex == Container.courseSlotsList.get(k).getCoursePlan().getIndex())
-						{
-							
-							// if there is a student in the courseSlotsList
-							if(Container.courseSlotsList.get(k).getSlotList().isEmpty() == false || Container.courseSlotsList.get(k).getWaitingList().isEmpty() == false )
-							{
-								isthereStudent = true;
-								
-							}
-							// once found the CoursePlanIndex, end the loop
-							break;
-							
-						}
-
-					}
-					
-				}
-				
-			}
-
-			
-		}
 		
 		// 2 different menu will appear according to whether is there student register in that index
-		if(isthereStudent == true)
+		if(Validation.checkIfIsThereStudent(courseIDInput, lessonID) || Validation.checkIfThereAreLessonIDInCousePlan(courseIDInput, lessonID)  )
 		{
 			do 
 			{
-				System.out.println("There are Students in ID "+ splitLessonIDInfoString[0] + " you are only allow to modify these 2 option.");
+				System.out.println("There are Students and lesson are tag in ID "+ splitLessonIDInfoString[0] + " you are only allow to modify these 2 option.");
 				System.out.println("Which Selection in ID "+ splitLessonIDInfoString[0] + " you want to modify?");
 				System.out.println("(1) Is the lesson online: " + isOnlineValue);
 				System.out.println("(2) Location: " + location);
 				System.out.println("(3) Quit");
+				System.out.print("Enter the your choice: ");
 				
 				// validate the choice input
 				if (sc.hasNextInt()) 
@@ -750,8 +678,11 @@ public class AdminUI {
 								break breakSwitch;
 							}
 							
+							//TODO: auto caps name
+							locationExtName = WordUtils.capitalizeFully(locationExtName);
+							
 							System.out.print("Enter the Location short form name (E.g HWLAB 2): (-1 to return): ");
-							locationName = sc.nextLine();
+							locationName = sc.nextLine().toUpperCase();
 							
 							//exit
 							if(locationName.equals(Integer.toString(Container.BREAK_MENU)))
@@ -760,7 +691,7 @@ public class AdminUI {
 							}
 							
 							System.out.print("Enter the Location Address (E.g N4-01B-05): (-1 to return): ");
-							locationAddress = sc.nextLine();
+							locationAddress = sc.nextLine().toUpperCase();
 							
 							//exit
 							if(locationAddress.equals(Integer.toString(Container.BREAK_MENU)))
@@ -773,6 +704,8 @@ public class AdminUI {
 							AdminControl.setLessonLocation(lessonID, lessonLocation);
 							//update the display for Location
 							splitLessonIDInfoString[6] = lessonLocation.toString();
+							
+							System.out.println("Successfully updated lesson address.");
 						}
 						
 						
@@ -786,19 +719,16 @@ public class AdminUI {
 							location = splitLessonIDInfoString[6];
 						}
 
-						System.out.println("Successfully updated lesson address.");
-						
 						break;
 						
-						
 					default:
-						System.out.println("Please Enter Choice from 1 to 3");
+						System.out.println("Invalid choice. Please Enter Choice from 1 to 3");
 				
 					}
 				}
 				else
 				{
-					System.out.println("Please Enter Choice from 1 to 3");
+					System.out.println("Invalid choice. Please Enter Choice from 1 to 3");
 					// Clear sc
 					sc.next();
 				}
@@ -820,6 +750,7 @@ public class AdminUI {
 				System.out.println("(6) Is the lesson online: " + isOnlineValue);
 				System.out.println("(7) Location: " + location);
 				System.out.println("(8) Quit");
+				System.out.print("Enter the your choice: ");
 	
 	
 				// validate the choice input
@@ -850,22 +781,7 @@ public class AdminUI {
 							{
 								break breakSwitch;
 							}
-
-							
-//							// check if there exist courseID in courseList
-//							for (int i = 0; i < Container.courseList.size(); i++) 
-//							{
-//								if (newCourseID.equals(Container.courseList.get(i).getCourseID())) 
-//								{
-//									
-//									isNewCode = true;
-//									break;
-//								} 
-//								else 
-//								{
-//									isNewCode = false;
-//								}
-//							}
+							// check if there exist courseID in courseList
 							if (Validation.checkIfValidCourseID(existingCourseID)) {
 								break;
 							} 
@@ -913,26 +829,6 @@ public class AdminUI {
 								break;
 							}
 
-//							if (lessonTypeInput.equals(LessonType.LAB.toString())) 
-//							{
-//								lessonType = LessonType.LAB;
-//								break;
-//							} 
-//							else if (lessonTypeInput.equals(LessonType.LECTURE.toString()) || lessonTypeInput.equals("LEC")) {
-//								lessonType = LessonType.LECTURE;
-//								break;
-//							} 
-//							else if(lessonTypeInput.equals(LessonType.TUTORIAL.toString())|| lessonTypeInput.equals("TUT"))
-//							{
-//								lessonType = LessonType.TUTORIAL;
-//								break;
-//								
-//							}
-//							else 
-//							{
-//								System.out.println("Invalid input ");
-//							}
-
 						}
 						
 						AdminControl.setLessonLessonType(lessonID, lessonType);
@@ -970,26 +866,6 @@ public class AdminUI {
 							{
 								break;
 							}
-
-//							if (weekTypeInput.equals(WeekType.ODD.toString())) 
-//							{
-//								weekType = WeekType.ODD;
-//								break;
-//							} 
-//							else if (weekTypeInput.equals(WeekType.EVEN.toString())) {
-//								weekType = WeekType.EVEN;
-//								break;
-//							} 
-//							else if(weekTypeInput.equals(WeekType.WEEKLY.toString()))
-//							{
-//								weekType = WeekType.WEEKLY;
-//								break;
-//
-//							}
-//							else 
-//							{
-//								System.out.println("Invalid input ");
-//							}
 
 						}
 						
@@ -1071,45 +947,6 @@ public class AdminUI {
 						
 						lessonDayDefault = Validation.checkIfValidDay(dayValue);
 						
-//						if (dayValue.equals(lessonDayDefault.MONDAY.toString())) 
-//						{
-//							lessonDayDefault = lessonDayDefault.MONDAY;
-//							
-//						} 
-//						else if (dayValue.equals(lessonDayDefault.TUESDAY.toString())) {
-//							lessonDayDefault = lessonDayDefault.TUESDAY;
-//							
-//						} 
-//						else if(dayValue.equals(lessonDayDefault.WEDNESDAY.toString()))
-//						{
-//							lessonDayDefault = lessonDayDefault.WEDNESDAY;
-//							
-//						}
-//						else if(dayValue.equals(lessonDayDefault.THURSDAY.toString()))
-//						{
-//							lessonDayDefault = lessonDayDefault.THURSDAY;
-//							
-//						}
-//						else if(dayValue.equals(lessonDayDefault.FRIDAY.toString()))
-//						{
-//							lessonDayDefault = lessonDayDefault.FRIDAY;
-//							
-//						}
-//						else if(dayValue.equals(lessonDayDefault.SATURDAY.toString()))
-//						{
-//							lessonDayDefault = lessonDayDefault.SATURDAY;
-//							
-//						}
-//						else if(dayValue.equals(lessonDayDefault.SUNDAY.toString()))
-//						{
-//							lessonDayDefault = lessonDayDefault.SUNDAY;
-//							
-//						}
-//						else 
-//						{
-//							System.out.println("Invalid input ");
-//						}
-						
 						// lesson Period include day constructor
 						lessonPeriod = new Period(startTime, endTime, lessonDayDefault);
 						
@@ -1148,50 +985,6 @@ public class AdminUI {
 							{
 								break;
 							}
-
-//							if (dayInput.equals(lessonDay.MONDAY.toString()) || (dayInput.equals("MON"))) 
-//							{
-//								lessonDay = lessonDay.MONDAY;
-//								break;
-//							} 
-//							else if (dayInput.equals(lessonDay.TUESDAY.toString())|| (dayInput.equals("TUE"))) {
-//								lessonDay = lessonDay.TUESDAY;
-//								break;
-//							} 
-//							else if(dayInput.equals(lessonDay.WEDNESDAY.toString())|| (dayInput.equals("WED")))
-//							{
-//								lessonDay = lessonDay.WEDNESDAY;
-//								break;
-//
-//							}
-//							else if(dayInput.equals(lessonDay.THURSDAY.toString())|| (dayInput.equals("THU")))
-//							{
-//								lessonDay = lessonDay.THURSDAY;
-//								break;
-//
-//							}
-//							else if(dayInput.equals(lessonDay.FRIDAY.toString())|| (dayInput.equals("FRI")))
-//							{
-//								lessonDay = lessonDay.FRIDAY;
-//								break;
-//
-//							}
-//							else if(dayInput.equals(lessonDay.SATURDAY.toString())|| (dayInput.equals("SAT")))
-//							{
-//								lessonDay = lessonDay.SATURDAY;
-//								break;
-//
-//							}
-//							else if(dayInput.equals(lessonDay.SUNDAY.toString())|| (dayInput.equals("SUN")))
-//							{
-//								lessonDay = lessonDay.SUNDAY;
-//								break;
-//
-//							}
-//							else 
-//							{
-//								System.out.println("Invalid input ");
-//							}
 
 						}
 						
@@ -1303,8 +1096,11 @@ public class AdminUI {
 								break breakSwitch;
 							}
 							
+							//TODO: auto caps name
+							locationExtName = WordUtils.capitalizeFully(locationExtName);
+							
 							System.out.print("Enter the Location short form name (E.g HWLAB 2): (-1 to return): ");
-							locationName = sc.nextLine();
+							locationName = sc.nextLine().toUpperCase();
 							
 							//exit
 							if(locationName.equals(Integer.toString(Container.BREAK_MENU)))
@@ -1313,7 +1109,7 @@ public class AdminUI {
 							}
 							
 							System.out.print("Enter the Location Address (E.g N4-01B-05): (-1 to return): ");
-							locationAddress = sc.nextLine();
+							locationAddress = sc.nextLine().toUpperCase();
 							
 							//exit
 							if(locationAddress.equals(Integer.toString(Container.BREAK_MENU)))
@@ -1326,9 +1122,9 @@ public class AdminUI {
 							AdminControl.setLessonLocation(lessonID, lessonLocation);
 							//update the display for Location
 							splitLessonIDInfoString[6] = lessonLocation.toString();
+							
+							System.out.println("Successfully updated lesson address.");
 						}
-						
-						
 						
 						if(splitLessonIDInfoString[6].equals("null~null~null"))
 						{
@@ -1338,10 +1134,7 @@ public class AdminUI {
 						{
 							location = splitLessonIDInfoString[6];
 						}
-
-						System.out.println("Successfully updated lesson address.");
 						
-
 						break;
 						
 					case 8: // (8) Quit
@@ -1350,14 +1143,14 @@ public class AdminUI {
 						break;
 						
 					default:
-						System.out.println("Please Enter Choice from 1 to 5");
+						System.out.println("Invalid choice. Please Enter Choice from 1 to 5");
 	
 
 					}
 				}
 				else
 				{
-					System.out.println("Please Enter Choice from 1 to 8");
+					System.out.println("Invalid choice. Please Enter Choice from 1 to 8");
 					// Clear sc
 					sc.next();
 				}
@@ -1438,7 +1231,7 @@ public class AdminUI {
 
 		int choice = -1;
 
-		boolean run = true;
+		
 
 		do 
 		{
@@ -1450,6 +1243,7 @@ public class AdminUI {
 			System.out.println("(4) Add Lesson to List");
 			System.out.println("(5) Delete Lesson");
 			System.out.println("(6) Quit");
+			System.out.print("Enter the your choice: ");
 
 			// validate the choice input
 			if (sc.hasNextInt()) 
@@ -1478,20 +1272,7 @@ public class AdminUI {
 						{
 							break breakSwitch;
 						}
-
-//						// check if there exist a GroupID in coursPlantList
-//						for (int i = 0; i < Container.coursePlanList.size(); i++) 
-//						{
-//							if (newGroupID.equals(Container.coursePlanList.get(i).getGroupID())) 
-//							{
-//								isGroupID = true;
-//								break;
-//							} 
-//							else 
-//							{
-//								isGroupID = false;
-//							}
-//						}
+						// check if there exist a GroupID in coursPlantList
 						else if (Validation.checkIfValidGroupID(splitCouseInfoString[0], newGroupID)) 
 						{
 							System.out.printf("Course Group: %s is used.\n", newGroupID);
@@ -1532,26 +1313,12 @@ public class AdminUI {
 							{
 								break breakSwitch;
 							}
-
-//							// check if there exist a index in the coursePlantList
-//							for (int i = 0; i < Container.coursePlanList.size(); i++) 
-//							{
-//								if (newIndex == Container.coursePlanList.get(i).getIndex()) 
-//								{
-//									isNewIndex = true;
-//									break;
-//								} 
-//								else 
-//								{
-//									isNewIndex = false;
-//								}
-//							}
-							
-							if(String.valueOf(index).length() == 5)
+							// check if there exist a index in the coursePlantList
+							if(String.valueOf(newIndex).length() == 5)
 							{
 								if (Validation.checkIfValidIndex(newIndex)) 
 								{
-									System.out.printf("Course Index: %d is used.\n", index);
+									System.out.printf("Course Index: %d is used.\n", newIndex);
 	
 								} 
 								else 
@@ -1562,8 +1329,7 @@ public class AdminUI {
 							else
 							{
 								System.out.println("Please enter 5 digits");
-								// Clear sc
-								sc.next();
+								
 							}
 
 						} 
@@ -1592,6 +1358,8 @@ public class AdminUI {
 					// check is there student in the course Slots
 					if(Validation.checkIfValidIsCourseSlotEmpty(index))
 					{
+						
+						int countNumLessonID = 0;
 					
 					System.out.println("Re-enter Lesson List to Index: " + splitCouseInfoString[2]);
 					System.out.println("Here are the Lesson you can add to Index: " + splitCouseInfoString[2]);
@@ -1604,6 +1372,7 @@ public class AdminUI {
 						{
 							System.out.println(Container.lessonList.get(i).toString());
 							System.out.println("---------------------------------");
+							countNumLessonID++;
 						}
 
 					}
@@ -1612,9 +1381,12 @@ public class AdminUI {
 					int count = 0;
 					int lessonIndex;
 					CoursePlan addCoursePlanList = new CoursePlan();
-
+					
+					
+					while(true)
+					{
 					System.out.print("Enter the toal number of lesson you want to add: (-1 to return): ");
-
+					
 					if (sc.hasNextInt()) 
 					{
 						// total number of the lesson user want to add
@@ -1625,49 +1397,72 @@ public class AdminUI {
 						{
 							break breakSwitch;
 						}
-						
-						sc.nextLine(); // Consume newline left-over
-
-						// loop the number of times the user want to add
-						while (count < totalNumberAdd) 
+						else if(totalNumberAdd <= countNumLessonID)
 						{
-
-							System.out.print("Enter the lesson ID you want to add: ");
-							// user enter the ID from the lesson.txt
-							if (sc.hasNextInt()) 
+							
+						
+							sc.nextLine(); // Consume newline left-over
+	
+							// loop the number of times the user want to add
+							while (count < totalNumberAdd) 
 							{
-								lessonIndex = sc.nextInt();
-								sc.nextLine(); // Consume newline left-over
-
-								// search for the ID in the Lesson.txt
-								for (int i = 0; i < Container.lessonList.size(); i++) 
+	
+								System.out.print("Enter the lesson ID you want to add: (-1 to return): ");
+								// user enter the ID from the lesson.txt
+								if (sc.hasNextInt()) 
 								{
-									// validate the courseID and the Lesson ID
-									if (Container.lessonList.get(i).getCourseID().equals(splitCouseInfoString[0])
-											&& Container.lessonList.get(i).getLessonID() == lessonIndex) 
+									lessonIndex = sc.nextInt();
+									sc.nextLine(); // Consume newline left-over
+									
+									//exit
+									if(lessonIndex == Container.BREAK_MENU)
 									{
-
-										// remove and add the lesson ID to CoursePlan.txt
-										addCoursePlanList.getLessons().add(Container.lessonList.get(i));
-
-										// increase counter
-										count++;
-
-										System.out.println(count + " lesson added.");
+										break breakSwitch;
 									}
-									else
+									
+									
+	
+									// search for the ID in the Lesson.txt
+									for (int i = 0; i < Container.lessonList.size(); i++) 
 									{
+										// validate the courseID and the Lesson ID
+										if (Container.lessonList.get(i).getCourseID().equals(splitCouseInfoString[0])
+												&& Container.lessonList.get(i).getLessonID() == lessonIndex) 
+										{
+	
+											// remove and add the lesson ID to CoursePlan.txt
+											addCoursePlanList.getLessons().add(Container.lessonList.get(i));
+	
+											// increase counter
+											count++;
+	
+											System.out.println(count + " lesson added.");
+										}
+
+									}
+									if(count < totalNumberAdd)
+									{
+										
 										System.out.println("Invalid lesson ID");
+										
 									}
+									
+	
+								} 
+								else 
+								{
+									System.out.println("Please enter numeric value");
+									// Clear sc
+									sc.next();
 								}
-
-							} 
-							else 
-							{
-								System.out.println("Please enter numeric value");
-								// Clear sc
-								sc.next();
 							}
+							
+							break;
+							
+						}
+						else
+						{
+							System.out.println("Total number of lesson cannot be less than the total number of lesson");
 						}
 
 					} 
@@ -1676,6 +1471,7 @@ public class AdminUI {
 						System.out.println("Please enter numeric value");
 						// Clear sc
 						sc.next();
+					}
 					}
 
 					// update txt file
@@ -1692,6 +1488,9 @@ public class AdminUI {
 
 				case 4: // (4) Add Lesson to List
 
+					
+					int countNumLessonID = 0;
+					
 					System.out.println("Add Lesson List to Index: " + splitCouseInfoString[2]);
 					System.out.println("Here are the Lesson you can add to Index: " + splitCouseInfoString[2]);
 					System.out.println("---------------------------------");
@@ -1704,6 +1503,7 @@ public class AdminUI {
 						{
 							System.out.println(Container.lessonList.get(i).toString());
 							System.out.println("---------------------------------");
+							countNumLessonID++;
 						}
 
 					}
@@ -1713,83 +1513,113 @@ public class AdminUI {
 					int lessonIndex_1;
 					CoursePlan addCoursePlanList_1 = new CoursePlan();
 
-					System.out.print("Enter the toal number of lesson you want to add: ");
-
-					if (sc.hasNextInt()) {
-						// total number of the lesson user want to add
-						totalNumberAdd_1 = sc.nextInt();
-						
-						//exit
-						if(totalNumberAdd_1 == Container.BREAK_MENU)
-						{
-							break breakSwitch;
-						}
-						sc.nextLine(); // Consume newline left-over
-
-						// loop the number of times the user want to add
-						while (count_1 < totalNumberAdd_1) 
-						{
-
-							System.out.print("Enter the lesson ID you want to add: ");
-							// user enter the ID from the lesson.txt
-							if (sc.hasNextInt()) 
-							{
-								lessonIndex_1 = sc.nextInt();
-								sc.nextLine(); // Consume newline left-over
-
-								// search for the ID in the Lesson.txt
-								for (int i = 0; i < Container.lessonList.size(); i++) 
-								{
-									// validate the courseID and the Lesson ID
-									if (Container.lessonList.get(i).getCourseID().equals(splitCouseInfoString[0])
-											&& Container.lessonList.get(i).getLessonID() == lessonIndex_1) 
-									{
-										// Note: this is to prevent overwrite of lesson at CoursePlan.txt
-										// Extract out the list from Course Plan.txt
-										for (int j = 0; j < Container.coursePlanList.size(); j++) 
-										{
-											if (Container.coursePlanList.get(j).getCourseID().equals(splitCouseInfoString[0])
-													&& Container.coursePlanList.get(j).getIndex() == Integer.parseInt(splitCouseInfoString[2])) 
-											{
-												// Extract out the list of Lesson from CoursePlan.txt
-												for (int k = 0; k < Container.coursePlanList.get(j).getLessons().size(); k++) 
-												{
-													// System.out.println(Container.coursePlanList.get(j).getLessons().get(k));
-													// Add the previous Lessons from CoursePlan.txt
-													addCoursePlanList_1.getLessons().add(Container.coursePlanList.get(j).getLessons().get(k));
-												}
-											}
-											else
-											{
-												System.out.println("Invalid lesson ID");
-											}
-										}
-
-										// add the lesson ID to CoursePlan.txt
-										addCoursePlanList_1.getLessons().add(Container.lessonList.get(i));
-
-										// increase counter
-										count_1++;
-
-										System.out.println(count_1 + " lesson added.");
-									}
-								}
-
-							} 
-							else 
-							{
-								System.out.println("Please enter numeric value");
-								// Clear sc
-								sc.next();
-							}
-						}
-
-					} 
-					else 
+					while(true)
 					{
-						System.out.println("Please enter numeric value");
-						// Clear sc
-						sc.next();
+						System.out.print("Enter the toal number of lesson you want to add: (-1 to return): ");
+	
+						if (sc.hasNextInt()) {
+							// total number of the lesson user want to add
+							totalNumberAdd_1 = sc.nextInt();
+							
+							//exit
+							if(totalNumberAdd_1 == Container.BREAK_MENU)
+							{
+								break breakSwitch;
+							}
+							else if(totalNumberAdd_1 <= countNumLessonID)
+							{
+							sc.nextLine(); // Consume newline left-over
+	
+							// loop the number of times the user want to add
+							while (count_1 < totalNumberAdd_1) 
+							{
+	
+								System.out.print("Enter the lesson ID you want to add: (-1 to return): ");
+								// user enter the ID from the lesson.txt
+								if (sc.hasNextInt()) 
+								{
+									lessonIndex_1 = sc.nextInt();
+									sc.nextLine(); // Consume newline left-over
+	
+									//exit
+									if(lessonIndex_1 == Container.BREAK_MENU)
+									{
+										break breakSwitch;
+									}
+									else if(Validation.checkIfExistLessonID(lessonIndex_1, Integer.parseInt(splitCouseInfoString[2])) == false)
+									{
+									
+									
+									// search for the ID in the Lesson.txt
+									for (int i = 0; i < Container.lessonList.size(); i++) 
+									{
+										// validate the courseID and the Lesson ID
+										if (Container.lessonList.get(i).getCourseID().equals(splitCouseInfoString[0])
+												&& Container.lessonList.get(i).getLessonID() == lessonIndex_1) 
+										{
+											// Note: this is to prevent overwrite of lesson at CoursePlan.txt
+											// Extract out the list from Course Plan.txt
+											for (int j = 0; j < Container.coursePlanList.size(); j++) 
+											{
+												if (Container.coursePlanList.get(j).getCourseID().equals(splitCouseInfoString[0])
+														&& Container.coursePlanList.get(j).getIndex() == Integer.parseInt(splitCouseInfoString[2])) 
+												{
+													// Extract out the list of Lesson from CoursePlan.txt
+													for (int k = 0; k < Container.coursePlanList.get(j).getLessons().size(); k++) 
+													{
+														// System.out.println(Container.coursePlanList.get(j).getLessons().get(k));
+														// Add the previous Lessons from CoursePlan.txt
+														addCoursePlanList_1.getLessons().add(Container.coursePlanList.get(j).getLessons().get(k));
+													}
+												}
+												
+											}
+											
+	
+											// add the lesson ID to CoursePlan.txt
+											addCoursePlanList_1.getLessons().add(Container.lessonList.get(i));
+	
+											// increase counter
+											count_1++;
+	
+											System.out.println(count_1 + " lesson added.");
+										}
+									}
+									if(count_1 < totalNumberAdd_1)
+									{
+										
+										System.out.println("Invalid lesson ID");
+										
+									}
+									}
+									else
+									{
+										System.out.printf("%d exist in the Lesson List.\n",lessonIndex_1 );
+									}
+	
+								} 
+								else 
+								{
+									System.out.println("Please enter numeric value");
+									// Clear sc
+									sc.next();
+								}
+							}
+							
+							break;
+							}
+							else
+							{
+								System.out.println("Total number of lesson cannot be less than the total number of lesson");
+							}
+	
+						} 
+						else 
+						{
+							System.out.println("Please enter numeric value");
+							// Clear sc
+							sc.next();
+						}
 					}
 
 					// update txt file
@@ -1847,24 +1677,21 @@ public class AdminUI {
 					{
 						System.out.println("There is student registered in this index. No deleting is allowed.");
 					}
-					
-					
-
 					break;
 
 				case 6:
 					System.out.println("Quit...");
-					run = false;
+					
 					break;
 
 				default:
-					System.out.println("Please Enter Choice from 1 to 5");
+					System.out.println("Invalid choice. Please Enter Choice from 1 to 5");
 
 				}
 			} 
 			else 
 			{
-				System.out.println("Please Enter Choice from 1 to 5");
+				System.out.println("Invalid choice. Please Enter Choice from 1 to 5");
 				// Clear sc
 				sc.next();
 			}
@@ -1929,7 +1756,7 @@ public class AdminUI {
 
 		int choice = -1;
 
-		boolean run = true;
+		
 
 		do 
 		{
@@ -1941,7 +1768,8 @@ public class AdminUI {
 			System.out.println("(4) Course AU: " + splitString[3]);
 			System.out.println("(5) Course Type: " + splitString[4]);
 			System.out.println("(6) Quit");
-
+			System.out.print("Enter the your choice: ");
+			
 			// validate the choice input
 			if (sc.hasNextInt()) {
 				choice = sc.nextInt();
@@ -2005,8 +1833,6 @@ public class AdminUI {
 
 					String newCourseID;
 
-					boolean isNewCode = false;
-
 					// validate the CourseID
 					while (true) 
 					{
@@ -2018,20 +1844,7 @@ public class AdminUI {
 						{
 							break breakSwitch;
 						}
-
-//							// check if there exist courseID in courseList
-//							for (int i = 0; i < Container.courseList.size(); i++) 
-//							{
-//								if (newCourseID.equals(Container.courseList.get(i).getCourseID())) 
-//								{
-//									isNewCode = true;
-//									break;
-//								} 
-//								else 
-//								{
-//									isNewCode = false;
-//								}
-//							}
+						// check if there exist courseID in courseList
 						else if (Validation.checkIfValidCourseID(newCourseID)) 
 						{
 							System.out.printf("Course ID %s is used.\n", courseID);
@@ -2056,13 +1869,12 @@ public class AdminUI {
 
 					sc.nextLine(); // Consume newline left-over
 
-					System.out.print("Modify Course AU " + splitString[3] + " to: (-1 to return): ");
-
 					int newAU;
 
 					// validate course AU
 					while (true) 
 					{
+						System.out.print("Modify Course AU " + splitString[3] + " to: (-1 to return): ");
 						if (sc.hasNextInt()) 
 						{
 							newAU = sc.nextInt();
@@ -2078,7 +1890,8 @@ public class AdminUI {
 						} 
 						else 
 						{
-							System.out.println("Invalid input ");
+							System.out.println("Please enter numeric value.");
+							sc.next();
 						}
 
 					}
@@ -2123,30 +1936,6 @@ public class AdminUI {
 							break;
 						}
 
-//							if (courseTypeInput.equals(CourseType.CORE.toString())) 
-//							{
-//								newCourseType = CourseType.CORE;
-//								break;
-//							} 
-//							else if (courseTypeInput.equals(CourseType.GER.toString())) {
-//								newCourseType = CourseType.GER;
-//								break;
-//							} 
-//							else if(courseTypeInput.equals(CourseType.PRESCRIBED.toString()))
-//							{
-//								newCourseType = CourseType.PRESCRIBED;
-//								break;
-//								
-//							}
-//							else if (courseTypeInput.equals(CourseType.UNRESTRICTED_ELECTIVE.toString()) || courseTypeInput.equals("UE"))
-//							{
-//								newCourseType = CourseType.UNRESTRICTED_ELECTIVE;
-//								break;
-//							}
-//							else 
-//							{
-//								System.out.println("Invalid input ");
-//							}
 					}
 
 					// update txt file
@@ -2160,17 +1949,17 @@ public class AdminUI {
 
 				case 6:
 					System.out.println("Quit...");
-					run = false;
+					
 					break;
 
 				default:
-					System.out.println("Please Enter Choice from 1 to 5");
+					System.out.println("Invalid choice. Please Enter Choice from 1 to 5");
 
 				}
 			} 
 			else 
 			{
-				System.out.println("Please Enter Choice from 1 to 5");
+				System.out.println("Invalid choice. Please Enter Choice from 1 to 5");
 				// Clear sc
 				sc.next();
 			}
@@ -2192,7 +1981,6 @@ public class AdminUI {
 		
 		
 		// validate courseCode
-		boolean isCourseCode = false;
 		while (true) {
 			System.out.print("Enter the Course ID: (-1 to return): ");
 			courseID = sc.nextLine().toUpperCase();
@@ -2202,19 +1990,6 @@ public class AdminUI {
 			{
 				return;
 			}
-
-//			for (int i = 0; i < Container.courseList.size(); i++) 
-//			{
-//				if (courseID.equals(Container.courseList.get(i).getCourseID())) 
-//				{
-//					isCourseCode = true;
-//					break;
-//				} 
-//				else 
-//				{
-//					isCourseCode = false;
-//				}
-//			}
 			if (Validation.checkIfValidCourseID(courseID)) {
 				break;
 			} 
@@ -2250,27 +2025,6 @@ public class AdminUI {
 			{
 				break;
 			}
-			
-//			if (lessonTypeInput.equals(LessonType.LAB.toString())) 
-//			{
-//				lessonType = LessonType.LAB;
-//				break;
-//			} 
-//			else if (lessonTypeInput.equals(LessonType.LECTURE.toString()) || lessonTypeInput.equals("LEC")) {
-//				lessonType = LessonType.LECTURE;
-//				break;
-//			} 
-//			else if(lessonTypeInput.equals(LessonType.TUTORIAL.toString())|| lessonTypeInput.equals("TUT"))
-//			{
-//				lessonType = LessonType.TUTORIAL;
-//				break;
-//				
-//			}
-//			else 
-//			{
-//				System.out.println("Invalid input ");
-//			}
-
 		}
 		
 		
@@ -2298,27 +2052,6 @@ public class AdminUI {
 			{
 				break;
 			}
-			
-//			if (weekTypeInput.equals(WeekType.ODD.toString())) 
-//			{
-//				weekType = WeekType.ODD;
-//				break;
-//			} 
-//			else if (weekTypeInput.equals(WeekType.EVEN.toString())) {
-//				weekType = WeekType.EVEN;
-//				break;
-//			} 
-//			else if(weekTypeInput.equals(WeekType.WEEKLY.toString()))
-//			{
-//				weekType = WeekType.WEEKLY;
-//				break;
-//
-//			}
-//			else 
-//			{
-//				System.out.println("Invalid input ");
-//			}
-
 		}
 		
 		
@@ -2348,7 +2081,7 @@ public class AdminUI {
 			} 
 			else 
 			{
-				System.out.println("Invalid Input Time Format(HH:MM): (-1 to return): ");
+				System.out.println("Invalid Input Time Format(HH:MM) ");
 			}
 		}
 		
@@ -2372,7 +2105,7 @@ public class AdminUI {
 			} 
 			else 
 			{
-				System.out.println("Invalid Input Time Format(HH:MM): ");
+				System.out.println("Invalid Input Time Format(HH:MM) ");
 			}
 		}
 				
@@ -2400,48 +2133,6 @@ public class AdminUI {
 			{
 				break;
 			}
-			
-//			if (dayInput.equals(lessonDay.MONDAY.toString()) || (dayInput.equals("MON"))) 
-//			{
-//				lessonDay = lessonDay.MONDAY;
-//				break;
-//			} 
-//			else if (dayInput.equals(lessonDay.TUESDAY.toString())|| (dayInput.equals("TUE"))) {
-//				lessonDay = lessonDay.TUESDAY;
-//				break;
-//			} 
-//			else if(dayInput.equals(lessonDay.WEDNESDAY.toString())|| (dayInput.equals("WED")))
-//			{
-//				lessonDay = lessonDay.WEDNESDAY;
-//				break;
-//
-//			}
-//			else if(dayInput.equals(lessonDay.THURSDAY.toString())|| (dayInput.equals("THU")))
-//			{
-//				lessonDay = lessonDay.THURSDAY;
-//				break;
-//
-//			}
-//			else if(dayInput.equals(lessonDay.FRIDAY.toString())|| (dayInput.equals("FRI")))
-//			{
-//				lessonDay = lessonDay.FRIDAY;
-//				break;
-//			}
-//			else if(dayInput.equals(lessonDay.SATURDAY.toString())|| (dayInput.equals("SAT")))
-//			{
-//				lessonDay = lessonDay.SATURDAY;
-//				break;
-//			}
-//			else if(dayInput.equals(lessonDay.SUNDAY.toString())|| (dayInput.equals("SUN")))
-//			{
-//				lessonDay = lessonDay.SUNDAY;
-//				break;
-//			}
-//			else 
-//			{
-//				System.out.println("Invalid input ");
-//			}
-
 		}
 
 		// lesson Period include day constructor
@@ -2502,8 +2193,11 @@ public class AdminUI {
 				return;
 			}
 			
+			//TODO: auto caps name
+			locationExtName = WordUtils.capitalizeFully(locationExtName);
+			
 			System.out.print("Enter the Location short form name (E.g HWLAB 2): (-1 to return): ");
-			locationName = sc.nextLine();
+			locationName = sc.nextLine().toUpperCase();
 			//exit
 			if(locationName.equals(Integer.toString(Container.BREAK_MENU)))
 			{
@@ -2511,7 +2205,7 @@ public class AdminUI {
 			}
 			
 			System.out.print("Enter the Location Address (E.g N4-01B-05): (-1 to return): ");
-			locationAddress = sc.nextLine();
+			locationAddress = sc.nextLine().toUpperCase();
 			//exit
 			if(locationAddress.equals(Integer.toString(Container.BREAK_MENU)))
 			{
@@ -2528,122 +2222,6 @@ public class AdminUI {
 		
 
 	}
-
-
-
-	// Can be deleted cos add vacancy merge with Add index
-//	private static void addVacancy(Scanner sc) {
-//		
-//		
-//		
-//		sc.nextLine(); // Consume newline left-over
-//		
-//		System.out.println("Set Vacancy of a course");
-//		
-//		String courseID;
-//		
-//		int index;
-//		
-//		CoursePlan courseIndex = new CoursePlan();
-//		
-//		int totalSlots;
-//		
-//		// validate courseCode
-//		boolean isCourseCode = false;
-//		while (true) {
-//			System.out.print("Enter the Course ID: ");
-//			courseID = sc.nextLine().toUpperCase();
-//
-//			// check if the courseID exist in the courseList
-//			for (int i = 0; i < Container.courseList.size(); i++) 
-//			{
-//				if (courseID.equals(Container.courseList.get(i).getCourseID())) 
-//				{
-//					isCourseCode = true;
-//					break;
-//				} 
-//				else 
-//				{
-//					isCourseCode = false;
-//				}
-//			}
-//			if (isCourseCode) {
-//				break;
-//			} 
-//			else 
-//			{
-//				System.out.printf("Invalid Course ID: %s \n", courseID);
-//			}
-//
-//		}
-//		
-//		
-//		boolean isIndex = false;
-//		// validate index of the course
-//		while (true) {
-//			System.out.print("Enter a new "+ courseID + " index: ");
-//			
-//			if(sc.hasNextInt())
-//			{
-//				index = sc.nextInt();
-//
-//				// check if the index exist in the coursePlanList
-//				for (int i = 0; i < Container.coursePlanList.size(); i++) 
-//				{
-//					if (index == Container.coursePlanList.get(i).getIndex()) 
-//					{
-//						courseIndex.setIndex(index);
-//						isIndex = true;
-//						break;
-//					} 
-//					else 
-//					{
-//						isIndex = false;
-//					}
-//				}
-//				if (isIndex) {
-//
-//					break;
-//				} 
-//				else 
-//				{
-//					System.out.printf("Invalid Course Index: %d.\n", index);
-//
-//				}
-//
-//			}
-//			else
-//			{
-//				System.out.println("Please enter numeric value ");
-				// Clear sc
-				//sc.next();
-//			}
-//		}
-//		
-//		sc.nextLine(); // Consume newline left-over
-//		
-//		// validate total slot input
-//		while(true)
-//		{
-//			System.out.print("Enter total slot for "+ courseID + " index: "+ index + " :");
-//			if(sc.hasNextInt())
-//			{
-//				totalSlots = sc.nextInt();
-//				break;
-//			}
-//			else
-//			{
-//				System.out.println("Please enter numeric value ");
-//			}
-//		}
-//		
-//		sc.nextLine(); // Consume newline left-over
-//		
-//		AdminControl.addSlots(totalSlots, courseIndex);
-//		
-//	}
-
-
 
 	// TODO validate Class and exit -1
 	// Add Course Index and Index Vacancy
@@ -2665,7 +2243,6 @@ public class AdminUI {
 
 		
 		// validate courseCode
-		boolean isCourseCode = false;
 		while (true) {
 			System.out.print("Enter the Course ID: (-1 to return): ");
 			courseID = sc.nextLine().toUpperCase();
@@ -2675,20 +2252,7 @@ public class AdminUI {
 			{
 				return;
 			}
-
-//			//check if the courseID exist in the courseList
-//			for (int i = 0; i < Container.courseList.size(); i++) 
-//			{
-//				if (courseID.equals(Container.courseList.get(i).getCourseID())) 
-//				{
-//					isCourseCode = true;
-//					break;
-//				} 
-//				else 
-//				{
-//					isCourseCode = false;
-//				}
-//			}
+			//check if the courseID exist in the courseList
 			if (Validation.checkIfValidCourseID(courseID)) {
 				break;
 			} 
@@ -2701,9 +2265,8 @@ public class AdminUI {
 		
 		
 		// validate Group ID
-		boolean isGroupID = false;
 		while (true) {
-			System.out.print("Enter a new "+ courseID + " group: (-1 to return): ");
+			System.out.print("Enter a new "+ courseID + " group ID (e.g SSP1) (-1 to return): ");
 			groupID = sc.nextLine().toUpperCase();
 
 			//exit
@@ -2711,20 +2274,7 @@ public class AdminUI {
 			{
 				return;
 			}
-			
-//			// Check if the groupID is being used
-//			for (int i = 0; i < Container.coursePlanList.size(); i++) 
-//			{
-//				if (courseID.equals(Container.coursePlanList.get(i).getGroupID())) 
-//				{
-//					isGroupID = true;
-//					break;
-//				} 
-//				else 
-//				{
-//					isGroupID = false;
-//				}
-//			}
+			// Check if the groupID is being used
 			if (Validation.checkIfValidGroupID(courseID ,groupID)) {
 				System.out.printf("Course Group: %s is used.\n", groupID);
 				
@@ -2737,7 +2287,6 @@ public class AdminUI {
 		}
 		
 		// validate Index
-		boolean isIndex = false;
 		while (true) {
 			System.out.print("Enter a new "+ courseID + " index: (-1 to return): ");
 			
@@ -2754,20 +2303,6 @@ public class AdminUI {
 				if(String.valueOf(index).length() == 5)
 				{
 
-//					// Check if the index is being used
-//					for (int i = 0; i < Container.coursePlanList.size(); i++) 
-//					{
-//						if (index == Container.coursePlanList.get(i).getIndex()) 
-//						{
-//							isIndex = true;
-//							break;
-//						} 
-//						else 
-//						{
-//							
-//							isIndex = false;
-//						}
-//					}
 					if (Validation.checkIfValidIndex(index)) {
 						System.out.printf("Course Index: %d is used.\n", index);
 	
@@ -2782,8 +2317,7 @@ public class AdminUI {
 				else
 				{
 					System.out.println("Please enter 5 digit number");
-					// Clear sc
-					sc.next();
+					
 				}
 			}
 			else
@@ -2799,7 +2333,7 @@ public class AdminUI {
 		// validate total slot input
 		while(true)
 		{
-			System.out.print("Enter total slot for "+ courseID + " index: "+ index + " : (-1 to return):");
+			System.out.print("Enter total slot for "+ courseID + " index: "+ index + " (-1 to return): ");
 			if(sc.hasNextInt())
 			{
 				totalSlots = sc.nextInt();
@@ -2888,20 +2422,7 @@ public class AdminUI {
 			{
 				return;
 			}
-			
-//			// Check if there a used courseID
-//			for (int i=0 ;i<Container.courseList.size(); i++)
-//			{
-//				if(courseID.equals(Container.courseList.get(i).getCourseID()))
-//				{
-//					isCourseCode = true;
-//					break;
-//				}
-//				else
-//				{
-//					isCourseCode = false;
-//				}
-//			}
+			// Check if there a used courseID
 			if(Validation.checkIfValidCourseID(courseID))
 			{
 				System.out.printf("Course ID: %s is used.\n", courseID);
@@ -2962,31 +2483,6 @@ public class AdminUI {
 				
 				break;
 			}
-			
-//			if (courseTypeInput.equals(CourseType.CORE.toString())) 
-//			{
-//				courseType = CourseType.CORE;
-//				break;
-//			} 
-//			else if (courseTypeInput.equals(CourseType.GER.toString())) {
-//				courseType = CourseType.GER;
-//				break;
-//			} 
-//			else if(courseTypeInput.equals(CourseType.PRESCRIBED.toString()))
-//			{
-//				courseType = CourseType.PRESCRIBED;
-//				break;
-//				
-//			}
-//			else if (courseTypeInput.equals(CourseType.UNRESTRICTED_ELECTIVE.toString()) || courseTypeInput.equals("UE"))
-//			{
-//				courseType = CourseType.UNRESTRICTED_ELECTIVE;
-//				break;
-//			}
-//			else 
-//			{
-//				System.out.println("Invalid input ");
-//			}
 		}
 		
 		AdminControl.addCourse(courseName, school, courseID, au, courseType);
@@ -3033,7 +2529,6 @@ public class AdminUI {
 		//System.out.println(name);
 		
 		// Validate Username
-//		boolean isUserName = false;
 		while(true)
 		{
 			System.out.print("Enter new student username: (-1 to return): ");
@@ -3044,23 +2539,7 @@ public class AdminUI {
 			{
 				return;
 			}
-			
-//			// check if the student username is being used
-//			for (int i=0 ;i<Container.studentList.size(); i++)
-//			{
-//				
-//				//System.out.println(Container.studentList.get(i).getUserName());
-//				if(userName.equals(Container.studentList.get(i).getUserName())) 
-//				{
-//					isUserName = true;
-//					break;
-//				}
-//				else
-//				{
-//					isUserName = false;
-//				}
-//				
-//			}
+			// check if the student username is being used
 			else if(Validation.checkIfValidStudentUserName(userName))
 			{
 				System.out.printf("Username: %s is used.\n", userName);
@@ -3090,22 +2569,7 @@ public class AdminUI {
 			{
 				return;
 			}
-			
-//			//check if the matric number is being used
-//			for (int i=0 ;i<Container.studentList.size(); i++)
-//			{
-//				
-//				if(matricNo.equals(Container.studentList.get(i).getMatricNo())) 
-//				{
-//					isMatric = true;
-//					break;
-//				}
-//				else
-//				{
-//					isMatric = false;
-//				}
-//				
-//			}
+			//check if the matric number is being used
 			else if(Validation.checkIfValidMatricNo(matricNo))
 			{
 				System.out.printf("Matric Number: %s is used.\n", matricNo);
@@ -3316,7 +2780,7 @@ public class AdminUI {
 					{
 						
 						// validate courseCode
-						boolean isCourseCode = false;
+						
 						while (true) {
 							System.out.print("Enter the Course ID: ");
 							courseID = sc.nextLine().toUpperCase();
@@ -3326,19 +2790,6 @@ public class AdminUI {
 							{
 								return;
 							}
-
-//							for (int i = 0; i < Container.courseList.size(); i++) 
-//							{
-//								if (courseID.equals(Container.courseList.get(i).getCourseID())) 
-//								{
-//									isCourseCode = true;
-//									break;
-//								} 
-//								else 
-//								{
-//									isCourseCode = false;
-//								}
-//							}
 							else if (Validation.checkIfValidCourseID(courseID)) {
 								// course ID exist
 								//add the course ID to a list

@@ -6,36 +6,60 @@ import java.util.*;
 
 import control.Container;
 
-
-// Student account that inherits LoginAccount
+/**
+ * The student account that inherits the LoginAccount.
+ * Stores various information pertaining to Student.
+ */
 public class Student extends LoginAccount implements IOData<Student>
 {
-	// Matric No - Eg. "U1234567A"
+	/**
+	 * The matriculation number of the student.
+	 * E.g. "U1234567A"
+	 */
 	String matricNo;
-	// Gender - Eg. Gender.MALE
+	/**
+	 * The gender of the student.
+	 * E.g. "MALE"
+	 */
 	Gender gender;
-	// Nationality - Eg. "Singaporean"
+	/**
+	 * The nationality of the student. 
+	 * E.g. "Singaporean"
+	 */
 	String nationality;
-	// Max AU - Eg. 23
-	// The max AU he can apply for in a semester
-	int maxAU;
-	// List of Courses - Courses the Student applied for this semester
-	// May need to change to all semesters
+	/**
+	 * The maximum AU which the student can apply for in a semester.
+	 * E.g. 21
+	 */
+	int maxAU;	
+	/**
+	 * The list of courses that the student has successfully applied for in the current semester.
+	 */
 	List<CoursePlan> coursePlanList;
-	// Access Period - The period Student can access the course application
-	// Only uses the Time of the period, Day is not used
+	/**
+	 * The period in which the student can access the program.
+	 */
 	Period accessPeriod;
-	// Access Date - The access date of the course application
+	/**
+	 * The date which the students can access the program.
+	 */
 	Date accessDate;
 	
+	/**
+	 * The list of courses that the student is exempted from.
+	 * Stores the course ID.
+	 * E.g. "CZ2001"
+	 */
 	List<String> exemptedCourseList;
 	
+	/**
+	 * The email of the student.
+	 */
 	String email; 
-	// ADDITIONAL INFO NEEDED !!! Ignore first
-	// Need pursuing degree, current studying year, etc.
-	// for Admin to check what access period and date to give
-
-	// overloaded constructor?
+	
+	/**
+	 * Class constructor that specifies the default values for each variable.
+	 */
 	public Student()
 	{
 		super();
@@ -50,7 +74,20 @@ public class Student extends LoginAccount implements IOData<Student>
 		this.email = null;
 	}
 	
-	
+	/**
+	 * Class constructor that specifies the course objects to create.
+	 * @param name The name of the Student.
+	 * @param userName The username of the account.
+	 * @param password The password of the account.
+	 * @param type The type of the account.
+	 * @param matricNo The matriculation number of the student.
+	 * @param gender The gender of the student.
+	 * @param nationality The nationality of the student. 
+	 * @param maxAU The maximum AU which the student can apply for in a semester.
+	 * @param accessPeriod The period in which the student can access the system.
+	 * @param accessDate The date which the students can access the system.
+	 * @param email 
+	 */
 	public Student(String name, String userName,
 			String password, AccountType type,
 			String matricNo, Gender gender,
@@ -69,96 +106,117 @@ public class Student extends LoginAccount implements IOData<Student>
 		this.email = email;
 	}
 
+	/**
+	 * Gets the matriculation number of the student
+	 * @return The student's matriculation number.
+	 */
 	public String getMatricNo()
 	{
 		return this.matricNo;
 	}
 
-	public void setMatricNo(String matricNo)
-	{
-		this.matricNo = matricNo;
-	}
-
+	/**
+	 * Gets the gender of the student.
+	 * @return The student's gender.
+	 */
 	public Gender getGender()
 	{
 		return this.gender;
 	}
 
-	public void setGender(Gender gender)
-	{
-		this.gender = gender;
-	}
-
+	/**
+	 * Gets the nationality of the student.
+	 * @return The student's nationality.
+	 */
 	public String getNationality()
 	{
 		return this.nationality;
 	}
 
-	public void setNationality(String nationality)
-	{
-		this.nationality = nationality;
-	}
-
+	/**
+	 * Gets the maximum number of AU the student is allowed.
+	 * @return The maximum numer of AU
+	 */
 	public int getMaxAU()
 	{
 		return this.maxAU;
 	}
 
-	public void setMaxAU(int maxAU)
-	{
-		this.maxAU = maxAU;
-	}
-
+	/**
+	 * Gets the list of courses that the student has successfully applied for in the current semester.
+	 * @return The list of course plan the student has
+	 */
 	public List<CoursePlan> getCoursePlan()
 	{
 		return this.coursePlanList;
 	}
 
-	public void setCoursePlan(List<CoursePlan> coursePlan)
-	{
-		this.coursePlanList = coursePlan;
-	}
-
-	public Period getAccessPeriod()
-	{
-		return this.accessPeriod;
-	}
-
+	/**
+	 * Sets the access period for student to access the program.
+	 * @param accessPeriod The period in which the student can access the system.
+	 */
 	public void setAccessPeriod(Period accessPeriod)
 	{
 		this.accessPeriod = accessPeriod;
 	}
-
-	public Date getAccessDate()
-	{
-		return this.accessDate;
-	}
-
+	
+	/**
+	 * Sets the access date for students to access the program.
+	 * @param accessDate The date which the students can access the program.
+	 */
 	public void setAccessDate(Date accessDate)
 	{
 		this.accessDate = accessDate;
 	}
 	
+	/**
+	 * Gets the access period for the student.
+	 * @return The student's access period.
+	 */
+	public Period getAccessPeriod()
+    {
+        return this.accessPeriod;
+    }
+	
+	/**
+	 * Gets the access date for the student.
+	 * @return The student's access date.
+	 */
+	public Date getAccessDate()
+    {
+        return this.accessDate;
+    }
+	
+	/**
+	 * Gets the list of courses which the student is exempted from.
+	 * @return The student's list of exempted courses
+	 */
 	public List<String> getExemptedCourseList()
 	{
 		return this.exemptedCourseList;
 	}
 
+	/**
+	 * Sets the the list of courses which the student is exempted from.
+	 * @param exemptedCourseList The list of courses that the student is exempted from.
+	 */
 	public void setExemptedCourseList(List<String> exemptedCourseList)
 	{
 		this.exemptedCourseList = exemptedCourseList;
 	}
 	
+	/**
+	 * Gets the email address of the student.
+	 * @return The student's email.
+	 */
 	public String getEmail()
 	{
 		return this.email;
 	}
-
-	public void setEmail(String email)
-	{
-		this.email = email;
-	}
 	
+	/**
+	 * Gets all information on the course in String format.
+	 */
 	public String toString()
 	{
 		List<Integer> strList = new ArrayList<Integer>();
@@ -173,6 +231,13 @@ public class Student extends LoginAccount implements IOData<Student>
 		+ "|" + accessDate + "|" + email + "|" + super.getPassword();
 	}
 	
+	
+	/**
+	 * For writing/overwriting into the text file.
+	 * @param fileName The name of the file to write to.
+	 * @param overwrite To indicate whether to overwrite the file or to simply append at the bottom of the text file.
+	 * @return Boolean value to confirm if writing is successful.
+	 */
 	@Override
 	public boolean writeDataToFile(String fileName, boolean overwrite)
 	{
@@ -189,6 +254,11 @@ public class Student extends LoginAccount implements IOData<Student>
 		}
 	}
 
+	/**
+	 * To read each line of data from the text file.
+	 * @param fileLine To indicate which line of code to read from.
+	 * @return The student information.
+	 */
 	@Override
 	public Student readDataFile(String fileLine)
 	{
@@ -249,49 +319,5 @@ public class Student extends LoginAccount implements IOData<Student>
 		super.setPassword(star.nextToken().trim());
 		
 		return this;
-		
 	}
-	
-	
-	@Override
-	public boolean updateLineInFile(String fileName, String[] keys)
-	{
-		// copy ori into temp
-		// modify temp
-		// save into ori
-		
-		
-		
-		// for now lessons don't need update
-		
-		return false;
-	}
-	
-	// don't need for now
-	public static void replaceLines(String fileName, String newLine) {
-	    try {
-	        // input the (modified) file content to the StringBuffer "input"
-	        BufferedReader file = new BufferedReader(new FileReader(fileName));
-	        StringBuffer inputBuffer = new StringBuffer();
-	        String line;
-	        
-	        // if line == the line to check
-	        // if keys == keys from line
-	        while ((line = file.readLine()) != null) {
-	            line = newLine; // replace the line here
-	            inputBuffer.append(line);
-	            inputBuffer.append('\n');
-	        }
-	        file.close();
-
-	        // write the new string with the replaced line OVER the same file
-	        FileOutputStream fileOut = new FileOutputStream(fileName);
-	        fileOut.write(inputBuffer.toString().getBytes());
-	        fileOut.close();
-
-	    } catch (Exception e) {
-	        System.out.println("Problem reading file.");
-	    }
-	}
-	
 }

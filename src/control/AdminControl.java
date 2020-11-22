@@ -1,14 +1,6 @@
 package control;
 
 import java.io.IOException;
-
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import java.util.*;
 
 import entity.*;
@@ -19,7 +11,6 @@ import entity.AllEnums.Gender;
 import entity.AllEnums.LessonType;
 import entity.AllEnums.WeekType;
 import entity.Date;
-import control.Container;
 
 public class AdminControl {
 	
@@ -33,11 +24,14 @@ public class AdminControl {
 			}
 		}
 	}
-	
-//	, Period period, Date date
-//	10:30,14:30,DEFAULT
-//	2020,7,25
+
 	// Admin feature: 1
+	/**
+	 * Sets the access period for the student.
+	 * @param matricNo The matriculation number of the student.
+	 * @param period The period in which the student can access the program.
+	 * @param date The date in which the student can access the program.
+	 */
 	public static void setStudentAccessPeriod(String matricNo, Period period, Date date) {
 		
 		for(int i = 0; i < Container.studentList.size(); i++) {
@@ -55,9 +49,6 @@ public class AdminControl {
 		}
 	}
 	
-	
-	
-	
 	//Admin Feature: 2
 	public static void createStudAcc(String name, String userName,
 			String password, AccountType type,
@@ -71,6 +62,9 @@ public class AdminControl {
 
 
 		createStudAcc.writeDataToFile(Container.STUDENT_FILE, false);
+		
+		// update the list
+		Container.studentList.add(createStudAcc);
 
 		try {
 			Container.readStudentFile(Container.STUDENT_FILE, Container.studentList);
@@ -132,6 +126,8 @@ public class AdminControl {
 		Course add_Course = new Course(name, school, courseID, courseAU, courseType);
 		add_Course.writeDataToFile(Container.COURSE_FILE, false);
 		
+		Container.courseList.add(add_Course);
+		
 
 		for (int i=0 ;i<Container.courseList.size(); i++)
 		{
@@ -147,6 +143,9 @@ public class AdminControl {
 		
 		CoursePlan add_index = new CoursePlan(courseID, groupID, index);
 		add_index.writeDataToFile(Container.COURSEPLAN_FILE, false);
+		
+		// update the list
+		Container.coursePlanList.add(add_index);
 		
 
 		for (int i=0 ;i<Container.coursePlanList.size(); i++)
@@ -165,6 +164,8 @@ public class AdminControl {
 		CourseSlots add_Slots = new CourseSlots(totalSlots, courseIndex);
 		add_Slots.writeDataToFile(Container.COURSESLOT_FILE, false);
 		
+		// update the list
+		Container.courseSlotsList.add(add_Slots);
 
 //		for (int i=0 ;i<Container.courseSlotsList.size(); i++)
 //		{
@@ -185,6 +186,8 @@ public class AdminControl {
 			lessonPeriod, isOnline, location);
 		add_LessonLocation.writeDataToFile(Container.LESSON_FILE, false);
 		
+		// update the list
+		Container.lessonList.add(add_LessonLocation);
 
 		for (int i=0 ;i<Container.lessonList.size(); i++)
 		{
@@ -502,7 +505,7 @@ public class AdminControl {
 				Container.courseSlotsList.get(i).setTotalSlots(totalSlots);
 				
 				//need to shift waiting list student to the register slots
-				while (Container.courseSlotsList.get(i).getSlotList().size() <= totalSlots && Container.courseSlotsList.get(i).getWaitingList().isEmpty() == false)
+				while (Container.courseSlotsList.get(i).getSlotList().size() < totalSlots && Container.courseSlotsList.get(i).getWaitingList().isEmpty() == false)
 				{
 					// get the first person in the waiting list
 					matricNo = Container.courseSlotsList.get(i).getWaitingList().get(0);
@@ -562,6 +565,11 @@ public class AdminControl {
 	
 
 	// Admin Feature: 4
+	/**
+	 * Gets the number of available slots by course index.
+	 * @param index The course index.
+	 * @return The number of available slots in the course index.
+	 */
 	public static int getNoOfSlotsByCourseIndex(int index) {
 		int availableSlots = -1;
 		
@@ -574,6 +582,11 @@ public class AdminControl {
 		return availableSlots;
 	}
 	
+	/**
+	 * Gets total slots in the course index.
+	 * @param index The course index.
+	 * @return The total slots in the course index.
+	 */
 	public static int getTotalSlotsByCourseIndex(int index) {
 		int totalSlots = -1;
 		
@@ -582,12 +595,16 @@ public class AdminControl {
 				totalSlots = Container.courseSlotsList.get(i).getTotalSlots();
 			}
 		}
-		
 		return totalSlots;
 	}
 	
 	
 	// Admin Feature: 5
+	/**
+	 * Gets list of students registered in the course index.
+	 * @param index The course index.
+	 * @return List of students registered in the course index.
+	 */
 	public static List<List<String>> getStudentListByCourseIndex(int index) {
 		
 		List<String> listString = new ArrayList<String>();
@@ -612,6 +629,11 @@ public class AdminControl {
 	}
 	
 	// Admin Feature: 6
+	/**
+	 * Gets the list of students registered in the course.
+	 * @param courseID The ID of the course.
+	 * @return The list of students (with relevant information) that are registered in the course.
+	 */
 	public static List<List<String>> getStudentListByCourseID(String courseID){
 		
 		List<String> listString = new ArrayList<String>();
@@ -633,6 +655,4 @@ public class AdminControl {
 		
 		return listOfListString;
 	}
-	
-
 }

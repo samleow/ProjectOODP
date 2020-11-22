@@ -5,22 +5,41 @@ import java.util.*;
 import control.Container;
 import entity.AllEnums.*;
 
-// Details of a particular course index
-// Stores the "timetable" of lessons
+/**
+ * Details of a particular course index
+ * Stores the 'Time Table' of lessons
+ */
 public class CoursePlan implements IOData<CoursePlan>
 {
-	// Course ID - Eg. "CZ2001"
+	/**
+	 * The ID of the course.
+	 * E.g. "CZ2001"
+	 */
 	private String courseID;
-	// Group ID - Eg. "SSP2"
+	/**
+	 * The ID of the group.
+	 * E.g. "SSP2"
+	 */
 	private String groupID;
-	// Index - Eg. 10192
-	// Assumption Index is unique among course plan
+	/**
+	 * The course index.
+	 * Assumption: All index numbers are unique among course plans.
+	 * E.g. "10102"
+	 */
 	private int index;
-	// List of lessons - Stores the different lessons of this index
+	/**
+	 * List of Lessons that stores the different lessons for this course plan.
+	 */
 	private List<Lesson> lessons;
-	//Course - Eg. "CZ2001"
+	/**
+	 * The course that this course plan belongs to.
+	 */
 	private Course course;
 	
+	
+	/**
+	 * Class constructor that specifies the default values for each variable.
+	 */
 	public CoursePlan()
 	{
 		this.courseID = "";
@@ -30,16 +49,28 @@ public class CoursePlan implements IOData<CoursePlan>
 		this.lessons = new ArrayList<Lesson>();		
 	}
 	
-	// Create another constructor by zh
+	/**
+	 * Class constructor for AdminControl class to specify the objects to create.
+	 * @param courseID The ID of the course.
+	 * @param groupID The ID of the group.
+	 * @param index The course index.
+	 */
 	public CoursePlan(String courseID, String groupID, int index)
 	{
 		this.courseID = courseID;
 		this.groupID = groupID;
 		this.index = index;
-		//this.course = course;
 		this.lessons = new ArrayList<Lesson>();	
 	}
 
+	
+	/**
+	 * Class constructor that specifies the objects to create.
+	 * @param courseID The ID of the course.
+	 * @param groupID The ID of the group.
+	 * @param index The course index.
+	 * @param course The course that this course plan belongs to.
+	 */
 	public CoursePlan(String courseID, String groupID, int index, Course course)
 	{
 		this.courseID = courseID;
@@ -49,55 +80,81 @@ public class CoursePlan implements IOData<CoursePlan>
 		this.lessons = new ArrayList<Lesson>();	
 	}
 
+	/**
+	 * Gets the ID of the course.
+	 * @return The course's ID
+	 */
 	public String getCourseID()
 	{
 		return this.courseID;
 	}
 
+	/**
+	 * Sets the ID for the course.
+	 * @param courseID The ID of the course.
+	 */
 	public void setCourseID(String courseID)
 	{
 		this.courseID = courseID;
 	}
 
+	/**
+	 * Gets the ID of the group.
+	 * @return The group's ID.
+	 */
 	public String getGroupID()
 	{
 		return this.groupID;
 	}
 
+	/**
+	 * Sets the ID for the group.
+	 * @param groupID The ID of the group.
+	 */
 	public void setGroupID(String groupID)
 	{
 		this.groupID = groupID;
 	}
 
+	/**
+	 * Gets the course index.
+	 * @return The course index.
+	 */
 	public int getIndex()
 	{
 		return this.index;
 	}
 
+	/**
+	 * Sets the course index.
+	 * @param index The course index.
+	 */
 	public void setIndex(int index)
 	{
 		this.index = index;
 	}
 
+	/**
+	 * Gets the list of lessons that this course plan has.
+	 * @return The list of lessons.
+	 */
 	public List<Lesson> getLessons()
 	{
 		return this.lessons;
 	}
 
+	/**
+	 * Sets the lessons that this course plan has.
+	 * @param lessons List of Lessons that stores the different lessons for this course plan.
+	 */
 	public void setLessons(List<Lesson> lessons)
 	{
 		this.lessons = lessons;
 	}
-	public Course getCourse()
-	{
-		return this.course;
-	}
-
-	public void setCourse(Course course)
-	{
-		this.course = course;
-	}
 	
+	/**
+	 * Gets all information on the lessons in this course plan in String format.
+	 */
 	@Override
 	public String toString()
 	{
@@ -110,6 +167,12 @@ public class CoursePlan implements IOData<CoursePlan>
 		return courseID + "|" + groupID + "|" + index + "|" + strList;
 	}
 	
+	/**
+	 * For writing/overwriting into the text file.
+	 * @param fileName The name of the file to write to.
+	 * @param overwrite To indicate whether to overwrite the file or to simply append at the bottom of the text file.
+	 * @return Boolean value to confirm if writing is successful.
+	 */
 	@Override
 	public boolean writeDataToFile(String fileName, boolean overwrite)
 	{
@@ -126,6 +189,12 @@ public class CoursePlan implements IOData<CoursePlan>
 		}
 	}
 
+	
+	/**
+	 * To read each line of data from the text file.
+	 * @param fileLine To indicate which line of code to read from.
+	 * @return The course's information.
+	 */
 	@Override
 	public CoursePlan readDataFile(String fileLine)
 	{
@@ -169,46 +238,5 @@ public class CoursePlan implements IOData<CoursePlan>
 		}
 
 		return this;
-	}
-	
-	
-	
-	@Override
-	public boolean updateLineInFile(String fileName, String[] keys)
-	{
-		// copy ori into temp
-		// modify temp
-		// save into ori
-		
-		// for now lessons don't need update
-		
-		return false;
-	}
-	
-	// don't need for now
-	public static void replaceLines(String fileName, String newLine) {
-	    try {
-	        // input the (modified) file content to the StringBuffer "input"
-	        BufferedReader file = new BufferedReader(new FileReader(fileName));
-	        StringBuffer inputBuffer = new StringBuffer();
-	        String line;
-	        
-	        // if line == the line to check
-	        // if keys == keys from line
-	        while ((line = file.readLine()) != null) {
-	            line = newLine; // replace the line here
-	            inputBuffer.append(line);
-	            inputBuffer.append('\n');
-	        }
-	        file.close();
-
-	        // write the new string with the replaced line OVER the same file
-	        FileOutputStream fileOut = new FileOutputStream(fileName);
-	        fileOut.write(inputBuffer.toString().getBytes());
-	        fileOut.close();
-
-	    } catch (Exception e) {
-	        System.out.println("Problem reading file.");
-	    }
 	}
 }

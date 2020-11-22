@@ -1,16 +1,29 @@
 package entity;
 
-// Location details
+/**
+ * Details of a particular location
+ */
 public class Location
 {
-	// Name - Eg. "HWLAB2"
+	/**
+	 * The name of the location.
+	 * E.g. "HWLAB2"
+	 */
 	private String name;
-	// Name Extended - Eg. "Hardware Lab 2"
+	/**
+	 * The extended name of the location.
+	 * E.g. "Hardware Lab 2"
+	 */
 	private String nameExtended;
-	// Address - Eg. "N4-01B-05"
+	/**
+	 * The address of the location.
+	 * E.g. "N4-01B-05"
+	 */
 	private String address;
-
-	// Default constructor for no location lesson
+	
+	/**
+	 * Class constructor that specifies the default values for each variable.
+	 */
 	public Location()
 	{
 		this.name = "null";
@@ -18,44 +31,22 @@ public class Location
 		this.address = "null";
 	}
 	
-	// To preload the data to create the text file, can be removed later on
+	/**
+	 * Class constructor that specifies the course objects to create.
+	 * @param name The name of the location.
+	 * @param nameExtended The extended name of the location.
+	 * @param address The address of the location.
+	 */
 	public Location(String name, String nameExtended, String address)
 	{
 		this.name = name;
 		this.nameExtended = nameExtended;
 		this.address = address;
 	}
-
-	public String getName()
-	{
-		return this.name;
-	}
-
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-
-	public String getNameExtended()
-	{
-		return this.nameExtended;
-	}
-
-	public void setNameExtended(String nameExtended)
-	{
-		this.nameExtended = nameExtended;
-	}
-
-	public String getAddress()
-	{
-		return this.address;
-	}
-
-	public void setAddress(String address)
-	{
-		this.address = address;
-	}
 	
+	/**
+	 * Gets all information on the location in String format.
+	 */
 	@Override
 	public String toString()
 	{

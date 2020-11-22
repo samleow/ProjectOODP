@@ -6,9 +6,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.StringTokenizer;
 
-import entity.*;
-
-import entity.AllEnums;
 import entity.AllEnums.CourseType;
 import entity.AllEnums.Day;
 import entity.AllEnums.LessonType;
@@ -17,7 +14,11 @@ import entity.AllEnums.WeekType;
 
 public class Validation {
 	
-	// Validate CoursID
+	/**
+	 * Checks whether the course ID currently exist.
+	 * @param courseID The ID of the course.
+	 * @return boolean value on whether the course ID is valid.
+	 */
 	public static boolean checkIfValidCourseID(String courseID) {
 		boolean check = false;
 		
@@ -30,8 +31,12 @@ public class Validation {
 		return check;
 	}
 	
-	// Validate course Index
-	public static boolean checkIfValidIndex(int index) { // not sure if there's a better way to do this
+	/**
+	 * Checks if the course index currently exist.
+	 * @param index The course index.
+	 * @return boolean value on whether the course ID is valid.
+	 */
+	public static boolean checkIfValidIndex(int index) {
 		
 		boolean check = false;
 		for(int i = 0; i < Container.coursePlanList.size(); i++) { // took the index from coursePlanList
@@ -43,7 +48,11 @@ public class Validation {
 		return check;
 	}
 	
-	//Validate Time
+	/**
+	 * Checks if the time is a valid time, following the HH:MM format
+	 * @param time The time values.
+	 * @return boolean value on whether the time is valid
+	 */
 	public static boolean checkIfValidTime(String time) {
 		boolean check = true;
 		if (!time.matches("^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")){
@@ -53,9 +62,11 @@ public class Validation {
 		return check;
 	}
 	
-	
-
-	// Validate Matric No
+	/**
+	 * Checks if the matriculation number exist currently.
+	 * @param matricNo
+	 * @return
+	 */
 	public static boolean checkIfValidMatricNo(String matricNo) {
 		boolean check = false;
 		for(int i = 0; i < Container.studentList.size(); i++) {
@@ -69,7 +80,11 @@ public class Validation {
 	}
 	
 
-	//Validate Date
+	/**
+	 * Checks if the date is valid, following the YYYY-MM-DD format.
+	 * @param strAccessDate Access date in the String format.
+	 * @return boolean value of whether the date is a valid date.
+	 */
 	public static boolean checkIfValidDate(String strAccessDate) {
 		
 		if(!strAccessDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
@@ -77,12 +92,9 @@ public class Validation {
 		}
 		
 		StringTokenizer star = new StringTokenizer(strAccessDate , "-");
-//		Date accessDate = new Date(Integer.parseInt(star.nextToken().trim()),Integer.parseInt(star.nextToken().trim())
-//				,Integer.parseInt(star.nextToken().trim()));
 		String year = star.nextToken().trim();
 		String month = star.nextToken().trim();
 		String day = star.nextToken().trim();
-//		boolean check = false;
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");  
 		LocalDateTime now = LocalDateTime.now();  
@@ -116,8 +128,6 @@ public class Validation {
             	day = "0" + day;
             }
             int intAccessDate = Integer.parseInt(year+month+day);
-            //System.out.println(intAccessDate);
-            //int length = (int)(Math.log10(intAccessDate)+1);
             
             if(intAccessDate < intCurrentDate) {
             	System.out.println("Date entered cannot be in the past.");
@@ -134,7 +144,7 @@ public class Validation {
 	public static boolean checkIfValidGroupID(String courseID, String groupIDInput) {
 		boolean check = false;
 		for(int i = 0; i < Container.coursePlanList.size(); i++) {
-			if(Container.coursePlanList.get(i).getGroupID().equals(groupIDInput) && Container.coursePlanList.get(i).equals(courseID)) {
+			if(Container.coursePlanList.get(i).getGroupID().equals(groupIDInput) && Container.coursePlanList.get(i).getCourseID().equals(courseID)) {
 				check = true;
 				break;
 			}
@@ -155,7 +165,89 @@ public class Validation {
 		
 		return check;
 	}	
+	
+	//Validate if Lesson ID exist in course plan using index (update course plan)
+	public static boolean checkIfExistLessonID(int lessonID, int index) {
+		boolean check = false;
+		for(int i = 0; i < Container.coursePlanList.size(); i++) {
+			if(Container.coursePlanList.get(i).getIndex() == index )
+			{
+			for(int j = 0; j < Container.coursePlanList.get(i).getLessons().size(); j++) {
+				if(Container.coursePlanList.get(i).getLessons().get(j).getLessonID() == lessonID) {
+					check = true;
+					break;
+			}
+			}
+			}
+		}
+		
+		return check;
+	}	
+	
+	//Validate if there are lesson ID in course Plan (update lesson)
+	public static boolean checkIfThereAreLessonIDInCousePlan(String courseID, int lessonID) {
+		boolean check = false;
+		for(int i = 0; i < Container.coursePlanList.size(); i++) {
+			if(Container.coursePlanList.get(i).getCourseID().equals(courseID))
+			{
+			for(int j = 0; j < Container.coursePlanList.get(i).getLessons().size(); j++) {
+				if(Container.coursePlanList.get(i).getLessons().get(j).getLessonID() == lessonID) {
+					check = true;
+					break;
+			}
+			}
+			}
+		}
+		
+		return check;
+	}	
 
+	
+	//Validate student exist in course plan using courseID (update lesson)
+	public static boolean checkIfIsThereStudent(String courseID, int lessonID ) {
+		
+		boolean check = false;
+		for (int i=0 ;i<Container.coursePlanList.size(); i++)
+		{
+			
+			for(int j= 0; j<Container.coursePlanList.get(i).getLessons().size(); j++)
+			{
+				
+				// if the lesson ID exist in coursePlanList
+				if(courseID.equals(Container.coursePlanList.get(i).getCourseID()) && lessonID == Container.coursePlanList.get(i).getLessons().get(j).getLessonID())
+				{
+					
+					int getCoursePlanIndex = Container.coursePlanList.get(i).getIndex();
+					
+					
+					//check courseSlotsList if there are student in the waiting list or registered list
+					for(int k = 0; k<Container.courseSlotsList.size(); k++ )
+					{
+						// check for matching index
+						if(getCoursePlanIndex == Container.courseSlotsList.get(k).getCoursePlan().getIndex())
+						{
+							
+							// if there is a student in the courseSlotsList
+							if(Container.courseSlotsList.get(k).getSlotList().isEmpty() == false || Container.courseSlotsList.get(k).getWaitingList().isEmpty() == false )
+							{
+								check = true;
+								
+							}
+							// once found the CoursePlanIndex, end the loop
+							break;
+							
+						}
+
+					}
+					
+				}
+				
+			}
+		}
+		return check;
+		
+	}
+	
 	
 	//Validate Course Type
 	public static CourseType checkIfValidCourseType(String courseTypeInput)
