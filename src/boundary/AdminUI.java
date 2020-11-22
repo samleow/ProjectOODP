@@ -1450,7 +1450,7 @@ public class AdminUI {
 		// validate courseCode
 		boolean isCourseID = false;
 		while (true) {
-			System.out.print("Enter the Course ID: (-1 to return): ");
+			System.out.print("Enter the Course ID (-1 to return): ");
 			courseID = sc.nextLine().toUpperCase();
 
 			// exit
