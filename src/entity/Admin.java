@@ -1,28 +1,36 @@
 package entity;
 
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
 import entity.AllEnums.AccountType;
-import entity.AllEnums.Day;
-import entity.AllEnums.LessonType;
-import entity.AllEnums.WeekType;
 
-// Admin account that inherits LoginAccount
-public class Admin extends LoginAccount implements IOData
+/**
+ * Contains information for all admin accounts.
+ * Inherits from parent class LoginAccount.
+ */
+public class Admin extends LoginAccount implements IOData<Admin>
 {
 	
+	/**
+	 * Class constructor.
+	 * Inherits from parent class LoginAccount
+	 */
 	public Admin() 
 	{
 		super();
 		
 	}
 	
-	
+	/**
+	 * Class constructor that creates an admin and inherits the name, username, password and account type from parent account.
+	 * @param name The name of this admin.
+	 * @param userName The user name of this admin.
+	 * @param password The password of this admin.
+	 * @param type The account type of this user.
+	 * 			   Account Type should be admin.
+	 */
 	public Admin(String name, String userName,
 			String password, AccountType type)
 	{
@@ -30,7 +38,9 @@ public class Admin extends LoginAccount implements IOData
 		
 	}
 
-
+	/**
+	 * Get all information about this admin in String format.
+	 */
 	@Override
 	public String toString()
 	{
@@ -38,7 +48,12 @@ public class Admin extends LoginAccount implements IOData
 		+ super.getPassword();
 	}
 	
-	// this may be for Add new Student
+	/**
+	 * For writing/overwriting into the text file.
+	 * @param fileName The name of the file to write to.
+	 * @param overwrite To indicate whether to overwrite the file or to simply append at the bottom of the text file.
+	 * @return Boolean value to confirm if writing is successful.
+	 */
 	@Override
 	public boolean writeDataToFile(String fileName, boolean overwrite)
 	{
@@ -50,11 +65,18 @@ public class Admin extends LoginAccount implements IOData
 		}
 		catch(IOException e)
 		{
-			System.out.println("File for overwriting Lesson data not found!");
+			System.out.println("File for overwriting Admin data not found!");
 			return false;
 		}
 	}
-
+	
+	/**
+	 * To read each line of data from the text file and sets the admin information accordingly.
+	 * @param fileLine To indicate which line of code to read from.
+	 * @param st To store fileLine.
+	 * @param star To store individual 'fields' of the string separated by a separator.
+	 * @return The admin's information.
+	 */
 	@Override
 	public Admin readDataFile(String fileLine)
 	{
@@ -67,53 +89,6 @@ public class Admin extends LoginAccount implements IOData
 		super.setType(AccountType.valueOf(star.nextToken().trim()));
 		super.setPassword(star.nextToken().trim()); 
 		
-		
 		return this;
 	}
-	
-	
-	
-	@Override
-	public boolean updateLineInFile(String fileName, String[] keys)
-	{
-		// copy ori into temp
-		// modify temp
-		// save into ori
-		
-		// for now lessons don't need update
-		
-		return false;
-	}
-	
-	// don't need for now
-	public static void replaceLines(String fileName, String newLine) {
-	    try {
-	        // input the (modified) file content to the StringBuffer "input"
-	        BufferedReader file = new BufferedReader(new FileReader(fileName));
-	        StringBuffer inputBuffer = new StringBuffer();
-	        String line;
-	        
-	        // if line == the line to check
-	        // if keys == keys from line
-	        while ((line = file.readLine()) != null) {
-	            line = newLine; // replace the line here
-	            inputBuffer.append(line);
-	            inputBuffer.append('\n');
-	        }
-	        file.close();
-
-	        // write the new string with the replaced line OVER the same file
-	        FileOutputStream fileOut = new FileOutputStream(fileName);
-	        fileOut.write(inputBuffer.toString().getBytes());
-	        fileOut.close();
-
-	    } catch (Exception e) {
-	        System.out.println("Problem reading file.");
-	    }
-	}
-	
-	
-	
-	
-
 }

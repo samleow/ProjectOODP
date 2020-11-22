@@ -5,7 +5,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.StringTokenizer;
+
 import entity.AllEnums.*;
+
 
 
 /**
@@ -14,7 +16,11 @@ import entity.AllEnums.*;
  */
 public class Validation {
 	
-	// Validate CoursID
+	/**
+	 * Checks whether the course ID currently exist.
+	 * @param courseID The ID of the course.
+	 * @return boolean value on whether the course ID is valid.
+	 */
 	public static boolean checkIfValidCourseID(String courseID) {
 		boolean check = false;
 		
@@ -27,8 +33,12 @@ public class Validation {
 		return check;
 	}
 	
-	// Validate course Index
-	public static boolean checkIfValidIndex(int index) { // not sure if there's a better way to do this
+	/**
+	 * Checks if the course index currently exist.
+	 * @param index The course index.
+	 * @return boolean value on whether the course ID is valid.
+	 */
+	public static boolean checkIfValidIndex(int index) {
 		
 		boolean check = false;
 		for(int i = 0; i < Container.coursePlanList.size(); i++) { // took the index from coursePlanList
@@ -40,7 +50,11 @@ public class Validation {
 		return check;
 	}
 	
-	//Validate Time
+	/**
+	 * Checks if the time is a valid time, following the HH:MM format
+	 * @param time The time values.
+	 * @return boolean value on whether the time is valid
+	 */
 	public static boolean checkIfValidTime(String time) {
 		boolean check = true;
 		if (!time.matches("^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")){
@@ -50,9 +64,11 @@ public class Validation {
 		return check;
 	}
 	
-	
-
-	// Validate Matric No
+	/**
+	 * Checks if the matriculation number exist currently.
+	 * @param matricNo
+	 * @return
+	 */
 	public static boolean checkIfValidMatricNo(String matricNo) {
 		boolean check = false;
 		for(int i = 0; i < Container.studentList.size(); i++) {
@@ -66,7 +82,11 @@ public class Validation {
 	}
 	
 
-	//Validate Date
+	/**
+	 * Checks if the date is valid, following the YYYY-MM-DD format.
+	 * @param strAccessDate Access date in the String format.
+	 * @return boolean value of whether the date is a valid date.
+	 */
 	public static boolean checkIfValidDate(String strAccessDate) {
 		
 		if(!strAccessDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
@@ -74,12 +94,9 @@ public class Validation {
 		}
 		
 		StringTokenizer star = new StringTokenizer(strAccessDate , "-");
-//		Date accessDate = new Date(Integer.parseInt(star.nextToken().trim()),Integer.parseInt(star.nextToken().trim())
-//				,Integer.parseInt(star.nextToken().trim()));
 		String year = star.nextToken().trim();
 		String month = star.nextToken().trim();
 		String day = star.nextToken().trim();
-//		boolean check = false;
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");  
 		LocalDateTime now = LocalDateTime.now();  
@@ -113,8 +130,6 @@ public class Validation {
             	day = "0" + day;
             }
             int intAccessDate = Integer.parseInt(year+month+day);
-            //System.out.println(intAccessDate);
-            //int length = (int)(Math.log10(intAccessDate)+1);
             
             if(intAccessDate < intCurrentDate) {
             	System.out.println("Date entered cannot be in the past.");

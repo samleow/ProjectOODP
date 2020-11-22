@@ -5,22 +5,36 @@ import java.util.*;
 import control.Container;
 import entity.AllEnums.*;
 
-// Details of the slots of a particular course index
+/**
+ * Details of the slots for a particular course index.
+ */
 public class CourseSlots implements IOData<CourseSlots>
-{
-	// Total Slots - Eg. 40
-	// Modifiable by Admin accounts
-	private int totalSlots;
-	// Course Plan - Contains course index details
+{	
+	/**
+	 * The total number of slots for the course plan.
+	 * Modifiable by Admin accounts
+	 * E.g. 10
+	 */
+	private int totalSlots;	
+	/**
+	 * The Course plan that this course slot belongs to.
+	 */
 	private CoursePlan coursePlan;
-	// Waiting List - List of Students waiting for avail slots to add
-	// Stores Student matricNo
+	/**
+	 * The list that stores the students waiting for available slots.
+	 * Stores student matriculation number
+	 */
 	private List<String> waitingList;
-	// Slot List - List of slots already assigned to Students
-	// Stores Student matricNo
+	/**
+	 * The list that stores the students that already had a slot.
+	 * Stores student matriculation number.
+	 */
 	private List<String> slotList;
 	
 	
+	/**
+	 * Class constructor that specifies the default values for each variable.
+	 */
 	public CourseSlots()
 	{
 		this.totalSlots = -1;
@@ -30,6 +44,11 @@ public class CourseSlots implements IOData<CourseSlots>
 	}
 	
 
+	/**
+	 * Class constructor that specifies the objects to create.
+	 * @param totalSlots The total number of slots for the course plan.
+	 * @param coursePlan The Course plan that this course slot belongs to
+	 */
 	public CourseSlots(int totalSlots, CoursePlan coursePlan)
 	{
 		this.totalSlots = totalSlots;
@@ -38,55 +57,65 @@ public class CourseSlots implements IOData<CourseSlots>
 		this.slotList = new ArrayList<String>();
 	}
 
+	/**
+	 * Gets the total number of slots for this course slot.
+	 * @return The total number of slots.
+	 */
 	public int getTotalSlots()
 	{
 		return this.totalSlots;
 	}
 
+	/**
+	 * Sets the total number of slots for this course slots.
+	 * @param totalSlots The total number of slots for the course plan.
+	 */
 	public void setTotalSlots(int totalSlots)
 	{
 		this.totalSlots = totalSlots;
 	}
 
+	/**
+	 * Gets the course plan that this course slot belongs to.
+	 * @return The course plan.
+	 */
 	public CoursePlan getCoursePlan()
 	{
 		return this.coursePlan;
 	}
 
-	public void setCoursePlan(CoursePlan coursePlan)
-	{
-		this.coursePlan = coursePlan;
-	}
-
+	/**
+	 * Gets the list of students that are waiting for a slot.
+	 * @return The waiting list.
+	 */
 	public List<String> getWaitingList()
 	{
 		return this.waitingList;
 	}
 
-	// I don't think need to set waiting list
-//	public void setWaitingList(List<String> waitingList)
-//	{
-//		this.waitingList = waitingList;
-//	}
-
+	/**
+	 * Gets the list of students that are already assigned a slot.
+	 * @return The slot list.
+	 */
 	public List<String> getSlotList()
 	{
 		return this.slotList;
 	}
-
-	public void setSlotList(List<String> slotList)
-	{
-		this.slotList = slotList;
-	}
 	
-	
+	/**
+	 * Gets all information on the course slot in String format.
+	 */
 	public String toString()
 	{		
-
 		return totalSlots + "|" + coursePlan.getIndex() + "|" + waitingList + "|" + slotList;
 	}
 	
-	
+	/**
+	 * For writing/overwriting into the text file.
+	 * @param fileName The name of the file to write to.
+	 * @param overwrite To indicate whether to overwrite the file or to simply append at the bottom of the text file.
+	 * @return Boolean value to confirm if writing is successful.
+	 */
 	@Override
 	public boolean writeDataToFile(String fileName, boolean overwrite)
 	{
@@ -103,6 +132,11 @@ public class CourseSlots implements IOData<CourseSlots>
 		}
 	}
 
+	/**
+	 * To read each line of data from the text file.
+	 * @param fileLine To indicate which line of code to read from.
+	 * @return The course slot's information.
+	 */
 	@Override
 	public CourseSlots readDataFile(String fileLine)
 	{
@@ -145,45 +179,5 @@ public class CourseSlots implements IOData<CourseSlots>
 			}	
 	    }
 		return this;
-	}
-	
-	
-	@Override
-	public boolean updateLineInFile(String fileName, String[] keys)
-	{
-		// copy ori into temp
-		// modify temp
-		// save into ori
-		
-		// for now lessons don't need update
-		
-		return false;
-	}
-	
-	// don't need for now
-	public static void replaceLines(String fileName, String newLine) {
-	    try {
-	        // input the (modified) file content to the StringBuffer "input"
-	        BufferedReader file = new BufferedReader(new FileReader(fileName));
-	        StringBuffer inputBuffer = new StringBuffer();
-	        String line;
-	        
-	        // if line == the line to check
-	        // if keys == keys from line
-	        while ((line = file.readLine()) != null) {
-	            line = newLine; // replace the line here
-	            inputBuffer.append(line);
-	            inputBuffer.append('\n');
-	        }
-	        file.close();
-
-	        // write the new string with the replaced line OVER the same file
-	        FileOutputStream fileOut = new FileOutputStream(fileName);
-	        fileOut.write(inputBuffer.toString().getBytes());
-	        fileOut.close();
-
-	    } catch (Exception e) {
-	        System.out.println("Problem reading file.");
-	    }
 	}
 }

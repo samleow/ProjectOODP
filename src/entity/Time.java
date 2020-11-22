@@ -1,42 +1,54 @@
 package entity;
 
-// Class to store time values in 24HR format
+/**
+ * Class to store time values in 24HR format.
+ */
 public class Time
 {
+	
+	/**
+	 * The hour values of time.
+	 */
 	private int hour;
+	/**
+	 * The minute values of time.
+	 */
 	private int minute;
 	
+	/**
+	 * Class constructor that specifies the default values for each variable.
+	 */
 	public Time()
 	{
 		this.hour = -1;
 		this.minute = -1;
 	}
 	
+	/**
+	 * Class constructor that specifies the course objects to create.
+	 * @param hour The hour values of time.
+	 * @param minute The minute values of time.
+	 */
 	public Time(int hour, int minute)
 	{
 		this.hour = hour;
 		this.minute = minute;
 	}
 	
-	// returns the time in an array
-	// in the order HR:MIN
+	/**
+	 * Gets the time.
+	 * @return The array of time in the order HR:MIN.
+	 */
 	public int[] getTime()
 	{
 		return new int[] { this.hour, this.minute};
 	}
 	
-	// sets the time using an array
-	// in the order HR:MIN
-	public void setTime(int[] time)
-	{
-		time[0] = this.hour;
-		time[1] = this.minute;
-	}
-	
-	// Compare the given Time to this Time
-	// Returns -1 if this Time is earlier than given Time
-	// Returns 1 if this Time is later than given Time
-	// Returns 0 if this Time is the same as given Time
+	/**
+	 * Compare the given time to this time
+	 * @param time 
+	 * @return An integer value that represents the comparison of time.
+	 */
 	public int compareWith(Time time)
 	{
 		if (this.hour < time.getTime()[0])
@@ -54,6 +66,9 @@ public class Time
 		}
 	}
 	
+	/**
+	 * Gets all information on this time in String format.
+	 */
 	@Override
 	public String toString()
 	{

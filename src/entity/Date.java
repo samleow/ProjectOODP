@@ -1,13 +1,27 @@
 package entity;
 
-// Class to store the date values in YEAR:MONTH:DAY format
+/**
+ *	To store date values in YEAR:MONTH:DAY format
+ */
 public class Date
 {
+	/**
+	 * The year of the date.
+	 */
 	private int year;
+	/**
+	 * The month of the date.
+	 */
 	private int month;
+	/**
+	 * The day of the date.
+	 */
 	private int day;
 	
-	// default constructor
+	
+	/**
+	 * Class constructor that specifies the default values for each variable.
+	 */
 	public Date()
 	{
 		this.year = -1;
@@ -15,15 +29,24 @@ public class Date
 		this.day = -1;
 	}
 	
+	/**
+	 * Class constructor that specifies the objects to create.
+	 * @param year The year of the date.
+	 * @param month The month of the date.
+	 * @param day The day of the date.
+	 */
 	public Date(int year, int month, int day)
 	{
 		this.year = year;
 		this.month = month;
 		this.day = day;
 	}
-	
-	// returns the date in an array
-	// in the order YEAR:MONTH:DAY
+
+	/**
+	 * Gets the date in an array format
+	 * In the order of YEAR:MONTH:DAY
+	 * @return The date in integer array format.
+	 */
 	public int[] getDate()
 	{
 		return new int[] { this.year, this.month, this.day };
@@ -79,6 +102,7 @@ public class Date
 		return this.year==year && this.month==month && this.day==day;
 	}
 	
+
 	@Override
 	public String toString()
 	{
