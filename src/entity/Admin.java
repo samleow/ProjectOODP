@@ -68,9 +68,6 @@ public class Admin extends LoginAccount implements IOData<Admin> {
 	 * accordingly.
 	 * 
 	 * @param fileLine To indicate which line of code to read from.
-	 * @param st       To store fileLine.
-	 * @param star     To store individual 'fields' of the string separated by a
-	 *                 separator.
 	 * @return The admin's information.
 	 */
 	@Override

@@ -365,8 +365,8 @@ public class AdminControl {
 	/**
 	 * Update course plan's group ID
 	 * 
-	 * @param index
-	 * @param newGroupID
+	 * @param index The course index e.g 10001
+	 * @param newGroupID Replacing the course group ID e.g SSP1
 	 */
 	public static void setCoursePlanGroupID(int index, String newGroupID) {
 

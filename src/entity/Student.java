@@ -83,7 +83,7 @@ public class Student extends LoginAccount implements IOData<Student> {
 	 *                     semester.
 	 * @param accessPeriod The period in which the student can access the system.
 	 * @param accessDate   The date which the students can access the system.
-	 * @param email
+	 * @param email		   The student email.
 	 */
 	public Student(String name, String userName, String password, AccountType type, String matricNo, Gender gender,
 			String nationality, int maxAU, Period accessPeriod, Date accessDate, String email) {

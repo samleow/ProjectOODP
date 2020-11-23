@@ -172,16 +172,16 @@ public class Lesson implements IOData<Lesson> {
 	/**
 	 * Sets whether the lesson is online or physical.
 	 * 
-	 * @param isOnline Whether this lesson is online lesson or physical lesson.
+	 * @param isOnline Whether this lesson is online or physical.
 	 */
 	public void setIsOnline(boolean isOnline) {
 		this.isOnline = isOnline;
 	}
 
 	/**
-	 * Sets the location where the lesson will take place.
+	 * Get the location where the lesson will take place.
 	 * 
-	 * @param location The location of where the lesson took place.
+	 * @return Location of the lesson.
 	 */
 	public Location getLocation() {
 		return this.location;
@@ -190,7 +190,7 @@ public class Lesson implements IOData<Lesson> {
 	/**
 	 * Get whether the lesson is online or physical.
 	 * 
-	 * @param isOnline Whether this lesson is online lesson or physical lesson.
+	 * @return Boolean value on whether this lesson is online or physical.
 	 */
 	public boolean getIsOnline() {
 		return this.isOnline;

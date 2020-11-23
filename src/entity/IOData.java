@@ -1,13 +1,13 @@
 package entity;
 
 /**
- * Interface class for entity classes that reads from or stores to external file
+ * Interface class for entity classes that reads from or stores to external file.
  * 
- * @param <T>
+ * @param <T> Generic type.
  */
 public interface IOData<T> {
 	/**
-	 * An abstract method to write/overwrite class object data to text file
+	 * An abstract method to write/overwrite class object data to text file.
 	 * 
 	 * @param fileName  The name of the file to write to.
 	 * @param overwrite To indicate whether to overwrite the file or to simply

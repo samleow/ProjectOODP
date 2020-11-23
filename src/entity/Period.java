@@ -75,6 +75,8 @@ public class Period {
 
 	/**
 	 * Gets all information on the period in String format.
+	 * 
+	 * @return The time and day in String format.
 	 */
 	@Override
 	public String toString() {
@@ -83,6 +85,8 @@ public class Period {
 
 	/**
 	 * Gets all information on the time in String format.
+	 * 
+	 * @return Start time and end time in String format.
 	 */
 	public String toTimeString() {
 		return startTime + "," + endTime;

@@ -45,7 +45,7 @@ public class Time {
 	/**
 	 * Compare the given time to this time
 	 * 
-	 * @param time
+	 * @param time The time to compare with.
 	 * @return An integer value that represents the comparison of time.
 	 */
 	public int compareWith(Time time) {
