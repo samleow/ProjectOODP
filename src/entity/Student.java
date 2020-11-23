@@ -14,43 +14,43 @@ public class Student extends LoginAccount implements IOData<Student> {
 	/**
 	 * The matriculation number of the student. E.g. "U1234567A"
 	 */
-	String matricNo;
+	private String matricNo;
 	/**
 	 * The gender of the student. E.g. "MALE"
 	 */
-	Gender gender;
+	private Gender gender;
 	/**
 	 * The nationality of the student. E.g. "Singaporean"
 	 */
-	String nationality;
+	private String nationality;
 	/**
 	 * The maximum AU which the student can apply for in a semester. E.g. 21
 	 */
-	int maxAU;
+	private int maxAU;
 	/**
 	 * The list of courses that the student has successfully applied for in the
 	 * current semester.
 	 */
-	List<CoursePlan> coursePlanList;
+	private List<CoursePlan> coursePlanList;
 	/**
 	 * The period in which the student can access the program.
 	 */
-	Period accessPeriod;
+	private Period accessPeriod;
 	/**
 	 * The date which the students can access the program.
 	 */
-	Date accessDate;
+	private Date accessDate;
 
 	/**
 	 * The list of courses that the student is exempted from. Stores the course ID.
 	 * E.g. "CZ2001"
 	 */
-	List<String> exemptedCourseList;
+	private List<String> exemptedCourseList;
 
 	/**
 	 * The email of the student.
 	 */
-	String email;
+	private String email;
 
 	/**
 	 * Class constructor that specifies the default values for each variable.
