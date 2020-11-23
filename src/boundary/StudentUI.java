@@ -3,8 +3,20 @@ package boundary;
 import java.util.Scanner;
 import control.*;
 
+/**
+ * The class handle the student user interface 
+ */
 public class StudentUI {
+	
+	/**
+	 * Private constructor of StudentUI.
+	 */
+	private StudentUI() {
+	}
 
+	/**
+	 * Student user interface.
+	 */
 	public static void studentLogin() {
 		int choice;
 		boolean run = true;

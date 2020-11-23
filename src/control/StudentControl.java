@@ -8,6 +8,12 @@ import entity.*;
  * Methods used for student features.
  */
 public class StudentControl {
+	
+	/**
+	 * Private constructor of StudentControl.
+	 */
+	private StudentControl() {
+	}
 
 	/**
 	 * The student information.

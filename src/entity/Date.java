@@ -93,6 +93,10 @@ public class Date {
 		return this.year == year && this.month == month && this.day == day;
 	}
 
+	
+	/**
+	 * Gets all information on the date in String format. 
+	 */
 	@Override
 	public String toString() {
 		return year + "," + month + "," + day;

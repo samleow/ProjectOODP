@@ -13,7 +13,7 @@ import entity.*;
  */
 public class Container {
 	/**
-	 * Private constructor to make class static.
+	 * Private constructor of Container.
 	 */
 	private Container() {
 	}

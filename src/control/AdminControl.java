@@ -16,6 +16,12 @@ import entity.Date;
  * Methods used for admin features.
  */
 public class AdminControl {
+	
+	/**
+	 * Private constructor of AdminControl.
+	 */
+	private AdminControl() {
+	}
 
 	/**
 	 * The admin information.
@@ -35,6 +41,12 @@ public class AdminControl {
 		}
 	}
 
+	/**
+	 * Prints out a list of lessons with given course ID.
+	 * 
+	 * @param courseIDInput The course ID of the lessons.
+	 * @return Returns the number of lessons.
+	 */
 	public static int getLessonList(String courseIDInput) {
 		int count = 0;
 

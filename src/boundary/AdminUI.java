@@ -13,10 +13,26 @@ import entity.AllEnums.*;
 
 import org.apache.commons.lang3.text.*;
 
-public class AdminUI {
 
+/**
+ * The class handle the admin user interface.
+ */
+public class AdminUI {
+	
+	/**
+	 * Private constructor of AdminUI.
+	 */
+	private AdminUI() {
+	}
+
+	/**
+	 * The enum global variable of the gender. e.g MALE, FEMALE
+	 */
 	static Gender gender = Gender.DEFAULT;
 
+	/**
+	 * Admin user interface.
+	 */
 	public static void adminLogin() {
 		int choice;
 		boolean run = true;
@@ -257,6 +273,11 @@ public class AdminUI {
 		} while (run);
 	}
 
+	/**
+	 * Add or update course slots based on user inputs.
+	 * 
+	 * @param sc The scanner object to handle inputs.
+	 */
 	private static void add_update_course(Scanner sc) {
 		int choice = -1;
 
