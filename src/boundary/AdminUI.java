@@ -233,9 +233,10 @@ public class AdminUI {
 
 						String capsCourseID = courseID.toUpperCase();
 
-						stringList = AdminControl.getStudentListByCourseID(capsCourseID);
+						
 
 						if (Validation.checkIfValidCourseID(capsCourseID)) {
+							stringList = AdminControl.getStudentListByCourseID(capsCourseID);
 							if (stringList.isEmpty()) {
 								System.out.println("\nNo student registered in this course.");
 							} else {
