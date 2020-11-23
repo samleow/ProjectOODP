@@ -11,6 +11,12 @@ import entity.*;
  * The class handling the user login display menu.
  */
 public class UserLogin {
+	
+	/**
+	 * Private constructor of UserLogin.
+	 */
+	private UserLogin() {
+	}
 
 	/**
 	 * The main program.

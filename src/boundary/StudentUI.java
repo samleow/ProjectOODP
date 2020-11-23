@@ -7,6 +7,12 @@ import control.*;
  * The class handle the student user interface 
  */
 public class StudentUI {
+	
+	/**
+	 * Private constructor of StudentUI.
+	 */
+	private StudentUI() {
+	}
 
 	/**
 	 * Student user interface.

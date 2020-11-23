@@ -18,6 +18,12 @@ import org.apache.commons.lang3.text.*;
  * The class handle the admin user interface.
  */
 public class AdminUI {
+	
+	/**
+	 * Private constructor of AdminUI.
+	 */
+	private AdminUI() {
+	}
 
 	/**
 	 * The enum global variable of the gender. e.g MALE, FEMALE
