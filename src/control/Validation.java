@@ -12,6 +12,12 @@ import entity.AllEnums.*;
  * Validation methods used for checking.
  */
 public class Validation {
+	
+	/**
+	 * Private constructor of Validation.
+	 */
+	private Validation() {
+	}
 
 	/**
 	 * Checks whether the course ID currently exist.

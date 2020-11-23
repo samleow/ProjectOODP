@@ -6,7 +6,23 @@ import java.security.NoSuchAlgorithmException;
 
 import entity.LoginAccount;
 
+/**
+ * Control class to handle Login.
+ */
 public class AccountControl {
+	
+	/**
+	 * Private constructor of AccountControl.
+	 */
+	private AccountControl() {
+	}
+	
+	/**
+	 * Returns an encrypted string based on given string.
+	 * 
+	 * @param input The string to encrypt.
+	 * @return Returns the encrypted input string.
+	 */
 	public static String encryptThisString(String input) {
 		try {
 			// getInstance() method is called with algorithm SHA-512
@@ -37,11 +53,18 @@ public class AccountControl {
 			throw new RuntimeException(e);
 		}
 	}
-
-	// check if login credentials are valid
+	
+	/**
+	 * Checks if login credentials are valid.
+	 * 
+	 * @param userName The username of the login account.
+	 * @param passwordHashed The encrypted password of the login account.
+	 * @param isAdmin Boolean value of whether the account type is an Admin account.
+	 * @return Returns true if login is successful.
+	 */
 	public static boolean accountLoginSuccess(String userName, String passwordHashed, boolean isAdmin) {
 		System.out.println("Loading...");
-
+		
 		LoginAccount accnt = null;
 		if (isAdmin)
 			accnt = Container.getAdminByUsername(userName);
