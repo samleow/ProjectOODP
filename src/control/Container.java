@@ -21,7 +21,7 @@ public class Container {
 	/**
 	 * Set to true if running on IDE, else set to false if running on console.
 	 */
-	public static final boolean DEBUG_MODE = true;
+	public static final boolean DEBUG_MODE = false;
 	/**
 	 * Input integer for user to return to previous menu.
 	 */

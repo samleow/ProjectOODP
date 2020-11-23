@@ -85,15 +85,15 @@ public class StudentControl {
 						}
 					}
 					System.out.println("\nSuccessfully Added the Course: " + tempcourseplan.getCourseID()
-							+ " | Index No: " + tempcourseplan.getIndex() + ".");
+							+ " | Index No: " + tempcourseplan.getIndex() + ".\n");
 				}
 			} else {
 				System.out.println("\nCurrent Course: " + currentTimeTableClashes.getCourseID() + " | Index No: "
-						+ currentTimeTableClashes.getIndex() + " Clashes. Failed to add the Course.");
+						+ currentTimeTableClashes.getIndex() + " Clashes. Failed to add the Course.\n");
 			}
 		} else {
 			System.out.println("\nCurrent Course in the waiting list clashes: " + currentTimeTableClashes.getCourseID()
-					+ " | Index No: " + currentTimeTableClashes.getIndex() + ". Failed to add the Course.");
+					+ " | Index No: " + currentTimeTableClashes.getIndex() + ". Failed to add the Course.\n");
 		}
 	}
 
@@ -367,9 +367,9 @@ public class StudentControl {
 				}
 				// calculate the vacancy
 				v = cs.getTotalSlots() - cs.getSlotList().size();
-				System.out.printf("\nThe vacancies available for %d are : %d\n", indexno, v);
-				System.out.printf("The number of students in waiting list for %d are : %d\n\n", indexno,
-						cs.getWaitingList().size());
+				System.out.printf("\nIndex: %d\n", indexno);
+				System.out.printf(
+						"Slots: " + v + "/" + cs.getTotalSlots() + " [Vacancy/Total Size]\n");
 				break;
 			} else {
 				System.out.println("\nInvalid input for course index no.");
@@ -495,17 +495,17 @@ public class StudentControl {
 						Container.overwriteFileWithData(Container.STUDENT_FILE, Container.studentList);
 						Container.overwriteFileWithData(Container.COURSESLOT_FILE, Container.courseSlotsList);
 
-						System.out.printf("Index no. for Course %s successfully set to %d!\n", currCP.getCourseID(),
+						System.out.printf("\nIndex no. for Course %s successfully set to %d!\n", currCP.getCourseID(),
 								indexno);
 						break outerloop;
 					} else {
-						System.out.println("Invalid input for course index no.!");
+						System.out.println("\nInvalid input for course index no.!");
 						sc.next();
 					}
 				}
 
 			} else {
-				System.out.println("Invalid input for course index no.!");
+				System.out.println("\nInvalid input for course index no.!");
 				sc.next();
 			}
 		}
@@ -547,7 +547,6 @@ public class StudentControl {
 					System.out.println("FOR PEER (STUDENT 2):");
 					System.out.printf("Please enter user name (%d to return): ", Container.BREAK_MENU);
 					userName = sc.next();
-					System.out.println();
 					if (userName.equals("" + Container.BREAK_MENU))
 						break outerloop;
 					else if (userName.equals(studentInfo.getUserName())) {
@@ -555,7 +554,7 @@ public class StudentControl {
 						continue;
 					}
 
-					System.out.print("Enter your Password: ");
+					System.out.print("Enter your password: ");
 
 					if (Container.DEBUG_MODE)
 						password = sc.next();

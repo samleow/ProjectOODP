@@ -242,7 +242,7 @@ public class AdminUI {
 					} while (true);
 					break;
 				case 7: /* (7) Log Out */
-					System.out.println("\nLog Out Admin...");
+					System.out.println("\nLog Out Admin...\n");
 					run = false;
 					break;
 
@@ -884,7 +884,7 @@ public class AdminUI {
 						boolean isOnline = false;
 
 						while (true) {
-							System.out.print("\nIs the lesson online Y/N: (-1 to return): ");
+							System.out.print("\nIs the lesson online (Y/N) (-1 to return): ");
 							isOnlineInput = sc.nextLine().toUpperCase();
 
 							// exit
@@ -2019,7 +2019,7 @@ public class AdminUI {
 		// to exit the selection
 		// boolean isExit = false;
 
-		System.out.println("/n=== Add a Course ===");
+		System.out.println("\n=== Add a Course ===");
 
 		// Algo
 		String courseName;
@@ -2174,16 +2174,16 @@ public class AdminUI {
 
 		}
 
-		System.out.println("/nDefault password: 123");
+		System.out.println("\nDefault password: 123");
 		hashPassword = AccountControl.encryptThisString(password);
 
-		System.out.println("/nAccount Type: STUDENT");
+		System.out.println("Account Type: STUDENT");
 		acctype = AccountType.STUDENT;
 
 		// validate Matric number
 		// boolean isMatric = false;
 		while (true) {
-			System.out.print("/nEnter unique student matric number: (-1 to return): ");
+			System.out.print("\nEnter unique student matric number: (-1 to return): ");
 			matricNo = sc.nextLine().toUpperCase();
 			// exit
 			if (matricNo.equals(Integer.toString(Container.BREAK_MENU))) {
@@ -2191,7 +2191,7 @@ public class AdminUI {
 			}
 			// check if the matric number is being used
 			else if (Validation.checkIfValidMatricNo(matricNo)) {
-				System.out.printf("Matric Number %s currently exist.\n", matricNo);
+				System.out.printf("\nMatric Number %s currently exist.\n", matricNo);
 			} else {
 				break;
 			}
