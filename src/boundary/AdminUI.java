@@ -26,11 +26,6 @@ public class AdminUI {
 	}
 
 	/**
-	 * The enum global variable of the gender. e.g MALE, FEMALE
-	 */
-	static Gender gender = Gender.DEFAULT;
-
-	/**
 	 * Admin user interface.
 	 */
 	public static void adminLogin() {
